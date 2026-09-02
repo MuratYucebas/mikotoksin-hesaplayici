@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ziyaretçi E-Postaları - Yücebaş Food</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --yb-blue: #002B82;
+      --yb-orange: #DE7C00;
+      --bg: #f4f6fa;
+      --card-bg: #ffffff;
+      --text-main: #17202a;
+      --text-muted: #5d6d7e;
+      --border: #d5dbdb;
+      --shadow-sm: 0 2px 4px rgba(0, 43, 130, 0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding: 0 0 40px 0;
+      min-height: 100vh;
+    }
+
+    .top-navbar {
+      background: var(--yb-blue);
+      padding: 16px 24px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 32px;
+    }
+
+    .navbar-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .brand-logo-wrap img {
+      height: 50px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .header-info-box {
+      text-align: right;
+      color: #ffffff;
+    }
+
+    .header-info-box h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+    }
+
+    .card-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--yb-blue);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 2px solid #f0f4fc;
+      padding-bottom: 12px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-box {
+      background: linear-gradient(135deg, #f0f4fc 0%, #ffffff 100%);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--yb-blue);
+    }
+
+    .emails-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .email-item {
+      background: #fafbfc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s;
+    }
+
+    .email-item:hover {
+      background: #f0f4fc;
+      border-color: var(--yb-blue);
+    }
+
+    .email-content {
+      flex: 1;
+    }
+
+    .email-address {
+      font-weight: 600;
+      color: var(--yb-blue);
+      margin-bottom: 4px;
+    }
+
+    .email-time {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .delete-btn {
+      background: #ff5252;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .delete-btn:hover {
+      background: #d32f2f;
+    }
+
+    .no-emails {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-muted);
+    }
+
+    .clear-all-btn {
+      background: var(--yb-orange);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 24px;
+    }
+
+    .clear-all-btn:hover {
+      background: #CC6600;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: var(--yb-blue);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .back-link:hover {
+      color: var(--yb-orange);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="top-navbar">
+    <div class="navbar-container">
+      <div class="brand-logo-wrap">
+        <img src="./assets/logo.jpg" alt="Yücebaş Food" title="Yücebaş Food">
+      </div>
+      <div class="header-info-box">
+        <h2>Ziyaretçi E-Postaları</h2>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <h2 class="card-title">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+        </svg>
+        Toplanan E-Postalar
+      </h2>
+
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-label">Toplam E-Posta</div>
+          <div class="stat-value" id="totalCount">0</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Bugün Eklenen</div>
+          <div class="stat-value" id="todayCount">0</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Son Ekleme</div>
+          <div style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px;" id="lastAdded">-</div>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <button class="clear-all-btn" onclick="clearAllEmails()">Tümünü Sil</button>
+      </div>
+
+      <div id="emailsContainer">
+        <div class="no-emails">Henüz e-posta eklenmedi</div>
+      </div>
+
+      <a href="./robot.html" class="back-link">← Robot sayfasına dön</a>
+    </div>
+  </div>
+
+  <script>
+    function displayEmails() {
+      const emails = JSON.parse(localStorage.getItem('robotEmails')) || [];
+      const container = document.getElementById('emailsContainer');
+
+      document.getElementById('totalCount').innerText = emails.length;
+
+      // Bugün eklenen e-postaları say
+      const today = new Date().toDateString();
+      const todayEmails = emails.filter(e => new Date(e.timestamp).toDateString() === today);
+      document.getElementById('todayCount').innerText = todayEmails.length;
+
+      // Son ekleme zamanı
+      if (emails.length > 0) {
+        const lastEmail = emails[emails.length - 1];
+        const lastTime = new Date(lastEmail.timestamp).toLocaleString('tr-TR');
+        document.getElementById('lastAdded').innerText = lastTime;
+      }
+
+      if (emails.length === 0) {
+        container.innerHTML = '<div class="no-emails">Henüz e-posta eklenmedi</div>';
+        return;
+      }
+
+      const emailsList = document.createElement('div');
+      emailsList.className = 'emails-list';
+
+      emails.reverse().forEach((email, index) => {
+        const time = new Date(email.timestamp).toLocaleString('tr-TR');
+        const item = document.createElement('div');
+        item.className = 'email-item';
+        item.innerHTML = `
+          <div class="email-content">
+            <div class="email-address">${email.email}</div>
+            <div class="email-time">${time}</div>
+          </div>
+          <button class="delete-btn" onclick="deleteEmail(${emails.length - 1 - index})">Sil</button>
+        `;
+        emailsList.appendChild(item);
+      });
+
+      container.innerHTML = '';
+      container.appendChild(emailsList);
+    }
+
+    function deleteEmail(index) {
+      const emails = JSON.parse(localStorage.getItem('robotEmails')) || [];
+      emails.splice(index, 1);
+      localStorage.setItem('robotEmails', JSON.stringify(emails));
+      displayEmails();
+    }
+
+    function clearAllEmails() {
+      if (confirm('Tüm e-postaları silmek istediğinizden emin misiniz?')) {
+        localStorage.removeItem('robotEmails');
+        displayEmails();
+      }
+    }
+
+    // Sayfa yüklendiğinde e-postaları göster
+    displayEmails();
+
+    // Her 2 saniyede bir sayfayı yenile (gerçek zamanlı görünüm için)
+    setInterval(displayEmails, 2000);
+  </script>
+
+</body>
+</html>
