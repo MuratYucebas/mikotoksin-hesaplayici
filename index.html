@@ -1237,18 +1237,26 @@
         samplePerPackGrams = (targetWeightKg * 1000) / packsToOpen;
       }
 
+      // Analiz noktaları sayısını al ve açılacak koli sayısını çoğalt
+      const analysisPointCount = getAnalysisPointCount();
+      const totalPacksToOpen = packsToOpen * analysisPointCount;
+
       // Ambalajı açılan toplam ürün kütlesi
-      const openedProductKg = packsToOpen * packWeightKg;
+      const openedProductKg = totalPacksToOpen * packWeightKg;
       const openedProductRatio = ((openedProductKg / lotWeightKg) * 100).toFixed(1);
 
       // Örnekleme Frekansı (n)
       const freqN = Math.round(totalPacks / packsToOpen);
 
       // UI Güncelleme
-      document.getElementById('packsToOpenVal').innerText = packsToOpen;
-      document.getElementById('packsToOpenDesc').innerText = isVacuum 
+      document.getElementById('packsToOpenVal').innerText = totalPacksToOpen;
+      let descText = isVacuum
         ? `Tablo 2 standardı (${baseIncrements} adet) üzerinden %50 vakum indirimi uygulandı`
         : `Standart kurala göre açılacak paket sayısı`;
+      if (analysisPointCount > 1) {
+        descText += ` × ${analysisPointCount} analiz noktası = ${totalPacksToOpen} paket`;
+      }
+      document.getElementById('packsToOpenDesc').innerText = descText;
 
       document.getElementById('targetWeightVal').innerText = targetWeightKg.toLocaleString('tr-TR', { minimumFractionDigits: 1 });
       document.getElementById('samplePerPackVal').innerText = Math.round(samplePerPackGrams);
@@ -1315,10 +1323,6 @@
       const analysisPointCount = getAnalysisPointCount();
       const totalPacksToOpen = packsToOpen * analysisPointCount;
 
-      // Ambalajı açılan toplam ürün kütlesi
-      const openedProductKg = totalPacksToOpen * packWeightKg;
-      document.getElementById('openedProductVal').innerText = openedProductKg.toLocaleString('tr-TR');
-
       // Analiz noktası renkleri
       const analysisColors = [
         '#d32f2f', // Kırmızı - Bakanlık
@@ -1337,12 +1341,29 @@
       const visualization = document.getElementById('paletVisualization');
       visualization.innerHTML = '';
 
+      // Toplam analiz kolileri renk sırasına göre dağıt
+      const coloredKolisPerAnalysis = [];
+      for (let a = 0; a < analysisPointCount; a++) {
+        coloredKolisPerAnalysis.push({
+          colorIndex: a,
+          koliIndices: new Set()
+        });
+      }
+
+      // Sondan başlayarak colisPerAnalysis kadar koli her analiz rengine ata
+      for (let a = 0; a < analysisPointCount; a++) {
+        for (let k = 0; k < colisPerAnalysis; k++) {
+          const globalIndex = totalPacksToOpen - 1 - (a * colisPerAnalysis + k);
+          if (globalIndex >= 0) {
+            coloredKolisPerAnalysis[a].koliIndices.add(globalIndex);
+          }
+        }
+      }
+
       for (let i = 1; i <= paletCount; i++) {
         const koliCount = i === paletCount ? (totalPacks - (i - 1) * packsPerPalet) : packsPerPalet;
         const layerCount = Math.ceil(koliCount / kolisPerLayer);
-
-        // Her paletin bozulan koli sayısı
-        const defectiveInThisPalet = defectivePerPalet + (i <= defectiveRemainder ? 1 : 0);
+        const paletStartIdx = (i - 1) * packsPerPalet;
 
         // Palet wrapper
         const wrapper = document.createElement('div');
@@ -1351,6 +1372,8 @@
         // Katmanları oluştur (aşağıdan yukarıya)
         const layersDiv = document.createElement('div');
         layersDiv.className = 'palet-layers';
+
+        let coloredKoliCountInPalet = 0;
 
         for (let layer = 0; layer < layerCount; layer++) {
           const layerDiv = document.createElement('div');
@@ -1363,15 +1386,14 @@
             const koliDiv = document.createElement('div');
             koliDiv.className = 'koli';
 
-            // Sondan başlayarak analysisPointCount kadar koli renklendir
+            const globalIndex = paletStartIdx + j;
             let colorIndex = -1;
-            const koliPosFromEnd = koliCount - j; // Sondan başlayarak pozisyon
 
+            // Her renk grubu için kontrol et
             for (let a = 0; a < analysisPointCount; a++) {
-              const analysisStart = a * colisPerAnalysis;
-              const analysisEnd = (a + 1) * colisPerAnalysis;
-              if (koliPosFromEnd > analysisStart && koliPosFromEnd <= analysisEnd) {
+              if (coloredKolisPerAnalysis[a].koliIndices.has(globalIndex)) {
                 colorIndex = a;
+                coloredKoliCountInPalet++;
                 break;
               }
             }
@@ -1382,8 +1404,8 @@
               koliDiv.style.fontWeight = 'bold';
             }
 
-            koliDiv.innerText = (j + 1);
-            let tooltip = `Koli ${j + 1}`;
+            koliDiv.innerText = (globalIndex + 1);
+            let tooltip = `Koli ${globalIndex + 1}`;
             if (colorIndex >= 0) {
               const analysisNames = [
                 'Bakanlık Analizi',
@@ -1410,7 +1432,7 @@
         // Palet etiketi
         const label = document.createElement('div');
         label.className = 'palet-label';
-        label.innerText = `Palet ${i} • ${koliCount} koli${defectiveInThisPalet > 0 ? ` (${defectiveInThisPalet} analiz)` : ''}`;
+        label.innerText = `Palet ${i} • ${koliCount} koli${coloredKoliCountInPalet > 0 ? ` (${coloredKoliCountInPalet} renkli)` : ''}`;
         wrapper.appendChild(label);
 
         visualization.appendChild(wrapper);
