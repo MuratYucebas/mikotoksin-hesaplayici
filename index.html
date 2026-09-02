@@ -380,46 +380,129 @@
 
     .palet-container {
       position: relative;
-      width: 140px;
-      height: 180px;
-      background: linear-gradient(135deg, #8B7355 0%, #A0826D 100%);
-      border-radius: 8px;
-      border: 2px solid #654321;
-      padding: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      gap: 20px;
+      margin-bottom: 24px;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      overflow-x: auto;
+      overflow-y: hidden;
+      min-height: 350px;
+      scroll-behavior: smooth;
+    }
+
+    .palet-container::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .palet-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+
+    .palet-container::-webkit-scrollbar-thumb {
+      background: var(--yb-blue);
+      border-radius: 10px;
+    }
+
+    .palet-container::-webkit-scrollbar-thumb:hover {
+      background: var(--yb-blue-dark);
+    }
+
+    .palet-wrapper {
+      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      overflow: hidden;
+      gap: 4px;
+      flex-shrink: 0;
+      min-width: 280px;
     }
 
-    .palet-label {
-      position: absolute;
-      bottom: 6px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: #ffffff;
-      text-align: center;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.3);
+    .palet-layers {
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 0;
+      align-items: center;
+    }
+
+    .palet-layer {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 0;
       padding: 4px 0;
     }
 
-    .koli {
-      width: 32px;
-      height: 28px;
-      background: linear-gradient(135deg, var(--yb-orange) 0%, #CC6600 100%);
-      border: 1px solid #996600;
+    .palet-base {
+      width: 220px;
+      height: 16px;
+      background: linear-gradient(to right, #6B4423 0%, #8B5A2B 50%, #6B4423 100%);
       border-radius: 2px;
-      margin: 4px 2px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      border: 2px solid #3E2723;
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2), 0 4px 8px rgba(0, 0, 0, 0.3);
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.65rem;
-      font-weight: 600;
+      margin-top: 0;
+    }
+
+    .palet-base::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      width: 4px;
+      height: 8px;
+      background: #5D4037;
+      border-radius: 1px;
+    }
+
+    .palet-base::after {
+      content: '';
+      position: absolute;
+      right: 8px;
+      width: 4px;
+      height: 8px;
+      background: #5D4037;
+      border-radius: 1px;
+    }
+
+    .palet-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--yb-blue);
+      text-align: center;
+      margin-top: 8px;
+      white-space: nowrap;
+      order: 3;
+    }
+
+    .koli {
+      width: 36px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--yb-orange) 0%, #CC6600 100%);
+      border: 1.5px solid #996600;
+      border-radius: 3px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
       color: #ffffff;
+      cursor: default;
+    }
+
+    .koli:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
     }
 
     .full-width-result {
@@ -1121,28 +1204,62 @@
       const paletCount = parseInt(document.getElementById('paletCount').value) || 1;
       const totalPacks = Math.ceil((parseFloat(document.getElementById('lotWeight').value) || 0) / (parseFloat(document.getElementById('packWeight').value) || 1));
       const packsPerPalet = Math.ceil(totalPacks / paletCount);
+      const kolisPerLayer = 5; // Her katta 5 koli
 
       const visualization = document.getElementById('paletVisualization');
       visualization.innerHTML = '';
+      visualization.style.display = 'flex';
+      visualization.style.gap = '24px';
+      visualization.style.flexWrap = 'wrap';
+      visualization.style.justifyContent = 'flex-start';
 
       for (let i = 1; i <= paletCount; i++) {
         const paletDiv = document.createElement('div');
         paletDiv.className = 'palet-container';
 
         const koliCount = i === paletCount ? (totalPacks - (i - 1) * packsPerPalet) : packsPerPalet;
+        const layerCount = Math.ceil(koliCount / kolisPerLayer);
 
-        for (let j = 0; j < koliCount && j < 9; j++) {
-          const koliDiv = document.createElement('div');
-          koliDiv.className = 'koli';
-          koliDiv.innerText = (j + 1);
-          paletDiv.appendChild(koliDiv);
+        // Palet wrapper
+        const wrapper = document.createElement('div');
+        wrapper.className = 'palet-wrapper';
+
+        // Katmanları oluştur (aşağıdan yukarıya)
+        const layersDiv = document.createElement('div');
+        layersDiv.className = 'palet-layers';
+
+        for (let layer = 0; layer < layerCount; layer++) {
+          const layerDiv = document.createElement('div');
+          layerDiv.className = 'palet-layer';
+
+          const startIdx = layer * kolisPerLayer;
+          const endIdx = Math.min(startIdx + kolisPerLayer, koliCount);
+
+          for (let j = startIdx; j < endIdx; j++) {
+            const koliDiv = document.createElement('div');
+            koliDiv.className = 'koli';
+            koliDiv.innerText = (j + 1);
+            koliDiv.title = `Koli ${j + 1}`;
+            layerDiv.appendChild(koliDiv);
+          }
+
+          layersDiv.appendChild(layerDiv);
         }
 
+        wrapper.appendChild(layersDiv);
+
+        // Ahşap palet tabanı
+        const baseDiv = document.createElement('div');
+        baseDiv.className = 'palet-base';
+        wrapper.appendChild(baseDiv);
+
+        // Palet etiketi
         const label = document.createElement('div');
         label.className = 'palet-label';
-        label.innerText = `Palet ${i} (${koliCount} koli)`;
-        paletDiv.appendChild(label);
+        label.innerText = `Palet ${i} • ${koliCount} koli`;
+        wrapper.appendChild(label);
 
+        paletDiv.appendChild(wrapper);
         visualization.appendChild(paletDiv);
       }
     }
