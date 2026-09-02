@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yücebaş Food - AB 2023/2782 İncir Ezmesi Numune Alma Hesaplayıcı</title>
+  <title>Yücebaş Food - AB 2023/2782 Kuru İncir Ürünü Numune Alma Hesaplayıcı</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -365,6 +365,19 @@
       font-weight: 500;
     }
 
+    .regulation-ref {
+      background: #f0f4fc;
+      border-left: 3px solid var(--yb-orange);
+      padding: 6px 10px;
+      margin-top: 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--yb-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
     .full-width-result {
       background: #f8fafc;
       border: 1px solid var(--border);
@@ -617,7 +630,7 @@
 
       <div class="header-info-box">
         <div class="title-tag">Yönetmelik (AB) 2023/2782</div>
-        <h2>İncir Ezmesi Resmi Örnekleme Portalı</h2>
+        <h2>Kuru İncir Ürünü Resmi Örnekleme Portalı</h2>
       </div>
     </div>
   </header>
@@ -693,14 +706,17 @@
           <div>
             <div class="item-title">Mevzuat Tonaj Kadamesi</div>
             <div class="item-val" id="tierText">-</div>
+            <div class="regulation-ref" style="margin-top: 4px;">Tablo 2</div>
           </div>
           <div>
             <div class="item-title">Partideki Toplam Paket</div>
             <div class="item-val" id="totalPacksText">-</div>
+            <div class="regulation-ref" style="margin-top: 4px;">Madde C.2</div>
           </div>
           <div>
             <div class="item-title">Alt Parti / Durum</div>
             <div class="item-val" id="sublotsText">-</div>
+            <div class="regulation-ref" style="margin-top: 4px;">Madde C.3</div>
           </div>
         </div>
 
@@ -713,6 +729,7 @@
               <span class="unit-small">adet paket</span>
             </div>
             <div class="result-desc" id="packsToOpenDesc">Artımlı numune kuralı</div>
+            <div class="regulation-ref">Tablo 2 & Madde C.7.1</div>
           </div>
 
           <!-- Hedef Toplam Numune Ağırlığı -->
@@ -723,6 +740,7 @@
               <span class="unit-small">kg</span>
             </div>
             <div class="result-desc">Birleştirilecek agreganın asgari kütlesi</div>
+            <div class="regulation-ref">Tablo 2 - Kuru İncir Standardı</div>
           </div>
 
           <!-- Paket Başına Alınacak Miktar -->
@@ -733,16 +751,18 @@
               <span class="unit-small">g / paket</span>
             </div>
             <div class="result-desc">Açılan ambalajdan alınacak miktar</div>
+            <div class="regulation-ref">Madde C.2.2</div>
           </div>
 
           <!-- Ambalajı Açılan Ürün Miktarı -->
           <div class="result-card alert-card">
-            <div class="result-label">Vakumu Bozulan / Açılan Ürün</div>
+            <div class="result-label">Ambalaj Bütünlüğü Bozulan / Açılan Ürün</div>
             <div class="result-value">
               <span id="openedProductVal">0</span>
               <span class="unit-small">kg</span>
             </div>
             <div class="result-desc" id="openedProductDesc">Etkilenen koli miktarı</div>
+            <div class="regulation-ref">Madde C.1</div>
           </div>
         </div>
 
@@ -751,14 +771,16 @@
           <div class="res-label">Örnekleme Sıklığı (ÖS - n) [Madde A.2]</div>
           <div class="res-val" id="samplingFreqVal">-</div>
           <div class="res-desc" id="samplingFreqDesc">-</div>
+          <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 0.7rem; font-weight: 600; color: var(--yb-orange); text-transform: uppercase; letter-spacing: 0.02em;">Madde A.2 - Örnekleme Şeması</div>
         </div>
 
         <!-- Laboratuvar Numunesi Bölünmesi -->
         <div class="full-width-result">
           <div>
-            <div class="result-label">Laboratuvar Numunelerine Ayrılma Şekli (Madde C.4)</div>
+            <div class="result-label">Laboratuvar Numunelerine Ayrılma Şekli</div>
             <div style="font-size: 1.05rem; font-weight: 800; color: var(--yb-blue);" id="labSplitVal">-</div>
             <div class="result-desc">Homojenleştirilip ayrı ayrı analiz edilecek laboratuvar numuneleri</div>
+            <div class="regulation-ref" style="margin-top: 10px;">Madde C.4</div>
           </div>
         </div>
 
@@ -770,13 +792,15 @@
               <span id="analysisCountVal">1</span>
               <span class="unit-small">adet analiz</span>
             </div>
-            <div class="result-desc" id="analysisCountDesc">Madde C.5 - Aflatoksin ve Okratoksin analizi</div>
+            <div class="result-desc" id="analysisCountDesc">Aflatoksin ve Okratoksin analizi</div>
+            <div class="regulation-ref">Madde C.5.1 - C.5.3</div>
           </div>
 
           <div class="result-card">
             <div class="result-label">Analiz Detayı</div>
             <div style="font-size: 0.95rem; font-weight: 600; color: var(--yb-blue); margin-top: 8px;" id="analysisDetailVal">-</div>
             <div class="result-desc">Her numunede yapılacak ölçümler</div>
+            <div class="regulation-ref">Madde C.5 & Ek III</div>
           </div>
         </div>
 
