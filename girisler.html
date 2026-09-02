@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ziyaretçi Girişleri - Yücebaş Food</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --yb-blue: #002B82;
+      --yb-orange: #DE7C00;
+      --bg: #f4f6fa;
+      --card-bg: #ffffff;
+      --text-main: #17202a;
+      --text-muted: #5d6d7e;
+      --border: #d5dbdb;
+      --shadow-sm: 0 2px 4px rgba(0, 43, 130, 0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding: 0 0 40px 0;
+      min-height: 100vh;
+    }
+
+    .top-navbar {
+      background: var(--yb-blue);
+      padding: 16px 24px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 32px;
+    }
+
+    .navbar-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .brand-logo-wrap img {
+      height: 50px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .header-info-box {
+      text-align: right;
+      color: #ffffff;
+    }
+
+    .header-info-box h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+    }
+
+    .card-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--yb-blue);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 2px solid #f0f4fc;
+      padding-bottom: 12px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-box {
+      background: linear-gradient(135deg, #f0f4fc 0%, #ffffff 100%);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--yb-blue);
+    }
+
+    .visits-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .visits-table thead {
+      background: #f0f4fc;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .visits-table th {
+      padding: 12px;
+      text-align: left;
+      font-weight: 700;
+      color: var(--yb-blue);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.02em;
+    }
+
+    .visits-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .visits-table tbody tr:hover {
+      background: #fafbfc;
+    }
+
+    .visit-row {
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .visit-row.expanded {
+      background: #f0f4fc;
+    }
+
+    .visit-details {
+      display: none;
+    }
+
+    .visit-details.show {
+      display: table-row;
+    }
+
+    .detail-cell {
+      padding: 16px 12px;
+      background: #fafbfc;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+    }
+
+    .detail-item {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px;
+    }
+
+    .detail-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .detail-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--yb-blue);
+      word-break: break-all;
+    }
+
+    .calculation-data {
+      background: linear-gradient(135deg, #fff7ed 0%, #ffffff 100%);
+      border-left: 3px solid var(--yb-orange);
+    }
+
+    .no-visits {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-muted);
+    }
+
+    .clear-all-btn {
+      background: #ff5252;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 24px;
+    }
+
+    .clear-all-btn:hover {
+      background: #d32f2f;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: var(--yb-blue);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .back-link:hover {
+      color: var(--yb-orange);
+    }
+
+    .expand-icon {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background: var(--yb-blue);
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 20px;
+      font-size: 0.7rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="top-navbar">
+    <div class="navbar-container">
+      <div class="brand-logo-wrap">
+        <img src="./assets/logo.jpg" alt="Yücebaş Food" title="Yücebaş Food">
+      </div>
+      <div class="header-info-box">
+        <h2>Ziyaretçi Girişleri</h2>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <h2 class="card-title">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+        </svg>
+        Ziyaretçi Analitikleri
+      </h2>
+
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-label">Toplam Ziyaret</div>
+          <div class="stat-value" id="totalCount">0</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Bugün Ziyaret Eden</div>
+          <div class="stat-value" id="todayCount">0</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Son Ziyaret</div>
+          <div style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px;" id="lastAdded">-</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Hesaplama Yapan</div>
+          <div class="stat-value" id="calculationCount">0</div>
+        </div>
+      </div>
+
+      <button class="clear-all-btn" onclick="clearAllVisits()">Tüm Verileri Sil</button>
+
+      <div id="visitsContainer">
+        <div class="no-visits">Henüz ziyaretçi kaydı yok</div>
+      </div>
+
+      <a href="./robot.html" class="back-link">← Robot sayfasına dön</a>
+    </div>
+  </div>
+
+  <script>
+    function getVisits() {
+      try {
+        return JSON.parse(localStorage.getItem('robotVisits')) || [];
+      } catch (e) {
+        try {
+          return JSON.parse(sessionStorage.getItem('robotVisits')) || [];
+        } catch (e2) {
+          return [];
+        }
+      }
+    }
+
+    function setVisits(visits) {
+      try {
+        localStorage.setItem('robotVisits', JSON.stringify(visits));
+      } catch (e) {
+        try {
+          sessionStorage.setItem('robotVisits', JSON.stringify(visits));
+        } catch (e2) {
+          console.log('Storage kullanılamıyor');
+        }
+      }
+    }
+
+    function displayVisits() {
+      const visits = getVisits();
+      const container = document.getElementById('visitsContainer');
+
+      document.getElementById('totalCount').innerText = visits.length;
+
+      const today = new Date().toDateString();
+      const todayVisits = visits.filter(v => new Date(v.timestamp).toDateString() === today);
+      document.getElementById('todayCount').innerText = todayVisits.length;
+
+      const calculationVisits = visits.filter(v => v.calculationData !== null);
+      document.getElementById('calculationCount').innerText = calculationVisits.length;
+
+      if (visits.length > 0) {
+        const lastVisit = visits[visits.length - 1];
+        const lastTime = new Date(lastVisit.timestamp).toLocaleString('tr-TR');
+        document.getElementById('lastAdded').innerText = lastTime;
+      }
+
+      if (visits.length === 0) {
+        container.innerHTML = '<div class="no-visits">Henüz ziyaretçi kaydı yok</div>';
+        return;
+      }
+
+      const table = document.createElement('table');
+      table.className = 'visits-table';
+      table.innerHTML = `
+        <thead>
+          <tr>
+            <th></th>
+            <th>Tarih & Saat</th>
+            <th>IP Adresi</th>
+            <th>Tarayıcı</th>
+            <th>İşletim Sistemi</th>
+            <th>Cihaz</th>
+            <th>Ülke / Şehir</th>
+          </tr>
+        </thead>
+        <tbody id="visitsBody"></tbody>
+      `;
+
+      const tbody = table.querySelector('#visitsBody');
+
+      visits.slice().reverse().forEach((visit, index) => {
+        const time = new Date(visit.timestamp).toLocaleString('tr-TR');
+        const location = visit.city !== 'Bilinmiyor' ? `${visit.city}, ${visit.country}` : visit.country;
+
+        const row = document.createElement('tr');
+        row.className = 'visit-row';
+        row.innerHTML = `
+          <td><span class="expand-icon" onclick="toggleDetails(${visits.length - 1 - index})">+</span></td>
+          <td>${time}</td>
+          <td>${visit.ip}</td>
+          <td>${visit.browser}</td>
+          <td>${visit.os}</td>
+          <td>${visit.deviceType}</td>
+          <td>${location}</td>
+        `;
+        tbody.appendChild(row);
+
+        const detailsRow = document.createElement('tr');
+        detailsRow.className = 'visit-details';
+        detailsRow.id = `details-${visits.length - 1 - index}`;
+        detailsRow.innerHTML = `
+          <td colspan="7">
+            <div class="detail-cell">
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <div class="detail-label">IP Adresi</div>
+                  <div class="detail-value">${visit.ip}</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Tarayıcı</div>
+                  <div class="detail-value">${visit.browser}</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">İşletim Sistemi</div>
+                  <div class="detail-value">${visit.os}</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Cihaz Tipi</div>
+                  <div class="detail-value">${visit.deviceType}</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Ülke</div>
+                  <div class="detail-value">${visit.country}</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Şehir</div>
+                  <div class="detail-value">${visit.city}</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Bölge</div>
+                  <div class="detail-value">${visit.region}</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Dil</div>
+                  <div class="detail-value">${visit.language}</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Ekran Çözünürlüğü</div>
+                  <div class="detail-value">${visit.screenResolution}</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Saat Dilimi</div>
+                  <div class="detail-value">${visit.timezone}</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Sayfa Yükleme Süresi</div>
+                  <div class="detail-value">${visit.pageLoadTime}</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Ziyaret Zamanı</div>
+                  <div class="detail-value">${new Date(visit.timestamp).toLocaleString('tr-TR')}</div>
+                </div>
+                ${visit.calculationData ? `
+                  <div class="detail-item calculation-data" style="grid-column: 1 / -1;">
+                    <div class="detail-label">📊 Yapılan Hesaplama</div>
+                    <div style="font-size: 0.9rem; color: var(--yb-blue); margin-top: 8px;">
+                      <strong>Parti Ağırlığı:</strong> ${visit.calculationData.lotWeight} kg<br>
+                      <strong>Paket Ağırlığı:</strong> ${visit.calculationData.packWeight} kg<br>
+                      <strong>Ambalaj Tipi:</strong> ${visit.calculationData.packageType}<br>
+                      <strong>Palet Sayısı:</strong> ${visit.calculationData.paletCount} adet<br>
+                      <strong>Hesaplama Zamanı:</strong> ${new Date(visit.calculationData.timestamp).toLocaleString('tr-TR')}
+                    </div>
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(detailsRow);
+      });
+
+      container.innerHTML = '';
+      container.appendChild(table);
+    }
+
+    function toggleDetails(index) {
+      const detailsRow = document.getElementById(`details-${index}`);
+      if (detailsRow) {
+        detailsRow.classList.toggle('show');
+      }
+    }
+
+    function clearAllVisits() {
+      if (confirm('Tüm ziyaretçi verilerini silmek istediğinizden emin misiniz?')) {
+        setVisits([]);
+        displayVisits();
+      }
+    }
+
+    displayVisits();
+    setInterval(displayVisits, 2000);
+  </script>
+
+</body>
+</html>

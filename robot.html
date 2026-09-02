@@ -1191,98 +1191,168 @@
     // Sayfa açılışında çalıştır
     calculate();
 
-    // E-posta Toplama Sistemi
-    function saveEmail(email) {
-      try {
-        const emails = JSON.parse(localStorage.getItem('robotEmails')) || [];
-        emails.push({
-          email: email,
-          timestamp: new Date().toISOString()
+    // Ziyaretçi Bilgi Toplama Sistemi
+    function getUserAgent() {
+      const ua = navigator.userAgent;
+      let browser = 'Bilinmiyor';
+      let os = 'Bilinmiyor';
+      let deviceType = 'Desktop';
+
+      // Tarayıcı Tespiti
+      if (ua.indexOf('Chrome') > -1 && ua.indexOf('Edg') === -1) {
+        browser = 'Chrome';
+      } else if (ua.indexOf('Safari') > -1 && ua.indexOf('Chrome') === -1) {
+        browser = 'Safari';
+      } else if (ua.indexOf('Firefox') > -1) {
+        browser = 'Firefox';
+      } else if (ua.indexOf('Edg') > -1) {
+        browser = 'Edge';
+      } else if (ua.indexOf('Opera') > -1 || ua.indexOf('OPR') > -1) {
+        browser = 'Opera';
+      }
+
+      // OS Tespiti
+      if (ua.indexOf('Windows') > -1) {
+        os = 'Windows';
+      } else if (ua.indexOf('Mac') > -1) {
+        os = 'macOS';
+      } else if (ua.indexOf('Linux') > -1) {
+        os = 'Linux';
+      } else if (ua.indexOf('iPhone') > -1 || ua.indexOf('iPad') > -1) {
+        os = 'iOS';
+      } else if (ua.indexOf('Android') > -1) {
+        os = 'Android';
+      }
+
+      // Cihaz Tipi
+      if (window.innerWidth < 768) {
+        deviceType = window.innerWidth < 600 ? 'Mobil' : 'Tablet';
+      }
+
+      return { browser, os, deviceType };
+    }
+
+    function getIPAddress() {
+      return fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => data.ip)
+        .catch(() => 'Bilinmiyor');
+    }
+
+    function getLocation(ip) {
+      return fetch(`https://ipapi.co/${ip}/json/`)
+        .then(response => response.json())
+        .then(data => ({
+          country: data.country_name || 'Bilinmiyor',
+          city: data.city || 'Bilinmiyor',
+          region: data.region || 'Bilinmiyor'
+        }))
+        .catch(() => ({
+          country: 'Bilinmiyor',
+          city: 'Bilinmiyor',
+          region: 'Bilinmiyor'
+        }));
+    }
+
+    function getSessionData() {
+      return {
+        language: navigator.language,
+        screenResolution: window.innerWidth + 'x' + window.innerHeight,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        timestamp: new Date().toISOString(),
+        pageLoadTime: performance.timing ? Math.round(performance.timing.loadEventEnd - performance.timing.navigationStart) + 'ms' : 'N/A'
+      };
+    }
+
+    function recordVisit() {
+      const { browser, os, deviceType } = getUserAgent();
+      const sessionData = getSessionData();
+
+      getIPAddress().then(ip => {
+        getLocation(ip).then(location => {
+          const visitData = {
+            timestamp: sessionData.timestamp,
+            ip: ip,
+            browser: browser,
+            os: os,
+            deviceType: deviceType,
+            country: location.country,
+            city: location.city,
+            region: location.region,
+            language: sessionData.language,
+            screenResolution: sessionData.screenResolution,
+            timezone: sessionData.timezone,
+            pageLoadTime: sessionData.pageLoadTime,
+            calculationData: null
+          };
+
+          saveVisit(visitData);
         });
-        localStorage.setItem('robotEmails', JSON.stringify(emails));
-        return true;
+      });
+    }
+
+    function saveVisit(visitData) {
+      try {
+        const visits = JSON.parse(localStorage.getItem('robotVisits')) || [];
+        visits.push(visitData);
+        localStorage.setItem('robotVisits', JSON.stringify(visits));
       } catch (e) {
-        console.log('localStorage kullanılamıyor, session storage deniyor');
         try {
-          const emails = JSON.parse(sessionStorage.getItem('robotEmails')) || [];
-          emails.push({
-            email: email,
-            timestamp: new Date().toISOString()
-          });
-          sessionStorage.setItem('robotEmails', JSON.stringify(emails));
-          return true;
+          const visits = JSON.parse(sessionStorage.getItem('robotVisits')) || [];
+          visits.push(visitData);
+          sessionStorage.setItem('robotVisits', JSON.stringify(visits));
         } catch (e2) {
           console.log('Storage kullanılamıyor');
-          return false;
         }
       }
     }
 
-    function openEmailModal() {
-      document.getElementById('emailModal').style.display = 'flex';
+    function recordCalculation() {
+      const lotWeight = document.getElementById('lotWeight').value;
+      const packWeight = document.getElementById('packWeight').value;
+      const isVacuum = document.getElementById('pkgVacuum').checked;
+      const paletCount = document.getElementById('paletCount').value;
+
+      const calculationData = {
+        lotWeight: parseFloat(lotWeight),
+        packWeight: parseFloat(packWeight),
+        packageType: isVacuum ? 'Vakumlu' : 'Normal',
+        paletCount: parseInt(paletCount),
+        timestamp: new Date().toISOString()
+      };
+
+      try {
+        const visits = JSON.parse(localStorage.getItem('robotVisits')) || [];
+        if (visits.length > 0) {
+          visits[visits.length - 1].calculationData = calculationData;
+          localStorage.setItem('robotVisits', JSON.stringify(visits));
+        }
+      } catch (e) {
+        try {
+          const visits = JSON.parse(sessionStorage.getItem('robotVisits')) || [];
+          if (visits.length > 0) {
+            visits[visits.length - 1].calculationData = calculationData;
+            sessionStorage.setItem('robotVisits', JSON.stringify(visits));
+          }
+        } catch (e2) {
+          console.log('Storage kullanılamıyor');
+        }
+      }
     }
 
-    function closeEmailModal() {
-      document.getElementById('emailModal').style.display = 'none';
-    }
-
-    function submitEmail(e) {
-      e.preventDefault();
-      const emailInput = document.getElementById('emailInput');
-      const email = emailInput.value.trim();
-
-      if (!email) return;
-
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        alert('Lütfen geçerli bir e-posta adresi girin');
-        return;
-      }
-
-      saveEmail(email);
-      emailInput.value = '';
-      closeEmailModal();
-      alert('E-postanız kaydedildi! Teşekkür ederiz.');
-    }
-
-    // Sayfaya girildiğinde modal göster
-    setTimeout(function() {
-      const modal = document.getElementById('emailModal');
-      if (modal) {
-        modal.style.display = 'flex';
-      }
-    }, 1500);
-
-    // Modal dışına tıklandığında kapat
-    document.addEventListener('click', function(event) {
-      const modal = document.getElementById('emailModal');
-      if (event.target === modal) {
-        closeEmailModal();
-      }
+    // Sayfa yüklendiğinde ziyareti kaydet
+    window.addEventListener('load', function() {
+      recordVisit();
     });
+
+    // Hesaplama yapıldığında hesaplama verilerini kaydet
+    const originalCalculate = window.calculate;
+    window.calculate = function() {
+      originalCalculate.apply(this, arguments);
+      recordCalculation();
+    };
   </script>
 
-  <!-- E-Posta Modal -->
-  <div id="emailModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; z-index: 1000;">
-    <div style="background: white; border-radius: 12px; padding: 32px; max-width: 420px; width: 90%; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);">
-      <h3 style="font-size: 1.4rem; font-weight: 800; color: #002B82; margin-bottom: 12px;">Bize Ulaşın</h3>
-      <p style="font-size: 0.9rem; color: #5d6d7e; margin-bottom: 24px; line-height: 1.6;">Mikotoksin örnekleme robot'unu kullanmak için mail adresiniz ile giriş yapmanız gerekiyor. Her seferinde mail adresinizi yazmanız yeterlidir.</p>
-
-      <form onsubmit="submitEmail(event)" style="display: flex; flex-direction: column; gap: 16px;">
-        <div>
-          <label style="display: block; font-size: 0.825rem; font-weight: 700; color: #002B82; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.03em;">E-Posta Adresiniz</label>
-          <input type="email" id="emailInput" placeholder="ornek@email.com" required style="width: 100%; padding: 12px 14px; border: 1.5px solid #d5dbdb; border-radius: 8px; font-size: 1rem; font-weight: 600; color: #17202a; outline: none; transition: all 0.2s ease; background: #fafbfc;">
-        </div>
-
-        <button type="submit" style="background: #002B82; color: white; border: none; border-radius: 8px; padding: 12px 20px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; margin-top: 8px;">Giriş Yap</button>
-      </form>
-
-      <button onclick="closeEmailModal()" style="width: 100%; margin-top: 12px; background: #f4f6fa; color: #5d6d7e; border: 1px solid #d5dbdb; border-radius: 8px; padding: 10px 20px; font-weight: 600; cursor: pointer; transition: all 0.2s;">Şimdi Atla</button>
-
-      <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #d5dbdb;">
-        <a href="./mailler.html" style="display: block; text-align: center; font-size: 0.85rem; color: #002B82; text-decoration: none; font-weight: 600;">Tüm Girişleri Görmek İçin Tıklayın</a>
-      </div>
-    </div>
-  </div>
 
 </body>
 </html>
