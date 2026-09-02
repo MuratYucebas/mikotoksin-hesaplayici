@@ -1370,9 +1370,10 @@
           }
         }
 
-        // En üstteki kolileri (son oluşturulanları) işaretle
-        // Katmanlar ters sırada oluşturulduğu için, son katman en üsttedir
-        const startColoringFrom = allKolis.length - coloredInThisPalet;
+        // En üstteki kolileri işaretle
+        // allKolis dizisinin başından başla (0'dan başlayan ilk koliler üstte olacak)
+        const startColoringFrom = 0;
+        const endColoringAt = coloredInThisPalet;
 
         // Kolileri katmanlara göre grupla
         const kolisByLayer = {};
@@ -1402,8 +1403,8 @@
 
             let colorIndex = -1;
 
-            // Bu koli renkli aralığında mı kontrol et
-            if (koli.idx >= startColoringFrom && analysisPointCount > 0) {
+            // Bu koli renkli aralığında mı kontrol et (0'dan başlayan ilk N koli)
+            if (koli.idx < endColoringAt && analysisPointCount > 0) {
               const coloredIdx = coloredKoliCountInPalet % analysisPointCount;
               colorIndex = coloredIdx;
 
