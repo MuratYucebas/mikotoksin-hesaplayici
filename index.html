@@ -1114,6 +1114,15 @@
       }
     });
 
+    // Global hesaplama değişkenleri
+    let globalCalculationState = {
+      totalPacks: 0,
+      packsToOpen: 0,
+      lotTon: 0,
+      isVacuum: false,
+      packWeightKg: 0
+    };
+
     function setVal(id, val) {
       document.getElementById(id).value = val;
       calculate();
@@ -1231,6 +1240,13 @@
       // Partideki paket sayısından fazla açılamaz
       packsToOpen = Math.min(packsToOpen, totalPacks);
 
+      // Global state güncelle
+      globalCalculationState.totalPacks = totalPacks;
+      globalCalculationState.packsToOpen = packsToOpen;
+      globalCalculationState.lotTon = lotTon;
+      globalCalculationState.isVacuum = isVacuum;
+      globalCalculationState.packWeightKg = packWeightKg;
+
       // Paket başına çekilecek gramaj
       let samplePerPackGrams = 0;
       if (packsToOpen > 0) {
@@ -1282,43 +1298,14 @@
 
     function visualizePalets() {
       const paletCount = parseInt(document.getElementById('paletCount').value) || 1;
-      const lotWeightKg = parseFloat(document.getElementById('lotWeight').value) || 0;
-      const packWeightKg = parseFloat(document.getElementById('packWeight').value) || 1;
-      const isVacuum = document.getElementById('pkgVacuum').checked;
-
-      const totalPacks = Math.ceil(lotWeightKg / packWeightKg);
-      const packsPerPalet = Math.ceil(totalPacks / paletCount);
       const kolisPerLayer = 5; // Her katta 5 koli
 
-      // Otomatik hesaplama: Mevzuat kurallarından packsToOpen'ı hesapla
-      let baseIncrements = 0;
-      const lotTon = lotWeightKg / 1000;
+      // Global state'ten değerleri al
+      const totalPacks = globalCalculationState.totalPacks;
+      const packWeightKg = globalCalculationState.packWeightKg;
+      const packsToOpen = globalCalculationState.packsToOpen;
 
-      if (lotTon <= 0.5) {
-        baseIncrements = 20;
-      } else if (lotTon <= 1.0) {
-        baseIncrements = 30;
-      } else if (lotTon <= 2.0) {
-        baseIncrements = 40;
-      } else if (lotTon <= 5.0) {
-        baseIncrements = 60;
-      } else if (lotTon <= 10.0) {
-        baseIncrements = 80;
-      } else if (lotTon < 15.0) {
-        baseIncrements = 100;
-      } else {
-        baseIncrements = 100;
-      }
-
-      let packsToOpen = baseIncrements;
-      if (isVacuum) {
-        if (lotTon < 15.0) {
-          packsToOpen = Math.round(baseIncrements * 0.5);
-        } else {
-          packsToOpen = 50;
-        }
-      }
-      packsToOpen = Math.min(packsToOpen, totalPacks);
+      const packsPerPalet = Math.ceil(totalPacks / paletCount);
 
       // Analiz noktası sayısına göre çoğalt
       const analysisPointCount = getAnalysisPointCount();
