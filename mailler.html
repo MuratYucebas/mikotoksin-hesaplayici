@@ -219,7 +219,7 @@
         <img src="./assets/logo.jpg" alt="Yücebaş Food" title="Yücebaş Food">
       </div>
       <div class="header-info-box">
-        <h2>Ziyaretçi E-Postaları</h2>
+        <h2>Kullanıcı Girişleri</h2>
       </div>
     </div>
   </header>
@@ -228,22 +228,22 @@
     <div class="card">
       <h2 class="card-title">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
         </svg>
-        Toplanan E-Postalar
+        Giriş Yapan Kullanıcılar
       </h2>
 
       <div class="stats-grid">
         <div class="stat-box">
-          <div class="stat-label">Toplam E-Posta</div>
+          <div class="stat-label">Toplam Giriş</div>
           <div class="stat-value" id="totalCount">0</div>
         </div>
         <div class="stat-box">
-          <div class="stat-label">Bugün Eklenen</div>
+          <div class="stat-label">Bugün Giriş Yapan</div>
           <div class="stat-value" id="todayCount">0</div>
         </div>
         <div class="stat-box">
-          <div class="stat-label">Son Ekleme</div>
+          <div class="stat-label">Son Giriş</div>
           <div style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px;" id="lastAdded">-</div>
         </div>
       </div>
@@ -253,7 +253,7 @@
       </div>
 
       <div id="emailsContainer">
-        <div class="no-emails">Henüz e-posta eklenmedi</div>
+        <div class="no-emails">Henüz giriş yapılmadı</div>
       </div>
 
       <a href="./robot.html" class="back-link">← Robot sayfasına dön</a>
@@ -304,7 +304,7 @@
       }
 
       if (emails.length === 0) {
-        container.innerHTML = '<div class="no-emails">Henüz e-posta eklenmedi</div>';
+        container.innerHTML = '<div class="no-emails">Henüz giriş yapılmadı</div>';
         return;
       }
 
