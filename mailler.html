@@ -261,8 +261,32 @@
   </div>
 
   <script>
+    function getEmails() {
+      try {
+        return JSON.parse(localStorage.getItem('robotEmails')) || [];
+      } catch (e) {
+        try {
+          return JSON.parse(sessionStorage.getItem('robotEmails')) || [];
+        } catch (e2) {
+          return [];
+        }
+      }
+    }
+
+    function setEmails(emails) {
+      try {
+        localStorage.setItem('robotEmails', JSON.stringify(emails));
+      } catch (e) {
+        try {
+          sessionStorage.setItem('robotEmails', JSON.stringify(emails));
+        } catch (e2) {
+          console.log('Storage kullanılamıyor');
+        }
+      }
+    }
+
     function displayEmails() {
-      const emails = JSON.parse(localStorage.getItem('robotEmails')) || [];
+      const emails = getEmails();
       const container = document.getElementById('emailsContainer');
 
       document.getElementById('totalCount').innerText = emails.length;
@@ -287,7 +311,7 @@
       const emailsList = document.createElement('div');
       emailsList.className = 'emails-list';
 
-      emails.reverse().forEach((email, index) => {
+      emails.slice().reverse().forEach((email, index) => {
         const time = new Date(email.timestamp).toLocaleString('tr-TR');
         const item = document.createElement('div');
         item.className = 'email-item';
@@ -306,15 +330,15 @@
     }
 
     function deleteEmail(index) {
-      const emails = JSON.parse(localStorage.getItem('robotEmails')) || [];
+      const emails = getEmails();
       emails.splice(index, 1);
-      localStorage.setItem('robotEmails', JSON.stringify(emails));
+      setEmails(emails);
       displayEmails();
     }
 
     function clearAllEmails() {
       if (confirm('Tüm e-postaları silmek istediğinizden emin misiniz?')) {
-        localStorage.removeItem('robotEmails');
+        setEmails([]);
         displayEmails();
       }
     }
