@@ -376,34 +376,27 @@
       margin-bottom: 16px;
     }
 
-    .palet-container {
-      position: relative;
+    #paletVisualization {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 24px;
       margin-bottom: 24px;
-      padding: 20px;
-      background: #ffffff;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      min-height: auto;
     }
 
     @media (max-width: 1200px) {
-      .palet-container {
+      #paletVisualization {
         grid-template-columns: repeat(3, 1fr);
       }
     }
 
     @media (max-width: 890px) {
-      .palet-container {
+      #paletVisualization {
         grid-template-columns: repeat(2, 1fr);
       }
     }
 
     @media (max-width: 600px) {
-      .palet-container {
+      #paletVisualization {
         grid-template-columns: 1fr;
       }
     }
@@ -414,7 +407,11 @@
       flex-direction: column;
       align-items: center;
       gap: 4px;
-      justify-self: center;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
     }
 
     .palet-layers {
@@ -921,7 +918,7 @@
         <!-- Palet Görselleştirmesi -->
         <div style="margin-top: 32px; padding-top: 32px; border-top: 2px solid var(--border);">
           <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 20px; color: var(--text-main);">Palet Düzeni</h3>
-          <div id="paletVisualization" style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: flex-start;"></div>
+          <div id="paletVisualization"></div>
         </div>
       </div>
     </div>
@@ -1179,15 +1176,8 @@
 
       const visualization = document.getElementById('paletVisualization');
       visualization.innerHTML = '';
-      visualization.style.display = 'flex';
-      visualization.style.gap = '24px';
-      visualization.style.flexWrap = 'wrap';
-      visualization.style.justifyContent = 'flex-start';
 
       for (let i = 1; i <= paletCount; i++) {
-        const paletDiv = document.createElement('div');
-        paletDiv.className = 'palet-container';
-
         const koliCount = i === paletCount ? (totalPacks - (i - 1) * packsPerPalet) : packsPerPalet;
         const layerCount = Math.ceil(koliCount / kolisPerLayer);
 
@@ -1230,8 +1220,7 @@
         label.innerText = `Palet ${i} • ${koliCount} koli`;
         wrapper.appendChild(label);
 
-        paletDiv.appendChild(wrapper);
-        visualization.appendChild(paletDiv);
+        visualization.appendChild(wrapper);
       }
     }
 
