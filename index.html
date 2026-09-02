@@ -380,33 +380,35 @@
 
     #paletVisualization {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
       margin-bottom: 0;
-      max-height: 320px;
+      max-height: 220px;
       overflow-y: auto;
-      padding-right: 8px;
+      overflow-x: hidden;
     }
 
     @media (max-width: 1200px) {
       #paletVisualization {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 6px;
-        max-height: 300px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3px;
+        max-height: 210px;
       }
     }
 
     @media (max-width: 890px) {
       #paletVisualization {
-        grid-template-columns: 1fr;
-        max-height: 250px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3px;
+        max-height: 200px;
       }
     }
 
     @media (max-width: 600px) {
       #paletVisualization {
         grid-template-columns: 1fr;
-        max-height: 200px;
+        gap: 2px;
+        max-height: 180px;
       }
     }
 
@@ -416,10 +418,10 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2px;
-      padding: 12px;
+      gap: 1px;
+      padding: 6px;
       background: #ffffff;
-      border-radius: 10px;
+      border-radius: 6px;
       border: 1px solid var(--border);
       box-shadow: var(--shadow-sm);
     }
@@ -433,16 +435,16 @@
 
     .palet-layer {
       display: flex;
-      gap: 8px;
+      gap: 4px;
       justify-content: center;
       flex-wrap: wrap;
       margin-bottom: 0;
-      padding: 4px 0;
+      padding: 2px 0;
     }
 
     .palet-base {
-      width: 180px;
-      height: 12px;
+      width: 140px;
+      height: 8px;
       background: linear-gradient(to right, #6B4423 0%, #8B5A2B 50%, #6B4423 100%);
       border-radius: 1px;
       border: 1px solid #3E2723;
@@ -475,26 +477,26 @@
     }
 
     .palet-label {
-      font-size: 0.7rem;
+      font-size: 0.6rem;
       font-weight: 700;
       color: var(--yb-blue);
       text-align: center;
-      margin-top: 4px;
+      margin-top: 2px;
       white-space: nowrap;
       order: 3;
     }
 
     .koli {
-      width: 32px;
-      height: 28px;
+      width: 18px;
+      height: 15px;
       background: linear-gradient(135deg, var(--yb-orange) 0%, #CC6600 100%);
       border: 1px solid #996600;
-      border-radius: 2px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      border-radius: 1px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.65rem;
+      font-size: 0.4rem;
       font-weight: 700;
       color: #ffffff;
       cursor: default;
