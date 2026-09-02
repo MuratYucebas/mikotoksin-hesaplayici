@@ -1254,7 +1254,7 @@
       }
 
       // Analiz noktaları sayısını al ve açılacak koli sayısını çoğalt
-      const analysisPointCount = getAnalysisPointCount();
+      const analysisPointCount = getAnalysisPointCount() || 1; // En az 1 olmalı
       const totalPacksToOpen = packsToOpen * analysisPointCount;
 
       // Ambalajı açılan toplam ürün kütlesi
@@ -1265,7 +1265,7 @@
       const freqN = Math.round(totalPacks / packsToOpen);
 
       // UI Güncelleme
-      document.getElementById('packsToOpenVal').innerText = totalPacksToOpen;
+      document.getElementById('packsToOpenVal').innerText = totalPacksToOpen.toLocaleString('tr-TR');
       let descText = isVacuum
         ? `Tablo 2 standardı (${baseIncrements} adet) üzerinden %50 vakum indirimi uygulandı`
         : `Standart kurala göre açılacak paket sayısı`;
