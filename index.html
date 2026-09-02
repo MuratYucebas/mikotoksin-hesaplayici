@@ -865,39 +865,6 @@
         </div>
       </div>
 
-      <!-- Analiz Kontrol Noktaları Kartı -->
-      <div class="card">
-        <h2 class="card-title">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M9 11l3 3L22 4"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          Analiz Kontrol Noktaları
-        </h2>
-
-        <div class="form-group">
-          <div class="checkbox-group">
-            <div class="checkbox-item">
-              <input type="checkbox" id="analysisPoint1" checked>
-              <label for="analysisPoint1">Türkiye Cumhuriyeti il Tarım ve Orman Bakanlığı Analizi</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" id="analysisPoint2">
-              <label for="analysisPoint2">Müşteri Talebi ile 3. Taraf Laboratuvar Analizi</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" id="analysisPoint3">
-              <label for="analysisPoint3">AB Gümrük Giriş Analizi</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" id="analysisPoint4">
-              <label for="analysisPoint4">Müşteri Deposunda 3. Taraf Analizi</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="info-footer">
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Her seçilen analiz noktası için aynı numuneler tekrar alınır ve aynı analizler yapılır. Bu, paletlerdeki açılacak koli sayısını ve renklerini çoğaltır.</p>
-        </div>
-      </div>
-
       <!-- Sonuç ve Hesaplama Kartı -->
       <div class="card">
         <h2 class="card-title">
@@ -1020,6 +987,39 @@
           <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 20px; color: var(--text-main);">Palet Düzeni</h3>
           <div id="paletVisualization"></div>
         </div>
+      </div>
+    </div>
+
+    <!-- Analiz Kontrol Noktaları Kartı - Grid Dışında -->
+    <div class="card" style="margin-top: 24px;">
+      <h2 class="card-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M9 11l3 3L22 4"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Analiz Kontrol Noktaları
+      </h2>
+
+      <div class="form-group">
+        <div class="checkbox-group">
+          <div class="checkbox-item">
+            <input type="checkbox" id="analysisPoint1" checked>
+            <label for="analysisPoint1">Türkiye Cumhuriyeti il Tarım ve Orman Bakanlığı Analizi</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="analysisPoint2">
+            <label for="analysisPoint2">Müşteri Talebi ile 3. Taraf Laboratuvar Analizi</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="analysisPoint3">
+            <label for="analysisPoint3">AB Gümrük Giriş Analizi</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="analysisPoint4">
+            <label for="analysisPoint4">Müşteri Deposunda 3. Taraf Analizi</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-footer">
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Her seçilen analiz noktası için aynı numuneler tekrar alınır ve aynı analizler yapılır. Bu, paletlerdeki açılacak koli sayısını ve renklerini çoğaltır.</p>
       </div>
     </div>
   </div>
