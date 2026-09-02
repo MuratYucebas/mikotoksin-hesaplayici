@@ -710,6 +710,48 @@
     body.email-gate-active .container {
       display: none;
     }
+
+    /* Checkbox Group Stilleri */
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px;
+      background: #fafbfc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .checkbox-item:hover {
+      background: #f0f4fc;
+      border-color: var(--yb-blue);
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      cursor: pointer;
+      accent-color: var(--yb-blue);
+    }
+
+    .checkbox-item label {
+      flex: 1;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-main);
+      margin: 0;
+      line-height: 1.4;
+    }
   </style>
 </head>
 <body>
@@ -820,6 +862,39 @@
             <input type="number" id="paletCount" value="10" min="1" step="1">
             <span class="unit">adet</span>
           </div>
+        </div>
+      </div>
+
+      <!-- Analiz Kontrol Noktaları Kartı -->
+      <div class="card">
+        <h2 class="card-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M9 11l3 3L22 4"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Analiz Kontrol Noktaları
+        </h2>
+
+        <div class="form-group">
+          <div class="checkbox-group">
+            <div class="checkbox-item">
+              <input type="checkbox" id="analysisPoint1" checked>
+              <label for="analysisPoint1">Türkiye Cumhuriyeti il Tarım ve Orman Bakanlığı Analizi</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="analysisPoint2">
+              <label for="analysisPoint2">Müşteri Talebi ile 3. Taraf Laboratuvar Analizi</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="analysisPoint3">
+              <label for="analysisPoint3">AB Gümrük Giriş Analizi</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="analysisPoint4">
+              <label for="analysisPoint4">Müşteri Deposunda 3. Taraf Analizi</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-footer">
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Her seçilen analiz noktası için aynı numuneler tekrar alınır ve aynı analizler yapılır. Bu, paletlerdeki açılacak koli sayısını ve renklerini çoğaltır.</p>
         </div>
       </div>
 
@@ -1191,6 +1266,15 @@
       visualizePalets();
     }
 
+    function getAnalysisPointCount() {
+      let count = 0;
+      if (document.getElementById('analysisPoint1').checked) count++;
+      if (document.getElementById('analysisPoint2').checked) count++;
+      if (document.getElementById('analysisPoint3').checked) count++;
+      if (document.getElementById('analysisPoint4').checked) count++;
+      return count;
+    }
+
     function visualizePalets() {
       const paletCount = parseInt(document.getElementById('paletCount').value) || 1;
       const lotWeightKg = parseFloat(document.getElementById('lotWeight').value) || 0;
@@ -1231,13 +1315,28 @@
       }
       packsToOpen = Math.min(packsToOpen, totalPacks);
 
+      // Analiz noktası sayısına göre çoğalt
+      const analysisPointCount = getAnalysisPointCount();
+      const totalPacksToOpen = packsToOpen * analysisPointCount;
+
       // Ambalajı açılan toplam ürün kütlesi
-      const openedProductKg = packsToOpen * packWeightKg;
+      const openedProductKg = totalPacksToOpen * packWeightKg;
       document.getElementById('openedProductVal').innerText = openedProductKg.toLocaleString('tr-TR');
 
+      // Analiz noktası renkleri
+      const analysisColors = [
+        '#d32f2f', // Kırmızı - Bakanlık
+        '#f57c00', // Turuncu - Müşteri Talep
+        '#1976d2', // Mavi - Gümrük
+        '#7b1fa2'  // Mor - Müşteri Depo
+      ];
+
+      // Her analiz noktası için kaç koli boyanacak
+      const colisPerAnalysis = packsToOpen;
+
       // Bozulan kolilerin palet başına dağıtımı
-      const defectivePerPalet = Math.floor(packsToOpen / paletCount);
-      const defectiveRemainder = packsToOpen % paletCount;
+      const defectivePerPalet = Math.floor(totalPacksToOpen / paletCount);
+      const defectiveRemainder = totalPacksToOpen % paletCount;
 
       const visualization = document.getElementById('paletVisualization');
       visualization.innerHTML = '';
@@ -1268,16 +1367,37 @@
             const koliDiv = document.createElement('div');
             koliDiv.className = 'koli';
 
-            // Bozulan kolileri son N koli olarak işaretle (SONDAN başlayarak sayılır)
-            const isDefective = j >= (koliCount - defectiveInThisPalet);
-            if (isDefective) {
-              koliDiv.style.background = '#d32f2f';
+            // Sondan başlayarak analysisPointCount kadar koli renklendir
+            let colorIndex = -1;
+            const koliPosFromEnd = koliCount - j; // Sondan başlayarak pozisyon
+
+            for (let a = 0; a < analysisPointCount; a++) {
+              const analysisStart = a * colisPerAnalysis;
+              const analysisEnd = (a + 1) * colisPerAnalysis;
+              if (koliPosFromEnd > analysisStart && koliPosFromEnd <= analysisEnd) {
+                colorIndex = a;
+                break;
+              }
+            }
+
+            if (colorIndex >= 0) {
+              koliDiv.style.background = analysisColors[colorIndex];
               koliDiv.style.color = 'white';
               koliDiv.style.fontWeight = 'bold';
             }
 
             koliDiv.innerText = (j + 1);
-            koliDiv.title = `Koli ${j + 1}${isDefective ? ' (Bozulan)' : ''}`;
+            let tooltip = `Koli ${j + 1}`;
+            if (colorIndex >= 0) {
+              const analysisNames = [
+                'Bakanlık Analizi',
+                'Müşteri Talep Analizi',
+                'Gümrük Analizi',
+                'Müşteri Depo Analizi'
+              ];
+              tooltip += ` (${analysisNames[colorIndex]})`;
+            }
+            koliDiv.title = tooltip;
             layerDiv.appendChild(koliDiv);
           }
 
@@ -1294,7 +1414,7 @@
         // Palet etiketi
         const label = document.createElement('div');
         label.className = 'palet-label';
-        label.innerText = `Palet ${i} • ${koliCount} koli${defectiveInThisPalet > 0 ? ` (${defectiveInThisPalet} bozulan)` : ''}`;
+        label.innerText = `Palet ${i} • ${koliCount} koli${defectiveInThisPalet > 0 ? ` (${defectiveInThisPalet} analiz)` : ''}`;
         wrapper.appendChild(label);
 
         visualization.appendChild(wrapper);
@@ -1307,6 +1427,10 @@
     document.getElementById('pkgVacuum').addEventListener('change', calculate);
     document.getElementById('pkgNormal').addEventListener('change', calculate);
     document.getElementById('paletCount').addEventListener('input', calculate);
+    document.getElementById('analysisPoint1').addEventListener('change', visualizePalets);
+    document.getElementById('analysisPoint2').addEventListener('change', visualizePalets);
+    document.getElementById('analysisPoint3').addEventListener('change', visualizePalets);
+    document.getElementById('analysisPoint4').addEventListener('change', visualizePalets);
 
     // Sayfa açılışında çalıştır
     calculate();
