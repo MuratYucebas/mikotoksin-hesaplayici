@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yücebaş Food - AB 2023/2782 İncir Ezmesi Numune Alma Hesaplayıcı</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* PDF Kurumsal Renk Kodları */
+      --yb-blue: #002B82;       /* Pantone 2746 C */
+      --yb-orange: #DE7C00;     /* Pantone 138 C */
+      --yb-blue-dark: #001f5c;
+      --yb-blue-light: #f0f4fc;
+      --yb-orange-light: #fff7ed;
+      
+      --bg: #f4f6fa;
+      --card-bg: #ffffff;
+      --text-main: #17202a;
+      --text-muted: #5d6d7e;
+      --border: #d5dbdb;
+      --border-focus: #002B82;
+      --shadow-sm: 0 2px 4px rgba(0, 43, 130, 0.05);
+      --shadow-md: 0 4px 12px rgba(0, 43, 130, 0.08);
+      --shadow-lg: 0 10px 24px rgba(0, 43, 130, 0.12);
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding: 0 0 40px 0;
+      min-height: 100vh;
+    }
+
+    /* Kurumsal Header */
+    .top-navbar {
+      background: var(--yb-blue);
+      padding: 16px 24px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 32px;
+    }
+
+    .navbar-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .brand-logo-wrap {
+      display: flex;
+      align-items: center;
+    }
+
+    .brand-logo-wrap img {
+      height: 50px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .header-info-box {
+      text-align: right;
+      color: #ffffff;
+    }
+
+    .header-info-box .title-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--yb-orange);
+      background: rgba(255, 255, 255, 0.1);
+      padding: 3px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 4px;
+    }
+
+    .header-info-box h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .page-desc-card {
+      background: #ffffff;
+      border-left: 5px solid var(--yb-orange);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .page-desc-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .page-desc-card span {
+      font-weight: 700;
+      color: var(--yb-blue);
+    }
+
+    .layout-grid {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 890px) {
+      .layout-grid {
+        grid-template-columns: 1fr;
+      }
+      .header-info-box {
+        text-align: left;
+      }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--yb-blue);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 2px solid var(--yb-blue-light);
+      padding-bottom: 12px;
+    }
+
+    .card-title svg {
+      stroke: var(--yb-orange);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.825rem;
+      font-weight: 700;
+      color: var(--yb-blue);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-wrapper input {
+      width: 100%;
+      padding: 12px 42px 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-main);
+      outline: none;
+      transition: all 0.2s ease;
+      background: #fafbfc;
+    }
+
+    .input-wrapper input:focus {
+      border-color: var(--yb-blue);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(0, 43, 130, 0.12);
+    }
+
+    .input-wrapper .unit {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .radio-pill-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .radio-pill-group label {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      transition: all 0.2s;
+      user-select: none;
+      text-align: center;
+    }
+
+    .radio-pill-group input[type="radio"] {
+      display: none;
+    }
+
+    .radio-pill-group input[type="radio"]:checked + label {
+      background: var(--yb-blue-light);
+      border-color: var(--yb-blue);
+      color: var(--yb-blue);
+    }
+
+    .quick-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .tag-btn {
+      background: var(--yb-blue-light);
+      border: 1px solid #c9d8f5;
+      color: var(--yb-blue);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .tag-btn:hover {
+      background: var(--yb-blue);
+      color: #ffffff;
+    }
+
+    .status-banner {
+      background: var(--yb-blue-light);
+      border: 1px solid #cbdcf7;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .status-banner .item-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .status-banner .item-val {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--yb-blue);
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .result-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+      position: relative;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .result-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .result-card.highlight {
+      border-left: 5px solid var(--yb-orange);
+      background: linear-gradient(135deg, #ffffff 0%, var(--yb-orange-light) 100%);
+    }
+
+    .result-card.alert-card {
+      border-left: 5px solid var(--yb-blue);
+      background: linear-gradient(135deg, #ffffff 0%, var(--yb-blue-light) 100%);
+    }
+
+    .result-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .result-value {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--yb-blue);
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .result-value.accent-color {
+      color: var(--yb-orange);
+    }
+
+    .result-value .unit-small {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .result-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+      line-height: 1.4;
+      font-weight: 500;
+    }
+
+    .full-width-result {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .frequency-card {
+      background: linear-gradient(135deg, var(--yb-blue) 0%, var(--yb-blue-dark) 100%);
+      color: #ffffff;
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .frequency-card .res-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--yb-orange);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .frequency-card .res-val {
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: #ffffff;
+    }
+
+    .frequency-card .res-desc {
+      font-size: 0.8rem;
+      color: #c9d8f5;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    .info-footer {
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .info-footer ul {
+      list-style-type: none;
+      display: grid;
+      gap: 6px;
+    }
+
+    .info-footer li {
+      position: relative;
+      padding-left: 18px;
+    }
+
+    .info-footer li::before {
+      content: "■";
+      position: absolute;
+      left: 6px;
+      color: var(--yb-orange);
+      font-size: 0.65rem;
+      top: 2px;
+    }
+
+    /* Email Giriş Kapısı Stilleri */
+    #emailGate {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 43, 130, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    #emailGate.hidden {
+      display: none;
+    }
+
+    .email-gate-modal {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 40px 32px;
+      max-width: 420px;
+      width: 90%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+
+    .email-gate-modal .gate-logo {
+      margin-bottom: 24px;
+    }
+
+    .email-gate-modal .gate-title {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--yb-blue);
+      margin-bottom: 8px;
+    }
+
+    .email-gate-modal .gate-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+
+    .email-gate-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .email-gate-form input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-main);
+      outline: none;
+      transition: all 0.2s ease;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .email-gate-form input:focus {
+      border-color: var(--yb-blue);
+      box-shadow: 0 0 0 3px rgba(0, 43, 130, 0.12);
+      background: #ffffff;
+    }
+
+    .email-gate-form .error-msg {
+      color: #e74c3c;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-align: left;
+      display: none;
+      margin-top: -6px;
+    }
+
+    .email-gate-form .error-msg.show {
+      display: block;
+    }
+
+    .email-gate-form button {
+      padding: 14px 24px;
+      background: linear-gradient(135deg, var(--yb-blue) 0%, var(--yb-blue-dark) 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-top: 8px;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .email-gate-form button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 43, 130, 0.25);
+    }
+
+    .email-gate-form button:active {
+      transform: translateY(0);
+    }
+
+    .logout-btn {
+      position: fixed;
+      top: 16px;
+      right: 24px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      z-index: 10000;
+      display: none;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .logout-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .logout-btn.show {
+      display: block;
+    }
+
+    /* Ana İçerik Gizleme */
+    body.email-gate-active {
+      overflow: hidden;
+    }
+
+    body.email-gate-active .top-navbar,
+    body.email-gate-active .container {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Email Giriş Kapısı -->
+  <div id="emailGate" class="email-gate-active">
+    <div class="email-gate-modal">
+      <div class="gate-logo">
+        <img src="./assets/logo.jpg" alt="Yücebaş Food Co." style="height: 60px; width: auto; object-fit: contain;">
+      </div>
+      <h1 class="gate-title">Hoşgeldiniz</h1>
+      <p class="gate-subtitle">AB 2023/2782 Mikotoksin Numune Alma Hesaplayıcısına erişmek için lütfen email adresinizi girin.</p>
+
+      <form class="email-gate-form" id="emailForm">
+        <input
+          type="email"
+          id="emailInput"
+          placeholder="E-posta adresiniz"
+          required
+          autocomplete="email"
+        />
+        <div class="error-msg" id="emailError">Lütfen geçerli bir email adresi girin (örn: kullanici@example.com)</div>
+        <button type="submit">Devam Et</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Çıkış Butonu -->
+  <button class="logout-btn" id="logoutBtn">Çıkış Yap</button>
+
+  <!-- Top Navigation Header with Corporate Logo -->
+  <header class="top-navbar">
+    <div class="navbar-container">
+      <div class="brand-logo-wrap">
+        <!-- Yücebaş Food Logo -->
+        <img src="./assets/logo.jpg" alt="Yücebaş Food Co. - Innovative Dried Fruits" title="Yücebaş Food Co.">
+      </div>
+
+      <div class="header-info-box">
+        <div class="title-tag">Yönetmelik (AB) 2023/2782</div>
+        <h2>İncir Ezmesi Resmi Örnekleme Portalı</h2>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    
+    <div class="page-desc-card">
+      <p>Bu hesaplayıcı, AB Komisyonu <span>(AB) 2023/2782</span> sayılı Mikotoksin Numune Alma Yönetmeliği <span>Ek I Bölüm II.C</span> hükümlerine uygun olarak partiler için numune alma planı oluşturur.</p>
+    </div>
+
+    <div class="layout-grid">
+      <!-- Parametre Giriş Kartı -->
+      <div class="card">
+        <h2 class="card-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          Sevkiyat Parametreleri
+        </h2>
+
+        <div class="form-group">
+          <label for="lotWeight">Toplam Parti Büyüklüğü</label>
+          <div class="input-wrapper">
+            <input type="number" id="lotWeight" value="4800" min="1" step="any">
+            <span class="unit">kg</span>
+          </div>
+          <div class="quick-tags">
+            <button class="tag-btn" onclick="setVal('lotWeight', 1800)">1.8 t</button>
+            <button class="tag-btn" onclick="setVal('lotWeight', 4800)">4.8 t</button>
+            <button class="tag-btn" onclick="setVal('lotWeight', 7000)">7 t</button>
+            <button class="tag-btn" onclick="setVal('lotWeight', 12000)">12 t</button>
+            <button class="tag-btn" onclick="setVal('lotWeight', 20000)">20 t</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="packWeight">Birim Paket Ağırlığı</label>
+          <div class="input-wrapper">
+            <input type="number" id="packWeight" value="15" min="0.1" step="any">
+            <span class="unit">kg</span>
+          </div>
+          <div class="quick-tags">
+            <button class="tag-btn" onclick="setVal('packWeight', 5)">5 kg</button>
+            <button class="tag-btn" onclick="setVal('packWeight', 7.5)">7.5 kg</button>
+            <button class="tag-btn" onclick="setVal('packWeight', 8)">8 kg</button>
+            <button class="tag-btn" onclick="setVal('packWeight', 9)">9 kg</button>
+            <button class="tag-btn" onclick="setVal('packWeight', 10)">10 kg</button>
+            <button class="tag-btn" onclick="setVal('packWeight', 15)">15 kg</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Ambalaj Tipi</label>
+          <div class="radio-pill-group">
+            <div>
+              <input type="radio" id="pkgVacuum" name="pkgType" value="vacuum" checked>
+              <label for="pkgVacuum">Vakumlu Ambalaj</label>
+            </div>
+            <div>
+              <input type="radio" id="pkgNormal" name="pkgType" value="normal">
+              <label for="pkgNormal">Normal Ambalaj</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sonuç ve Hesaplama Kartı -->
+      <div class="card">
+        <h2 class="card-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Mevzuat Çıktıları ve Dağılım
+        </h2>
+
+        <div class="status-banner">
+          <div>
+            <div class="item-title">Mevzuat Tonaj Kadamesi</div>
+            <div class="item-val" id="tierText">-</div>
+          </div>
+          <div>
+            <div class="item-title">Partideki Toplam Paket</div>
+            <div class="item-val" id="totalPacksText">-</div>
+          </div>
+          <div>
+            <div class="item-title">Alt Parti / Durum</div>
+            <div class="item-val" id="sublotsText">-</div>
+          </div>
+        </div>
+
+        <div class="results-grid">
+          <!-- Açılacak Paket Sayısı -->
+          <div class="result-card highlight">
+            <div class="result-label">Açılacak Paket Sayısı</div>
+            <div class="result-value accent-color">
+              <span id="packsToOpenVal">0</span>
+              <span class="unit-small">adet paket</span>
+            </div>
+            <div class="result-desc" id="packsToOpenDesc">Artımlı numune kuralı</div>
+          </div>
+
+          <!-- Hedef Toplam Numune Ağırlığı -->
+          <div class="result-card">
+            <div class="result-label">Hedef Agrega Numune</div>
+            <div class="result-value">
+              <span id="targetWeightVal">0</span>
+              <span class="unit-small">kg</span>
+            </div>
+            <div class="result-desc">Birleştirilecek agreganın asgari kütlesi</div>
+          </div>
+
+          <!-- Paket Başına Alınacak Miktar -->
+          <div class="result-card">
+            <div class="result-label">Paket Başı Çekilecek Numune</div>
+            <div class="result-value">
+              <span id="samplePerPackVal">0</span>
+              <span class="unit-small">g / paket</span>
+            </div>
+            <div class="result-desc">Açılan ambalajdan alınacak miktar</div>
+          </div>
+
+          <!-- Ambalajı Açılan Ürün Miktarı -->
+          <div class="result-card alert-card">
+            <div class="result-label">Vakumu Bozulan / Açılan Ürün</div>
+            <div class="result-value">
+              <span id="openedProductVal">0</span>
+              <span class="unit-small">kg</span>
+            </div>
+            <div class="result-desc" id="openedProductDesc">Etkilenen koli miktarı</div>
+          </div>
+        </div>
+
+        <!-- Örnekleme Sıklığı (Koyu Mavi Kurumsal Kart) -->
+        <div class="frequency-card">
+          <div class="res-label">Örnekleme Sıklığı (ÖS - n) [Madde A.2]</div>
+          <div class="res-val" id="samplingFreqVal">-</div>
+          <div class="res-desc" id="samplingFreqDesc">-</div>
+        </div>
+
+        <!-- Laboratuvar Numunesi Bölünmesi -->
+        <div class="full-width-result">
+          <div>
+            <div class="result-label">Laboratuvar Numunelerine Ayrılma Şekli (Madde C.4)</div>
+            <div style="font-size: 1.05rem; font-weight: 800; color: var(--yb-blue);" id="labSplitVal">-</div>
+            <div class="result-desc">Homojenleştirilip ayrı ayrı analiz edilecek laboratuvar numuneleri</div>
+          </div>
+        </div>
+
+        <div class="info-footer">
+          <ul>
+            <li><strong>Madde C.5.1:</strong> İncir ezmesinde aflatoksin ve okratoksin homojen dağılmadığı kabul edildiğinden kuru incir tablosu (Tablo 2) uygulanır.</li>
+            <li><strong>Madde C.7.1:</strong> 15 tondan küçük partilerde vakumlu ambalaj indirim oranı %50'dir; ancak 18 kg veya 24 kg gibi toplam hedef ağırlık korunmalıdır.</li>
+            <li><strong>Renk Kodları:</strong> Kurumsal kimlik Pantone 2746 C (#002B82) ve Pantone 138 C (#DE7C00) standartlarında uygulanmıştır.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Email Giriş Sistemi
+    const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    let isEmailVerified = false;
+
+    function validateEmail(email) {
+      return EMAIL_REGEX.test(email);
+    }
+
+    function unlockPage(email) {
+      isEmailVerified = true;
+      try {
+        localStorage.setItem('userEmail', email);
+      } catch (e) {
+        // localStorage kullanılamıyorsa sessionStorage kullan
+        try {
+          sessionStorage.setItem('userEmail', email);
+        } catch (e2) {
+          // Her ikisi de kullanılamazsa (örn: data: URL), sadece flag kullan
+          console.log('Storage unavailable, using in-memory flag');
+        }
+      }
+      document.getElementById('emailGate').classList.add('hidden');
+      document.body.classList.remove('email-gate-active');
+      document.getElementById('logoutBtn').classList.add('show');
+    }
+
+    function lockPage() {
+      isEmailVerified = false;
+      try {
+        localStorage.removeItem('userEmail');
+      } catch (e) {}
+      try {
+        sessionStorage.removeItem('userEmail');
+      } catch (e) {}
+      document.getElementById('emailGate').classList.remove('hidden');
+      document.body.classList.add('email-gate-active');
+      document.getElementById('logoutBtn').classList.remove('show');
+      document.getElementById('emailInput').value = '';
+      document.getElementById('emailError').classList.remove('show');
+      document.getElementById('emailInput').focus();
+    }
+
+    function checkEmailGate() {
+      let savedEmail = null;
+      try {
+        savedEmail = localStorage.getItem('userEmail');
+      } catch (e) {
+        try {
+          savedEmail = sessionStorage.getItem('userEmail');
+        } catch (e2) {}
+      }
+      if (savedEmail && validateEmail(savedEmail)) {
+        isEmailVerified = true;
+        document.getElementById('emailGate').classList.add('hidden');
+        document.body.classList.remove('email-gate-active');
+        document.getElementById('logoutBtn').classList.add('show');
+      }
+    }
+
+    // Form Submit
+    document.getElementById('emailForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('emailInput').value.trim();
+      const errorMsg = document.getElementById('emailError');
+
+      if (!validateEmail(email)) {
+        errorMsg.classList.add('show');
+        document.getElementById('emailInput').focus();
+        return;
+      }
+
+      errorMsg.classList.remove('show');
+      unlockPage(email);
+      calculate();
+    });
+
+    // Çıkış Butonu
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+      lockPage();
+    });
+
+    // Sayfa açılışında email kontrolü
+    window.addEventListener('DOMContentLoaded', function() {
+      try {
+        checkEmailGate();
+      } catch (e) {
+        console.log('Email gate check error (expected in data: URLs):', e.message);
+      }
+      if (!isEmailVerified) {
+        calculate();
+      }
+    });
+
+    function setVal(id, val) {
+      document.getElementById(id).value = val;
+      calculate();
+    }
+
+    function calculate() {
+      const lotWeightKg = parseFloat(document.getElementById('lotWeight').value) || 0;
+      const packWeightKg = parseFloat(document.getElementById('packWeight').value) || 0;
+      const isVacuum = document.getElementById('pkgVacuum').checked;
+
+      if (lotWeightKg <= 0 || packWeightKg <= 0) {
+        return;
+      }
+
+      const totalPacks = Math.ceil(lotWeightKg / packWeightKg);
+      document.getElementById('totalPacksText').innerText = totalPacks.toLocaleString('tr-TR') + ' paket';
+
+      let tierName = "";
+      let sublots = "Tek Parti";
+      let baseIncrements = 0;
+      let targetWeightKg = 0;
+      let labSplitText = "";
+
+      const lotTon = lotWeightKg / 1000;
+
+      if (lotTon <= 0.1) {
+        tierName = "≤ 0,1 ton (≤ 100 kg)";
+        baseIncrements = 10;
+        targetWeightKg = 3.0;
+        labSplitText = "1 laboratuvar numunesi (3 kg - Bölünmez)";
+      } else if (lotTon <= 0.2) {
+        tierName = "> 0,1 – ≤ 0,2 ton";
+        baseIncrements = 15;
+        targetWeightKg = 4.5;
+        labSplitText = "1 laboratuvar numunesi (4,5 kg - Bölünmez)";
+      } else if (lotTon <= 0.5) {
+        tierName = "> 0,2 – ≤ 0,5 ton";
+        baseIncrements = 20;
+        targetWeightKg = 6.0;
+        labSplitText = "1 laboratuvar numunesi (6 kg - Bölünmez)";
+      } else if (lotTon <= 1.0) {
+        tierName = "> 0,5 – ≤ 1,0 ton";
+        baseIncrements = 30;
+        targetWeightKg = 9.0;
+        labSplitText = "1 laboratuvar numunesi (9 kg - Bölünmez)";
+      } else if (lotTon <= 2.0) {
+        tierName = "> 1,0 – ≤ 2,0 ton";
+        baseIncrements = 40;
+        targetWeightKg = 12.0;
+        labSplitText = "2 eşit numune (6 kg + 6 kg)";
+      } else if (lotTon <= 5.0) {
+        tierName = "> 2,0 – ≤ 5,0 ton";
+        baseIncrements = 60;
+        targetWeightKg = 18.0;
+        labSplitText = "2 eşit numune (9 kg + 9 kg)";
+      } else if (lotTon <= 10.0) {
+        tierName = "> 5,0 – ≤ 10,0 ton";
+        baseIncrements = 80;
+        targetWeightKg = 24.0;
+        labSplitText = "3 eşit numune (8 kg + 8 kg + 8 kg)";
+      } else if (lotTon < 15.0) {
+        tierName = "> 10,0 – < 15,0 ton";
+        baseIncrements = 100;
+        targetWeightKg = 30.0;
+        labSplitText = "3 eşit numune (10 kg + 10 kg + 10 kg)";
+      } else {
+        // >= 15 ton (Madde C.3)
+        const sublotCount = Math.ceil(lotTon / 25);
+        tierName = "≥ 15 ton (Büyük Parti)";
+        sublots = sublotCount + " Alt Parti (~15-30 ton)";
+        baseIncrements = 100;
+        targetWeightKg = 30.0;
+        labSplitText = "3 eşit numune (10 kg + 10 kg + 10 kg) [Alt parti başına]";
+      }
+
+      document.getElementById('tierText').innerText = tierName;
+      document.getElementById('sublotsText').innerText = sublots;
+
+      // Vakum indirimi hesabı (Madde C.7.1)
+      let packsToOpen = baseIncrements;
+      if (isVacuum) {
+        if (lotTon < 15.0) {
+          packsToOpen = Math.round(baseIncrements * 0.5);
+        } else {
+          packsToOpen = 50; // >= 15 ton vakumlu kuralı
+        }
+      }
+
+      // Partideki paket sayısından fazla açılamaz
+      packsToOpen = Math.min(packsToOpen, totalPacks);
+
+      // Paket başına çekilecek gramaj
+      let samplePerPackGrams = 0;
+      if (packsToOpen > 0) {
+        samplePerPackGrams = (targetWeightKg * 1000) / packsToOpen;
+      }
+
+      // Ambalajı açılan toplam ürün kütlesi
+      const openedProductKg = packsToOpen * packWeightKg;
+      const openedProductRatio = ((openedProductKg / lotWeightKg) * 100).toFixed(1);
+
+      // Örnekleme Frekansı (n)
+      const freqN = Math.round(totalPacks / packsToOpen);
+
+      // UI Güncelleme
+      document.getElementById('packsToOpenVal').innerText = packsToOpen;
+      document.getElementById('packsToOpenDesc').innerText = isVacuum 
+        ? `Tablo 2 standardı (${baseIncrements} adet) üzerinden %50 vakum indirimi uygulandı`
+        : `Standart kurala göre açılacak paket sayısı`;
+
+      document.getElementById('targetWeightVal').innerText = targetWeightKg.toLocaleString('tr-TR', { minimumFractionDigits: 1 });
+      document.getElementById('samplePerPackVal').innerText = Math.round(samplePerPackGrams);
+      document.getElementById('openedProductVal').innerText = openedProductKg.toLocaleString('tr-TR');
+      document.getElementById('openedProductDesc').innerText = `Partinin %${openedProductRatio}'lik kısmının ambalajı açılmış olur`;
+      
+      document.getElementById('labSplitVal').innerText = labSplitText;
+
+      document.getElementById('samplingFreqVal').innerText = `Her ${freqN}. paketten numune alınmalıdır`;
+      document.getElementById('samplingFreqDesc').innerText = `Formül: ${totalPacks} toplam paket / ${packsToOpen} açılacak paket ≈ ${freqN}`;
+    }
+
+    // Input dinleyicileri
+    document.getElementById('lotWeight').addEventListener('input', calculate);
+    document.getElementById('packWeight').addEventListener('input', calculate);
+    document.getElementById('pkgVacuum').addEventListener('change', calculate);
+    document.getElementById('pkgNormal').addEventListener('change', calculate);
+
+    // Sayfa açılışında çalıştır
+    calculate();
+  </script>
+</body>
+</html>
