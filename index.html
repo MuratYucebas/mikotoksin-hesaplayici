@@ -1353,6 +1353,10 @@
       // Sondan başlayarak colisPerAnalysis kadar koli her analiz rengine ata
       for (let a = 0; a < analysisPointCount; a++) {
         for (let k = 0; k < colisPerAnalysis; k++) {
+          // Sondan başlayarak, her analiz rengine ait kolileri işaretle
+          // Örneğin: 200 açılacak koli, 2 analiz noktası
+          // Son 100 koli (koli 100-199) 1. renk
+          // Koli 0-99 2. renk
           const globalIndex = totalPacksToOpen - 1 - (a * colisPerAnalysis + k);
           if (globalIndex >= 0) {
             coloredKolisPerAnalysis[a].koliIndices.add(globalIndex);
@@ -1360,10 +1364,22 @@
         }
       }
 
+      // Açılan kolileri paletlere eşit dağıt
+      const coloredKolisPerPalet = Math.ceil(totalPacksToOpen / paletCount);
+      const coloredKolisRemainder = totalPacksToOpen % paletCount;
+
       for (let i = 1; i <= paletCount; i++) {
         const koliCount = i === paletCount ? (totalPacks - (i - 1) * packsPerPalet) : packsPerPalet;
         const layerCount = Math.ceil(koliCount / kolisPerLayer);
         const paletStartIdx = (i - 1) * packsPerPalet;
+
+        // Bu paletin kaç tane renkli (açılan) koli olacağı
+        const coloredInThisPalet = coloredKolisPerPalet + (i <= coloredKolisRemainder ? 1 : 0);
+
+        // Bu paletin renkli kolileri: sondan başlayarak
+        // Toplam renkli koli sayısından bu palet için ayrılmış kadarını çıkar
+        const paletColoredStartIdx = totalPacksToOpen - (i * coloredKolisPerPalet + Math.min(i, coloredKolisRemainder));
+        const paletColoredEndIdx = paletColoredStartIdx + coloredInThisPalet;
 
         // Palet wrapper
         const wrapper = document.createElement('div');
@@ -1389,12 +1405,15 @@
             const globalIndex = paletStartIdx + j;
             let colorIndex = -1;
 
-            // Her renk grubu için kontrol et
-            for (let a = 0; a < analysisPointCount; a++) {
-              if (coloredKolisPerAnalysis[a].koliIndices.has(globalIndex)) {
-                colorIndex = a;
-                coloredKoliCountInPalet++;
-                break;
+            // Bu koli renkli aralığında mı kontrol et
+            if (globalIndex >= paletColoredStartIdx && globalIndex < paletColoredEndIdx) {
+              // Hangi analiz rengine ait olduğunu bul
+              for (let a = 0; a < analysisPointCount; a++) {
+                if (coloredKolisPerAnalysis[a].koliIndices.has(globalIndex)) {
+                  colorIndex = a;
+                  coloredKoliCountInPalet++;
+                  break;
+                }
               }
             }
 
