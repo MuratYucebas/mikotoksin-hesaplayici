@@ -628,6 +628,10 @@
 
   <!-- Top Navigation Header with Corporate Logo -->
   <header class="top-navbar">
+    <div style="position: absolute; top: 16px; right: 24px; display: flex; gap: 8px; z-index: 100;">
+      <button id="langTr" style="background: var(--yb-orange); color: white; border: none; padding: 8px 12px; border-radius: 6px; font-weight: 700; font-size: 0.8rem; cursor: pointer; opacity: 1; border: 2px solid transparent;">TR</button>
+      <button id="langEn" style="background: transparent; color: var(--yb-orange); border: 2px solid var(--yb-orange); padding: 8px 12px; border-radius: 6px; font-weight: 700; font-size: 0.8rem; cursor: pointer; opacity: 0.7;">EN</button>
+    </div>
     <div class="navbar-container">
       <div class="brand-logo-wrap">
         <!-- Yücebaş Food Logo -->
@@ -635,8 +639,8 @@
       </div>
 
       <div class="header-info-box">
-        <div class="title-tag">Yönetmelik (AB) 2023/2782</div>
-        <h2>Kuru İncir Ürünü Resmi Örnekleme Robotu</h2>
+        <div class="title-tag" data-i18n="regulation">Yönetmelik (AB) 2023/2782</div>
+        <h2 data-i18n="pageTitle">Kuru İncir Ürünü Resmi Örnekleme Robotu</h2>
       </div>
     </div>
   </header>
@@ -644,7 +648,7 @@
   <div class="container">
     
     <div class="page-desc-card">
-      <p>Bu hesaplayıcı, AB Komisyonu <span>(AB) 2023/2782</span> sayılı Mikotoksin Numune Alma Yönetmeliği <span>Ek I Bölüm II.C</span> hükümlerine uygun olarak ihracat aşamasındaki kuru incir partileri için numune alma planı oluşturur.</p>
+      <p><span data-i18n="description">Bu hesaplayıcı, AB Komisyonu (AB) 2023/2782 sayılı Mikotoksin Numune Alma Yönetmeliği Ek I Bölüm II.C hükümlerine uygun olarak ihracat aşamasındaki kuru incir partileri için numune alma planı oluşturur.</span></p>
     </div>
 
     <div class="layout-grid">
@@ -652,11 +656,11 @@
       <div class="card">
         <h2 class="card-title">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-          Sevkiyat Parametreleri
+          <span data-i18n="shipmentParams">Sevkiyat Parametreleri</span>
         </h2>
 
         <div class="form-group">
-          <label for="lotWeight">Toplam Parti Büyüklüğü</label>
+          <label for="lotWeight" data-i18n="totalLotWeight">Toplam Parti Büyüklüğü</label>
           <div class="input-wrapper">
             <input type="number" id="lotWeight" value="2000" min="1" step="any">
             <span class="unit">kg</span>
@@ -671,7 +675,7 @@
         </div>
 
         <div class="form-group">
-          <label for="packWeight">Birim Paket Ağırlığı</label>
+          <label for="packWeight" data-i18n="unitPackWeight">Birim Paket Ağırlığı</label>
           <div class="input-wrapper">
             <input type="number" id="packWeight" value="10" min="0.1" step="any">
             <span class="unit">kg</span>
@@ -687,24 +691,24 @@
         </div>
 
         <div class="form-group">
-          <label>Ambalaj Tipi</label>
+          <label data-i18n="packageType">Ambalaj Tipi</label>
           <div class="radio-pill-group">
             <div>
               <input type="radio" id="pkgVacuum" name="pkgType" value="vacuum">
-              <label for="pkgVacuum">Vakumlu Ambalaj</label>
+              <label for="pkgVacuum" data-i18n="vacuum">Vakumlu Ambalaj</label>
             </div>
             <div>
               <input type="radio" id="pkgNormal" name="pkgType" value="normal" checked>
-              <label for="pkgNormal">Normal Ambalaj</label>
+              <label for="pkgNormal" data-i18n="normal">Normal Ambalaj</label>
             </div>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="paletCount">Palet Sayısı</label>
+          <label for="paletCount" data-i18n="paletCount">Palet Sayısı</label>
           <div class="input-wrapper">
             <input type="number" id="paletCount" value="10" min="1" step="1">
-            <span class="unit">adet</span>
+            <span class="unit" id="paletCountUnit">adet</span>
           </div>
         </div>
 
@@ -712,29 +716,29 @@
         <div style="margin-top: 32px; padding-top: 24px; border-top: 2px solid var(--border);">
           <h3 style="font-size: 0.95rem; font-weight: 800; color: var(--yb-blue); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 11l3 3L22 4"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            Analiz Kontrol Noktaları
+            <span data-i18n="analysisPoints">Analiz Kontrol Noktaları</span>
           </h3>
 
           <div class="checkbox-group">
             <div class="checkbox-item">
               <input type="checkbox" id="analysisPoint1" checked>
-              <label for="analysisPoint1">Türkiye Cumhuriyeti il Tarım ve Orman Bakanlığı Analizi</label>
+              <label for="analysisPoint1" data-i18n="ministryAnalysis">Türkiye Cumhuriyeti il Tarım ve Orman Bakanlığı Analizi</label>
             </div>
             <div class="checkbox-item">
               <input type="checkbox" id="analysisPoint2">
-              <label for="analysisPoint2">Müşteri Talebi ile 3. Taraf Laboratuvar Analizi</label>
+              <label for="analysisPoint2" data-i18n="customerAnalysis">Müşteri Talebi ile 3. Taraf Laboratuvar Analizi</label>
             </div>
             <div class="checkbox-item">
               <input type="checkbox" id="analysisPoint3">
-              <label for="analysisPoint3">AB Gümrük Giriş Analizi</label>
+              <label for="analysisPoint3" data-i18n="customsAnalysis">AB Gümrük Giriş Analizi</label>
             </div>
             <div class="checkbox-item">
               <input type="checkbox" id="analysisPoint4">
-              <label for="analysisPoint4">Müşteri Deposunda 3. Taraf Analizi</label>
+              <label for="analysisPoint4" data-i18n="warehouseAnalysis">Müşteri Deposunda 3. Taraf Analizi</label>
             </div>
           </div>
 
-          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 12px; line-height: 1.4;">Her seçilen analiz noktası için aynı numuneler tekrar alınır ve aynı analizler yapılır. Bu, paletlerdeki açılacak koli sayısını ve renklerini çoğaltır.</p>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 12px; line-height: 1.4;" id="analysisPointsNote">Her seçilen analiz noktası için aynı numuneler tekrar alınır ve aynı analizler yapılır. Bu, paletlerdeki açılacak koli sayısını ve renklerini çoğaltır.</p>
         </div>
       </div>
 
@@ -742,160 +746,385 @@
       <div class="card">
         <h2 class="card-title">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          Mevzuat Çıktıları ve Dağılım
+          <span data-i18n="regulatoryOutputs">Mevzuat Çıktıları ve Dağılım</span>
         </h2>
 
         <div class="status-banner">
           <div>
-            <div class="item-title">Mevzuat Tonaj Kadamesi</div>
+            <div class="item-title" data-i18n="regulatoryTier">Mevzuat Tonaj Kadamesi</div>
             <div class="item-val" id="tierText">-</div>
-            <div class="regulation-ref" style="margin-top: 4px;">Tablo 2</div>
+            <div class="regulation-ref" style="margin-top: 4px;" id="refTable2">Tablo 2</div>
           </div>
           <div>
-            <div class="item-title">Partideki Toplam Paket</div>
+            <div class="item-title" data-i18n="totalPackages">Partideki Toplam Paket</div>
             <div class="item-val" id="totalPacksText">-</div>
-            <div class="regulation-ref" style="margin-top: 4px;">Madde C.2</div>
+            <div class="regulation-ref" style="margin-top: 4px;" id="refC2">Madde C.2</div>
           </div>
           <div>
-            <div class="item-title">Alt Parti / Durum</div>
+            <div class="item-title" data-i18n="sublots">Alt Parti / Durum</div>
             <div class="item-val" id="sublotsText">-</div>
-            <div class="regulation-ref" style="margin-top: 4px;">Madde C.3</div>
+            <div class="regulation-ref" style="margin-top: 4px;" id="refC3">Madde C.3</div>
           </div>
         </div>
 
         <div class="results-grid">
           <!-- Açılacak Paket Sayısı -->
           <div class="result-card highlight">
-            <div class="result-label">Açılacak Paket Sayısı</div>
+            <div class="result-label" data-i18n="packetsToOpen">Açılacak Paket Sayısı</div>
             <div class="result-value accent-color">
               <span id="packsToOpenVal">0</span>
-              <span class="unit-small">adet paket</span>
+              <span class="unit-small" id="packsToOpenUnit">adet paket</span>
             </div>
             <div class="result-desc" id="packsToOpenDesc">Artımlı numune kuralı</div>
-            <div class="regulation-ref">Tablo 2 & Madde C.7.1</div>
+            <div class="regulation-ref" id="refC7">Tablo 2 & Madde C.7.1</div>
           </div>
 
           <!-- Hedef Toplam Numune Ağırlığı -->
           <div class="result-card">
-            <div class="result-label">Hedef Agrega Numune</div>
+            <div class="result-label" data-i18n="targetSample">Hedef Agrega Numune</div>
             <div class="result-value">
               <span id="targetWeightVal">0</span>
               <span class="unit-small">kg</span>
             </div>
-            <div class="result-desc">Birleştirilecek agreganın asgari kütlesi</div>
-            <div class="regulation-ref">Tablo 2 - Kuru İncir Standardı</div>
+            <div class="result-desc" id="targetSampleDesc">Birleştirilecek agreganın asgari kütlesi</div>
+            <div class="regulation-ref" id="refTable2Standard">Tablo 2 - Kuru İncir Standardı</div>
           </div>
 
           <!-- Paket Başına Alınacak Miktar -->
           <div class="result-card">
-            <div class="result-label">Paket Başı Çekilecek Numune</div>
+            <div class="result-label" data-i18n="samplePerPacket">Paket Başı Çekilecek Numune</div>
             <div class="result-value">
               <span id="samplePerPackVal">0</span>
-              <span class="unit-small">g / paket</span>
+              <span class="unit-small" id="samplePerPackUnit">g / paket</span>
             </div>
-            <div class="result-desc">Açılan ambalajdan alınacak miktar</div>
-            <div class="regulation-ref">Madde C.2.2</div>
+            <div class="result-desc" id="samplePerPackDesc">Açılan ambalajdan alınacak miktar</div>
+            <div class="regulation-ref" id="refC22">Madde C.2.2</div>
           </div>
 
           <!-- Ambalajı Açılan Ürün Miktarı -->
           <div class="result-card alert-card">
-            <div class="result-label">Ambalaj Bütünlüğü Bozulan / Açılan Ürün</div>
+            <div class="result-label" data-i18n="openedProduct">Ambalaj Bütünlüğü Bozulan / Açılan Ürün</div>
             <div class="result-value">
               <span id="openedProductVal">0</span>
               <span class="unit-small">kg</span>
             </div>
             <div class="result-desc" id="openedProductDesc">Mevzuat kurallarına göre otomatik hesaplanmış</div>
-            <div class="regulation-ref">Madde C.1</div>
+            <div class="regulation-ref" id="refC1">Madde C.1</div>
           </div>
         </div>
 
         <!-- Örnekleme Sıklığı (Koyu Mavi Kurumsal Kart) -->
         <div class="frequency-card">
-          <div class="res-label">Örnekleme Sıklığı (ÖS - n) [Madde A.2]</div>
+          <div class="res-label" id="freqCardLabel">Örnekleme Sıklığı (ÖS - n) [Madde A.2]</div>
           <div class="res-val" id="samplingFreqVal">-</div>
           <div class="res-desc" id="samplingFreqDesc">-</div>
-          <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 0.7rem; font-weight: 600; color: var(--yb-orange); text-transform: uppercase; letter-spacing: 0.02em;">Madde A.2 - Örnekleme Şeması</div>
+          <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 0.7rem; font-weight: 600; color: var(--yb-orange); text-transform: uppercase; letter-spacing: 0.02em;" id="freqCardRef">Madde A.2 - Örnekleme Şeması</div>
         </div>
 
         <!-- Laboratuvar Numunesi Bölünmesi -->
         <div class="full-width-result">
           <div>
-            <div class="result-label">Laboratuvar Numunelerine Ayrılma Şekli</div>
+            <div class="result-label" id="labSplitLabel">Laboratuvar Numunelerine Ayrılma Şekli</div>
             <div style="font-size: 1.05rem; font-weight: 800; color: var(--yb-blue);" id="labSplitVal">-</div>
-            <div class="result-desc">Homojenleştirilip ayrı ayrı analiz edilecek laboratuvar numuneleri</div>
-            <div class="regulation-ref" style="margin-top: 10px;">Madde C.4</div>
+            <div class="result-desc" id="labSplitDesc">Homojenleştirilip ayrı ayrı analiz edilecek laboratuvar numuneleri</div>
+            <div class="regulation-ref" style="margin-top: 10px;" id="refC4">Madde C.4</div>
           </div>
         </div>
 
         <!-- Laboratuvar Analiz Sayısı -->
         <div class="results-grid" style="margin-top: 20px;">
           <div class="result-card">
-            <div class="result-label">Gerekli Analiz Sayısı</div>
+            <div class="result-label" id="requiredAnalysisLabel">Gerekli Analiz Sayısı</div>
             <div class="result-value">
               <span id="analysisCountVal">1</span>
-              <span class="unit-small">adet analiz</span>
+              <span class="unit-small" id="analysisCountUnit">adet analiz</span>
             </div>
             <div class="result-desc" id="analysisCountDesc">Aflatoksin ve Okratoksin analizi</div>
-            <div class="regulation-ref">Madde C.5.1 - C.5.3</div>
+            <div class="regulation-ref" id="refC5">Madde C.5.1 - C.5.3</div>
           </div>
 
           <div class="result-card">
-            <div class="result-label">Analiz Detayı</div>
+            <div class="result-label" id="analysisDetailLabel">Analiz Detayı</div>
             <div style="font-size: 0.95rem; font-weight: 600; color: var(--yb-blue); margin-top: 8px;" id="analysisDetailVal">-</div>
-            <div class="result-desc">Her numunede yapılacak ölçümler</div>
-            <div class="regulation-ref">Madde C.5 & Ek III</div>
+            <div class="result-desc" id="analysisDetailDesc">Her numunede yapılacak ölçümler</div>
+            <div class="regulation-ref" id="refC5Annex3">Madde C.5 & Ek III</div>
           </div>
         </div>
 
         <div class="info-footer">
           <ul>
-            <li><strong>Madde C.5.1:</strong> İncir ezmesinde aflatoksin ve okratoksin homojen dağılmadığı kabul edildiğinden kuru incir tablosu (Tablo 2) uygulanır.</li>
-            <li><strong>Madde C.7.1:</strong> 15 tondan küçük partilerde vakumlu ambalaj indirim oranı %50'dir; ancak 18 kg veya 24 kg gibi toplam hedef ağırlık korunmalıdır.</li>
+            <li><strong id="noteC51Title">Madde C.5.1:</strong> <span id="noteC51Text">İncir ezmesinde aflatoksin ve okratoksin homojen dağılmadığı kabul edildiğinden kuru incir tablosu (Tablo 2) uygulanır.</span></li>
+            <li><strong id="noteC71Title">Madde C.7.1:</strong> <span id="noteC71Text">15 tondan küçük partilerde vakumlu ambalaj indirim oranı %50'dir; ancak 18 kg veya 24 kg gibi toplam hedef ağırlık korunmalıdır.</span></li>
           </ul>
+        </div>
+
+        <!-- Analiz Tahribatı Kartı -->
+        <div style="margin-top: 32px; padding: 24px; background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); border: 2px solid #FF9800; border-radius: 12px; box-shadow: 0 6px 20px rgba(255, 152, 0, 0.2);">
+          <div style="text-align: center;">
+            <div style="font-size: 0.8rem; text-transform: uppercase; font-weight: 800; color: #E65100; letter-spacing: 0.08em; margin-bottom: 12px;">⚠️ <span data-i18n="analysisDamage">ANALİZ TAHRİBATI</span></div>
+
+            <div style="font-size: 3.5rem; font-weight: 900; color: #D84315; margin-bottom: 12px; line-height: 1;">
+              <span id="damageTotalKg">0 kg</span>
+            </div>
+
+            <div style="font-size: 1rem; color: #BF360C; font-weight: 600; margin-bottom: 16px;">
+              <span data-i18n="damageWeight">Zarar gören ürün ağırlığı</span>
+            </div>
+
+            <!-- Progress Bar -->
+            <div style="background: rgba(255, 255, 255, 0.6); border-radius: 10px; overflow: hidden; margin-bottom: 16px; height: 36px; border: 2px solid #FF9800;">
+              <div id="damageProgressBar" style="background: linear-gradient(90deg, #D84315 0%, #FF6F00 100%); height: 100%; width: 10%; transition: width 0.3s ease; display: flex; align-items: center; justify-content: center;">
+                <div style="color: #fff; font-weight: 800; font-size: 0.95rem;" id="damagePercentageInBar">10%</div>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+              <div style="background: white; border-radius: 10px; padding: 12px; border: 1.5px solid #FF9800;">
+                <div style="font-size: 0.7rem; color: #666; text-transform: uppercase; font-weight: 800; letter-spacing: 0.05em; margin-bottom: 6px;" data-i18n="openedProduct2">Açılan Ürün</div>
+                <div style="font-size: 1.8rem; font-weight: 900; color: #D84315;" id="damageTotalKgSmall">0 kg</div>
+              </div>
+
+              <div style="background: white; border-radius: 10px; padding: 12px; border: 1.5px solid #002B82;">
+                <div style="font-size: 0.7rem; color: #666; text-transform: uppercase; font-weight: 800; letter-spacing: 0.05em; margin-bottom: 6px;" data-i18n="totalLot">Toplam Parti</div>
+                <div style="font-size: 1.8rem; font-weight: 900; color: #002B82;" id="damageLotKgSmall">0 kg</div>
+              </div>
+            </div>
+
+            <div style="background: rgba(216, 67, 21, 0.08); border-left: 3px solid #D84315; border-radius: 6px; padding: 10px; font-size: 0.8rem; color: #BF360C; line-height: 1.5; font-weight: 600;">
+              <span id="damageComplianceText" data-i18n="complianceNote">AB Regulation (EU) 2023/2782 uyarınca belirtilen sayıda ambalaj açılmakta ve analiz için tahribata uğramaktadır.</span>
+            </div>
+          </div>
         </div>
 
         <!-- Palet Görselleştirmesi -->
         <div style="margin-top: 32px; padding-top: 32px; border-top: 2px solid var(--border);">
-          <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 20px; color: var(--text-main);">Palet Düzeni & Tahribat Analizi</h3>
+          <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 20px; color: var(--text-main);" data-i18n="paletLayout">Palet Düzeni Gösterimi</h3>
 
-          <div style="display: grid; grid-template-columns: 1fr 320px; gap: 24px; align-items: start;">
-            <div id="paletVisualization"></div>
-
-            <!-- Tahribat Analiz Kartı -->
-            <div style="background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); border: 2px solid #FF9800; border-radius: 12px; padding: 20px; box-shadow: 0 6px 16px rgba(255, 152, 0, 0.2);">
-              <div style="font-size: 0.8rem; text-transform: uppercase; font-weight: 700; color: #E65100; letter-spacing: 0.05em; margin-bottom: 12px;">⚠️ Tahribat Analizi</div>
-
-              <div style="font-size: 2.2rem; font-weight: 900; color: #D84315; margin-bottom: 8px;">
-                <span id="damagePercentage">0</span>%
-              </div>
-
-              <div style="font-size: 0.85rem; color: #BF360C; font-weight: 600; margin-bottom: 16px; line-height: 1.5;">
-                Analiz için tahribata uğrayan ürün
-              </div>
-
-              <div style="background: white; border-radius: 8px; padding: 12px; margin-bottom: 12px;">
-                <div style="font-size: 0.7rem; color: #666; text-transform: uppercase; font-weight: 700; margin-bottom: 6px;">Açılan Toplam Ürün</div>
-                <div style="font-size: 1.3rem; font-weight: 800; color: #D84315;" id="damageTotalKg">0 kg</div>
-              </div>
-
-              <div style="background: white; border-radius: 8px; padding: 12px;">
-                <div style="font-size: 0.7rem; color: #666; text-transform: uppercase; font-weight: 700; margin-bottom: 6px;">Toplam Parti</div>
-                <div style="font-size: 1.3rem; font-weight: 800; color: #002B82;" id="damageLotKg">0 kg</div>
-              </div>
-
-              <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255, 152, 0, 0.3); font-size: 0.75rem; color: #BF360C; line-height: 1.6;">
-                <strong>Not:</strong> Mevzuat kurallarına uygun olarak belirtilen sayıda ambalaj açılmakta ve analiz için tahribata uğramaktadır.
-              </div>
-            </div>
-          </div>
+          <div id="paletVisualization"></div>
         </div>
       </div>
     </div>
   </div>
 
   <script>
+    // Çoklu Dil Desteği (i18n)
+    const translations = {
+      tr: {
+        pageTitle: 'Kuru İncir Ürünü Resmi Örnekleme Robotu',
+        regulation: 'Yönetmelik (AB) 2023/2782',
+        description: 'Bu hesaplayıcı, AB Komisyonu (AB) 2023/2782 sayılı Mikotoksin Numune Alma Yönetmeliği Ek I Bölüm II.C hükümlerine uygun olarak ihracat aşamasındaki kuru incir partileri için numune alma planı oluşturur.',
+        shipmentParams: 'Sevkiyat Parametreleri',
+        totalLotWeight: 'Toplam Parti Büyüklüğü',
+        unitPackWeight: 'Birim Paket Ağırlığı',
+        packageType: 'Ambalaj Tipi',
+        vacuum: 'Vakumlu Ambalaj',
+        normal: 'Normal Ambalaj',
+        paletCount: 'Palet Sayısı',
+        analysisPoints: 'Analiz Kontrol Noktaları',
+        ministryAnalysis: 'Türkiye Cumhuriyeti il Tarım ve Orman Bakanlığı Analizi',
+        customerAnalysis: 'Müşteri Talebi ile 3. Taraf Laboratuvar Analizi',
+        customsAnalysis: 'AB Gümrük Giriş Analizi',
+        warehouseAnalysis: 'Müşteri Deposunda 3. Taraf Analizi',
+        regulatoryOutputs: 'Mevzuat Çıktıları ve Dağılım',
+        regulatoryTier: 'Mevzuat Tonaj Kadamesi',
+        totalPackages: 'Partideki Toplam Paket',
+        sublots: 'Alt Parti / Durum',
+        packetsToOpen: 'Açılacak Paket Sayısı',
+        targetSample: 'Hedef Agrega Numune',
+        samplePerPacket: 'Paket Başı Çekilecek Numune',
+        openedProduct: 'Ambalaj Bütünlüğü Bozulan / Açılan Ürün',
+        samplingFrequency: 'Örnekleme Sıklığı (ÖS - n)',
+        labSplit: 'Laboratuvar Numunelerine Ayrılma Şekli',
+        requiredAnalysis: 'Gerekli Analiz Sayısı',
+        analysisDetail: 'Analiz Detayı',
+        paletLayout: 'Palet Düzeni Gösterimi',
+        analysisDamage: 'ANALİZ TAHRİBATI',
+        damageWeight: 'Zarar gören ürün ağırlığı',
+        openedProduct2: 'Açılan Ürün',
+        totalLot: 'Toplam Parti',
+        complianceNote: 'AB Regulation (EU) 2023/2782 uyarınca belirtilen sayıda ambalaj açılmakta ve analiz için tahribata uğramaktadır.',
+        noteC51Title: 'Madde C.5.1:',
+        noteC51Text: 'İncir ezmesinde aflatoksin ve okratoksin homojen dağılmadığı kabul edildiğinden kuru incir tablosu (Tablo 2) uygulanır.',
+        noteC71Title: 'Madde C.7.1:',
+        noteC71Text: '15 tondan küçük partilerde vakumlu ambalaj indirim oranı %50\'dir; ancak 18 kg veya 24 kg gibi toplam hedef ağırlık korunmalıdır.',
+        refTable2: 'Tablo 2',
+        refC2: 'Madde C.2',
+        refC3: 'Madde C.3',
+        refC7: 'Tablo 2 & Madde C.7.1',
+        refTable2Standard: 'Tablo 2 - Kuru İncir Standardı',
+        refC22: 'Madde C.2.2',
+        refC1: 'Madde C.1',
+        refC4: 'Madde C.4',
+        refC5: 'Madde C.5.1 - C.5.3',
+        refC5Annex3: 'Madde C.5 & Ek III',
+        paletCountUnit: 'adet',
+        analysisPointsNote: 'Her seçilen analiz noktası için aynı numuneler tekrar alınır ve aynı analizler yapılır. Bu, paletlerdeki açılacak koli sayısını ve renklerini çoğaltır.',
+        packsToOpenUnit: 'adet paket',
+        targetSampleDesc: 'Birleştirilecek agreganın asgari kütlesi',
+        samplePerPackUnit: 'g / paket',
+        samplePerPackDesc: 'Açılan ambalajdan alınacak miktar',
+        openedProductDesc: 'Mevzuat kurallarına göre otomatik hesaplanmış',
+        freqCardLabel: 'Örnekleme Sıklığı (ÖS - n) [Madde A.2]',
+        freqCardRef: 'Madde A.2 - Örnekleme Şeması',
+        labSplitLabel: 'Laboratuvar Numunelerine Ayrılma Şekli',
+        labSplitDesc: 'Homojenleştirilip ayrı ayrı analiz edilecek laboratuvar numuneleri',
+        requiredAnalysisLabel: 'Gerekli Analiz Sayısı',
+        analysisCountUnit: 'adet analiz',
+        analysisDetailLabel: 'Analiz Detayı',
+        analysisDetailDesc: 'Her numunede yapılacak ölçümler'
+      },
+      en: {
+        pageTitle: 'Dried Fig Product Official Sampling Robot',
+        regulation: 'Regulation (EU) 2023/2782',
+        description: 'This calculator creates a sampling plan for dried fig batches at the export stage in accordance with the European Commission Regulation (EU) 2023/2782 on Mycotoxin Sampling Annex I Part II.C.',
+        shipmentParams: 'Shipment Parameters',
+        totalLotWeight: 'Total Batch Size',
+        unitPackWeight: 'Unit Package Weight',
+        packageType: 'Package Type',
+        vacuum: 'Vacuum Package',
+        normal: 'Normal Package',
+        paletCount: 'Pallet Count',
+        analysisPoints: 'Analysis Control Points',
+        ministryAnalysis: 'Turkish Ministry of Agriculture and Forestry Analysis',
+        customerAnalysis: 'Customer Request Third Party Laboratory Analysis',
+        customsAnalysis: 'EU Customs Entry Analysis',
+        warehouseAnalysis: 'Customer Warehouse Third Party Analysis',
+        regulatoryOutputs: 'Regulatory Outputs and Distribution',
+        regulatoryTier: 'Regulatory Tonnage Tier',
+        totalPackages: 'Total Boxes in Batch',
+        sublots: 'Sub-batch / Status',
+        packetsToOpen: 'Boxes to Open',
+        targetSample: 'Target Aggregate Sample',
+        samplePerPacket: 'Sample Per Box',
+        openedProduct: 'Package Integrity Broken / Opened Product',
+        samplingFrequency: 'Sampling Frequency (SF - n)',
+        labSplit: 'Laboratory Sample Division Method',
+        requiredAnalysis: 'Required Analysis Count',
+        analysisDetail: 'Analysis Details',
+        paletLayout: 'Pallet Layout Display',
+        analysisDamage: 'ANALYSIS DAMAGE',
+        damageWeight: 'Damaged product weight',
+        openedProduct2: 'Opened Product',
+        totalLot: 'Total Batch',
+        complianceNote: 'According to EU Regulation 2023/2782, the specified number of boxes are opened and damaged during analysis.',
+        noteC51Title: 'Article C.5.1:',
+        noteC51Text: 'In fig paste, aflatoxin and ochratoxin are not homogeneously distributed; therefore, the dried fig table (Table 2) applies.',
+        noteC71Title: 'Article C.7.1:',
+        noteC71Text: 'For batches under 15 tons, the vacuum package discount rate is 50%; however, the total target weight (such as 18 kg or 24 kg) must be maintained.',
+        refTable2: 'Table 2',
+        refC2: 'Article C.2',
+        refC3: 'Article C.3',
+        refC7: 'Table 2 & Article C.7.1',
+        refTable2Standard: 'Table 2 - Dried Fig Standard',
+        refC22: 'Article C.2.2',
+        refC1: 'Article C.1',
+        refC4: 'Article C.4',
+        refC5: 'Article C.5.1 - C.5.3',
+        refC5Annex3: 'Article C.5 & Annex III',
+        paletCountUnit: 'pieces',
+        analysisPointsNote: 'For each selected analysis point, the same samples are taken again and the same analyses are performed. This multiplies the number and colors of boxes to be opened on the pallets.',
+        packsToOpenUnit: 'boxes',
+        targetSampleDesc: 'Minimum mass of the aggregate to be combined',
+        samplePerPackUnit: 'g / box',
+        samplePerPackDesc: 'Amount to be taken from the opened package',
+        openedProductDesc: 'Automatically calculated according to regulatory rules',
+        freqCardLabel: 'Sampling Frequency (SF - n) [Article A.2]',
+        freqCardRef: 'Article A.2 - Sampling Scheme',
+        labSplitLabel: 'Laboratory Sample Division Method',
+        labSplitDesc: 'Laboratory samples to be homogenized and analyzed separately',
+        requiredAnalysisLabel: 'Required Analysis Count',
+        analysisCountUnit: 'analyses',
+        analysisDetailLabel: 'Analysis Details',
+        analysisDetailDesc: 'Measurements to be performed on each sample',
+        analysisCountDesc: 'Article C.5 - Total analysis required'
+      }
+    };
+
+    // Dili belirle
+    function detectLanguage() {
+      const browserLang = navigator.language.split('-')[0];
+      return (browserLang === 'tr') ? 'tr' : 'en';
+    }
+
+    let currentLang = detectLanguage();
+
+    function t(key) {
+      return translations[currentLang][key] || translations.tr[key] || key;
+    }
+
+    function updateLanguageDisplay() {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        el.textContent = t(key);
+      });
+
+      // Info footer notları güncelle
+      const noteC51Title = document.getElementById('noteC51Title');
+      const noteC51Text = document.getElementById('noteC51Text');
+      const noteC71Title = document.getElementById('noteC71Title');
+      const noteC71Text = document.getElementById('noteC71Text');
+
+      if (noteC51Title) noteC51Title.textContent = t('noteC51Title');
+      if (noteC51Text) noteC51Text.textContent = t('noteC51Text');
+      if (noteC71Title) noteC71Title.textContent = t('noteC71Title');
+      if (noteC71Text) noteC71Text.textContent = t('noteC71Text');
+
+      // Regulation references ve statik metinleri güncelle
+      const refIds = [
+        'refTable2', 'refC2', 'refC3', 'refC7', 'refTable2Standard', 'refC22', 'refC1', 'refC4', 'refC5', 'refC5Annex3',
+        'paletCountUnit', 'analysisPointsNote', 'packsToOpenUnit', 'targetSampleDesc', 'samplePerPackUnit', 'samplePerPackDesc',
+        'openedProductDesc', 'freqCardLabel', 'freqCardRef', 'labSplitLabel', 'labSplitDesc', 'requiredAnalysisLabel',
+        'analysisCountUnit', 'analysisDetailLabel', 'analysisDetailDesc'
+      ];
+      refIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = t(id);
+      });
+    }
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      updateLanguageDisplay();
+
+      // Buton stillerini güncelle
+      const langTr = document.getElementById('langTr');
+      const langEn = document.getElementById('langEn');
+
+      if (lang === 'tr') {
+        langTr.style.background = 'var(--yb-orange)';
+        langTr.style.color = 'white';
+        langTr.style.border = '2px solid transparent';
+        langTr.style.opacity = '1';
+
+        langEn.style.background = 'transparent';
+        langEn.style.color = 'var(--yb-orange)';
+        langEn.style.border = '2px solid var(--yb-orange)';
+        langEn.style.opacity = '0.7';
+      } else {
+        langTr.style.background = 'transparent';
+        langTr.style.color = 'var(--yb-orange)';
+        langTr.style.border = '2px solid var(--yb-orange)';
+        langTr.style.opacity = '0.7';
+
+        langEn.style.background = 'var(--yb-orange)';
+        langEn.style.color = 'white';
+        langEn.style.border = '2px solid transparent';
+        langEn.style.opacity = '1';
+      }
+
+      // Dil değiştirildiğinde hesaplamaları ve palet visualizasyonunu güncelle
+      calculate();
+    }
+
     // Sayfa açılışında hesaplamayı çalıştır
     window.addEventListener('DOMContentLoaded', function() {
+      updateLanguageDisplay();
+
+      // Dil butonlarına event listener ekle
+      document.getElementById('langTr').addEventListener('click', () => setLanguage('tr'));
+      document.getElementById('langEn').addEventListener('click', () => setLanguage('en'));
+
       calculate();
     });
 
@@ -922,11 +1151,12 @@
         return;
       }
 
+      const numLocale = currentLang === 'en' ? 'en-US' : 'tr-TR';
       const totalPacks = Math.ceil(lotWeightKg / packWeightKg);
-      document.getElementById('totalPacksText').innerText = totalPacks.toLocaleString('tr-TR') + ' paket';
+      document.getElementById('totalPacksText').innerText = totalPacks.toLocaleString(numLocale) + (currentLang === 'en' ? ' boxes' : ' paket');
 
       let tierName = "";
-      let sublots = "Tek Parti";
+      let sublots = currentLang === 'en' ? "Single Batch" : "Tek Parti";
       let baseIncrements = 0;
       let targetWeightKg = 0;
       let labSplitText = "";
@@ -937,71 +1167,71 @@
       let analysisDetail = "";
 
       if (lotTon <= 0.1) {
-        tierName = "≤ 0,1 ton (≤ 100 kg)";
+        tierName = "≤ 0.1 ton (≤ 100 kg)";
         baseIncrements = 10;
         targetWeightKg = 3.0;
-        labSplitText = "1 laboratuvar numunesi (3 kg - Bölünmez)";
+        labSplitText = currentLang === 'en' ? "1 laboratory sample (3 kg - Non-divisible)" : "1 laboratuvar numunesi (3 kg - Bölünmez)";
         analysisCount = 1;
-        analysisDetail = "Aflatoksin + Okratoksin (Tek numunede)";
+        analysisDetail = currentLang === 'en' ? "Aflatoxin + Ochratoxin (Single sample)" : "Aflatoksin + Okratoksin (Tek numunede)";
       } else if (lotTon <= 0.2) {
-        tierName = "> 0,1 – ≤ 0,2 ton";
+        tierName = "> 0.1 – ≤ 0.2 ton";
         baseIncrements = 15;
         targetWeightKg = 4.5;
-        labSplitText = "1 laboratuvar numunesi (4,5 kg - Bölünmez)";
+        labSplitText = currentLang === 'en' ? "1 laboratory sample (4.5 kg - Non-divisible)" : "1 laboratuvar numunesi (4,5 kg - Bölünmez)";
         analysisCount = 1;
-        analysisDetail = "Aflatoksin + Okratoksin (Tek numunede)";
+        analysisDetail = currentLang === 'en' ? "Aflatoxin + Ochratoxin (Single sample)" : "Aflatoksin + Okratoksin (Tek numunede)";
       } else if (lotTon <= 0.5) {
-        tierName = "> 0,2 – ≤ 0,5 ton";
+        tierName = "> 0.2 – ≤ 0.5 ton";
         baseIncrements = 20;
         targetWeightKg = 6.0;
-        labSplitText = "1 laboratuvar numunesi (6 kg - Bölünmez)";
+        labSplitText = currentLang === 'en' ? "1 laboratory sample (6 kg - Non-divisible)" : "1 laboratuvar numunesi (6 kg - Bölünmez)";
         analysisCount = 1;
-        analysisDetail = "Aflatoksin + Okratoksin (Tek numunede)";
+        analysisDetail = currentLang === 'en' ? "Aflatoxin + Ochratoxin (Single sample)" : "Aflatoksin + Okratoksin (Tek numunede)";
       } else if (lotTon <= 1.0) {
-        tierName = "> 0,5 – ≤ 1,0 ton";
+        tierName = "> 0.5 – ≤ 1.0 ton";
         baseIncrements = 30;
         targetWeightKg = 9.0;
-        labSplitText = "1 laboratuvar numunesi (9 kg - Bölünmez)";
+        labSplitText = currentLang === 'en' ? "1 laboratory sample (9 kg - Non-divisible)" : "1 laboratuvar numunesi (9 kg - Bölünmez)";
         analysisCount = 1;
-        analysisDetail = "Aflatoksin + Okratoksin (Tek numunede)";
+        analysisDetail = currentLang === 'en' ? "Aflatoxin + Ochratoxin (Single sample)" : "Aflatoksin + Okratoksin (Tek numunede)";
       } else if (lotTon <= 2.0) {
-        tierName = "> 1,0 – ≤ 2,0 ton";
+        tierName = "> 1.0 – ≤ 2.0 ton";
         baseIncrements = 40;
         targetWeightKg = 12.0;
-        labSplitText = "2 eşit numune (6 kg + 6 kg)";
+        labSplitText = currentLang === 'en' ? "2 equal samples (6 kg + 6 kg)" : "2 eşit numune (6 kg + 6 kg)";
         analysisCount = 2;
-        analysisDetail = "Numune 1: Aflatoksin | Numune 2: Okratoksin";
+        analysisDetail = currentLang === 'en' ? "Sample 1: Aflatoxin | Sample 2: Ochratoxin" : "Numune 1: Aflatoksin | Numune 2: Okratoksin";
       } else if (lotTon <= 5.0) {
-        tierName = "> 2,0 – ≤ 5,0 ton";
+        tierName = "> 2.0 – ≤ 5.0 ton";
         baseIncrements = 60;
         targetWeightKg = 18.0;
-        labSplitText = "2 eşit numune (9 kg + 9 kg)";
+        labSplitText = currentLang === 'en' ? "2 equal samples (9 kg + 9 kg)" : "2 eşit numune (9 kg + 9 kg)";
         analysisCount = 2;
-        analysisDetail = "Numune 1: Aflatoksin | Numune 2: Okratoksin";
+        analysisDetail = currentLang === 'en' ? "Sample 1: Aflatoxin | Sample 2: Ochratoxin" : "Numune 1: Aflatoksin | Numune 2: Okratoksin";
       } else if (lotTon <= 10.0) {
-        tierName = "> 5,0 – ≤ 10,0 ton";
+        tierName = "> 5.0 – ≤ 10.0 ton";
         baseIncrements = 80;
         targetWeightKg = 24.0;
-        labSplitText = "3 eşit numune (8 kg + 8 kg + 8 kg)";
+        labSplitText = currentLang === 'en' ? "3 equal samples (8 kg + 8 kg + 8 kg)" : "3 eşit numune (8 kg + 8 kg + 8 kg)";
         analysisCount = 3;
-        analysisDetail = "Numune 1 & 2: Aflatoksin (çoğaltma) | Numune 3: Okratoksin";
+        analysisDetail = currentLang === 'en' ? "Samples 1 & 2: Aflatoxin (duplicate) | Sample 3: Ochratoxin" : "Numune 1 & 2: Aflatoksin (çoğaltma) | Numune 3: Okratoksin";
       } else if (lotTon < 15.0) {
-        tierName = "> 10,0 – < 15,0 ton";
+        tierName = "> 10.0 – < 15.0 ton";
         baseIncrements = 100;
         targetWeightKg = 30.0;
-        labSplitText = "3 eşit numune (10 kg + 10 kg + 10 kg)";
+        labSplitText = currentLang === 'en' ? "3 equal samples (10 kg + 10 kg + 10 kg)" : "3 eşit numune (10 kg + 10 kg + 10 kg)";
         analysisCount = 3;
-        analysisDetail = "Numune 1 & 2: Aflatoksin (çoğaltma) | Numune 3: Okratoksin";
+        analysisDetail = currentLang === 'en' ? "Samples 1 & 2: Aflatoxin (duplicate) | Sample 3: Ochratoxin" : "Numune 1 & 2: Aflatoksin (çoğaltma) | Numune 3: Okratoksin";
       } else {
-        // >= 15 ton (Madde C.3)
+        // >= 15 ton (Article C.3)
         const sublotCount = Math.ceil(lotTon / 25);
-        tierName = "≥ 15 ton (Büyük Parti)";
-        sublots = sublotCount + " Alt Parti (~15-30 ton)";
+        tierName = "≥ 15 ton";
+        sublots = currentLang === 'en' ? sublotCount + " Sub-batches (~15-30 tons)" : sublotCount + " Alt Parti (~15-30 ton)";
         baseIncrements = 100;
         targetWeightKg = 30.0;
-        labSplitText = "3 eşit numune (10 kg + 10 kg + 10 kg) [Alt parti başına]";
+        labSplitText = currentLang === 'en' ? "3 equal samples (10 kg + 10 kg + 10 kg) [Per sub-batch]" : "3 eşit numune (10 kg + 10 kg + 10 kg) [Alt parti başına]";
         analysisCount = 3 * sublotCount;
-        analysisDetail = `3 analiz / alt parti × ${sublotCount} alt parti = ${analysisCount} toplam analiz`;
+        analysisDetail = currentLang === 'en' ? `3 analyses / sub-batch × ${sublotCount} sub-batches = ${analysisCount} total analyses` : `3 analiz / alt parti × ${sublotCount} alt parti = ${analysisCount} toplam analiz`;
       }
 
       document.getElementById('tierText').innerText = tierName;
@@ -1009,7 +1239,11 @@
 
       // Analiz Sayısı Güncellemesi
       document.getElementById('analysisCountVal').innerText = analysisCount;
-      document.getElementById('analysisCountDesc').innerText = `Madde C.5 - Toplam ${analysisCount} adet analiz gereklidir`;
+      if (currentLang === 'en') {
+        document.getElementById('analysisCountDesc').innerText = `Article C.5 - Total ${analysisCount} analysis required`;
+      } else {
+        document.getElementById('analysisCountDesc').innerText = `Madde C.5 - Toplam ${analysisCount} adet analiz gereklidir`;
+      }
       document.getElementById('analysisDetailVal').innerText = analysisDetail;
 
       // Vakum indirimi hesabı (Madde C.7.1)
@@ -1050,29 +1284,49 @@
       const freqN = Math.round(totalPacks / packsToOpen);
 
       // UI Güncelleme
-      document.getElementById('packsToOpenVal').innerText = totalPacksToOpen.toLocaleString('tr-TR');
-      let descText = isVacuum
-        ? `Tablo 2 standardı (${baseIncrements} adet) üzerinden %50 vakum indirimi uygulandı`
-        : `Standart kurala göre açılacak paket sayısı`;
-      if (analysisPointCount > 1) {
-        descText += ` × ${analysisPointCount} analiz noktası = ${totalPacksToOpen} paket`;
+      document.getElementById('packsToOpenVal').innerText = totalPacksToOpen.toLocaleString(numLocale);
+      let descText = '';
+      if (currentLang === 'en') {
+        descText = isVacuum
+          ? `Table 2 standard (${baseIncrements} pieces) with 50% vacuum discount applied`
+          : `Standard rule for boxes to open`;
+        if (analysisPointCount > 1) {
+          descText += ` × ${analysisPointCount} analysis points = ${totalPacksToOpen} boxes`;
+        }
+      } else {
+        descText = isVacuum
+          ? `Tablo 2 standardı (${baseIncrements} adet) üzerinden %50 vakum indirimi uygulandı`
+          : `Standart kurala göre açılacak paket sayısı`;
+        if (analysisPointCount > 1) {
+          descText += ` × ${analysisPointCount} analiz noktası = ${totalPacksToOpen} paket`;
+        }
       }
       document.getElementById('packsToOpenDesc').innerText = descText;
 
-      document.getElementById('targetWeightVal').innerText = targetWeightKg.toLocaleString('tr-TR', { minimumFractionDigits: 1 });
+      document.getElementById('targetWeightVal').innerText = targetWeightKg.toLocaleString(numLocale, { minimumFractionDigits: 1 });
       document.getElementById('samplePerPackVal').innerText = Math.round(samplePerPackGrams);
-      document.getElementById('openedProductVal').innerText = openedProductKg.toLocaleString('tr-TR');
+      document.getElementById('openedProductVal').innerText = openedProductKg.toLocaleString(numLocale);
 
       document.getElementById('labSplitVal').innerText = labSplitText;
 
-      document.getElementById('samplingFreqVal').innerText = `Her ${freqN}. paketten numune alınmalıdır`;
-      document.getElementById('samplingFreqDesc').innerText = `Formül: ${totalPacks} toplam paket / ${packsToOpen} açılacak paket ≈ ${freqN}`;
+      if (currentLang === 'en') {
+        document.getElementById('samplingFreqVal').innerText = `Sample must be taken from every ${freqN}. box`;
+        document.getElementById('samplingFreqDesc').innerText = `Formula: ${totalPacks} total boxes / ${packsToOpen} boxes to open ≈ ${freqN}`;
+      } else {
+        document.getElementById('samplingFreqVal').innerText = `Her ${freqN}. paketten numune alınmalıdır`;
+        document.getElementById('samplingFreqDesc').innerText = `Formül: ${totalPacks} toplam paket / ${packsToOpen} açılacak paket ≈ ${freqN}`;
+      }
 
       // Tahribat Yüzdesi Hesaplaması
       const damagePercentage = lotWeightKg > 0 ? ((openedProductKg / lotWeightKg) * 100).toFixed(1) : 0;
-      document.getElementById('damagePercentage').innerText = damagePercentage;
-      document.getElementById('damageTotalKg').innerText = openedProductKg.toLocaleString('tr-TR') + ' kg';
-      document.getElementById('damageLotKg').innerText = lotWeightKg.toLocaleString('tr-TR') + ' kg';
+      document.getElementById('damageTotalKg').innerText = openedProductKg.toLocaleString(numLocale) + ' kg';
+      document.getElementById('damageTotalKgSmall').innerText = openedProductKg.toLocaleString(numLocale) + ' kg';
+      document.getElementById('damageLotKgSmall').innerText = lotWeightKg.toLocaleString(numLocale) + ' kg';
+
+      // Progress Bar Güncelle
+      const progressBarWidth = Math.min(damagePercentage, 100);
+      document.getElementById('damageProgressBar').style.width = progressBarWidth + '%';
+      document.getElementById('damagePercentageInBar').innerText = damagePercentage + '%';
 
       // Palet Görselleştirmesi
       visualizePalets();
@@ -1188,9 +1442,9 @@
 
             const koliNumber = paletStartKoli + idx;
             koliDiv.innerText = koliNumber;
-            let tooltip = `Koli ${koliNumber}`;
+            let tooltip = currentLang === 'en' ? `Package ${koliNumber}` : `Koli ${koliNumber}`;
             if (isMarked) {
-              tooltip += ` (Açılacak)`;
+              tooltip += currentLang === 'en' ? ` (To be opened)` : ` (Açılacak)`;
             }
             koliDiv.title = tooltip;
             layerDiv.appendChild(koliDiv);
@@ -1209,7 +1463,11 @@
         // Palet etiketi
         const label = document.createElement('div');
         label.className = 'palet-label';
-        label.innerText = `Palet ${i} • ${koliCount} koli${coloredKoliCountInPalet > 0 ? ` (${coloredKoliCountInPalet} açılacak)` : ''}`;
+        if (currentLang === 'en') {
+          label.innerText = `Pallet ${i} • ${koliCount} boxes${coloredKoliCountInPalet > 0 ? ` (${coloredKoliCountInPalet} to open)` : ''}`;
+        } else {
+          label.innerText = `Palet ${i} • ${koliCount} koli${coloredKoliCountInPalet > 0 ? ` (${coloredKoliCountInPalet} açılacak)` : ''}`;
+        }
         wrapper.appendChild(label);
 
         // Paletleri diziye ekle
