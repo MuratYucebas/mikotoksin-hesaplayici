@@ -365,15 +365,17 @@
       font-weight: 500;
     }
 
-    .full-width-result {
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 16px;
+    .regulation-ref {
+      background: #f0f4fc;
+      border-left: 3px solid var(--yb-orange);
+      padding: 6px 10px;
+      margin-top: 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--yb-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
     }
 
     #paletVisualization {
@@ -400,6 +402,7 @@
         grid-template-columns: 1fr;
       }
     }
+
 
     .palet-wrapper {
       position: relative;
@@ -493,6 +496,17 @@
     .koli:hover {
       transform: scale(1.05);
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+    }
+
+    .full-width-result {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
     }
 
     .frequency-card {
@@ -820,14 +834,17 @@
           <div>
             <div class="item-title">Mevzuat Tonaj Kadamesi</div>
             <div class="item-val" id="tierText">-</div>
+            <div class="regulation-ref" style="margin-top: 4px;">Tablo 2</div>
           </div>
           <div>
             <div class="item-title">Partideki Toplam Paket</div>
             <div class="item-val" id="totalPacksText">-</div>
+            <div class="regulation-ref" style="margin-top: 4px;">Madde C.2</div>
           </div>
           <div>
             <div class="item-title">Alt Parti / Durum</div>
             <div class="item-val" id="sublotsText">-</div>
+            <div class="regulation-ref" style="margin-top: 4px;">Madde C.3</div>
           </div>
         </div>
 
@@ -840,6 +857,7 @@
               <span class="unit-small">adet paket</span>
             </div>
             <div class="result-desc" id="packsToOpenDesc">Artımlı numune kuralı</div>
+            <div class="regulation-ref">Tablo 2 & Madde C.7.1</div>
           </div>
 
           <!-- Hedef Toplam Numune Ağırlığı -->
@@ -850,6 +868,7 @@
               <span class="unit-small">kg</span>
             </div>
             <div class="result-desc">Birleştirilecek agreganın asgari kütlesi</div>
+            <div class="regulation-ref">Tablo 2 - Kuru İncir Standardı</div>
           </div>
 
           <!-- Paket Başına Alınacak Miktar -->
@@ -860,16 +879,18 @@
               <span class="unit-small">g / paket</span>
             </div>
             <div class="result-desc">Açılan ambalajdan alınacak miktar</div>
+            <div class="regulation-ref">Madde C.2.2</div>
           </div>
 
           <!-- Ambalajı Açılan Ürün Miktarı -->
           <div class="result-card alert-card">
             <div class="result-label">Ambalaj Bütünlüğü Bozulan / Açılan Ürün</div>
             <div class="result-value">
-              <input type="number" id="openedProductVal" value="0" style="width: 100%; padding: 8px; font-size: 1.5rem; font-weight: 700; color: var(--yb-blue); border: 1px solid var(--border); border-radius: 4px;">
+              <span id="openedProductVal">0</span>
               <span class="unit-small">kg</span>
             </div>
-            <div class="result-desc" id="openedProductDesc">Bozulan ambalaj ağırlığını girin</div>
+            <div class="result-desc" id="openedProductDesc">Mevzuat kurallarına göre otomatik hesaplanmış</div>
+            <div class="regulation-ref">Madde C.1</div>
           </div>
         </div>
 
@@ -878,14 +899,16 @@
           <div class="res-label">Örnekleme Sıklığı (ÖS - n) [Madde A.2]</div>
           <div class="res-val" id="samplingFreqVal">-</div>
           <div class="res-desc" id="samplingFreqDesc">-</div>
+          <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 0.7rem; font-weight: 600; color: var(--yb-orange); text-transform: uppercase; letter-spacing: 0.02em;">Madde A.2 - Örnekleme Şeması</div>
         </div>
 
         <!-- Laboratuvar Numunesi Bölünmesi -->
         <div class="full-width-result">
           <div>
-            <div class="result-label">Laboratuvar Numunelerine Ayrılma Şekli (Madde C.4)</div>
+            <div class="result-label">Laboratuvar Numunelerine Ayrılma Şekli</div>
             <div style="font-size: 1.05rem; font-weight: 800; color: var(--yb-blue);" id="labSplitVal">-</div>
             <div class="result-desc">Homojenleştirilip ayrı ayrı analiz edilecek laboratuvar numuneleri</div>
+            <div class="regulation-ref" style="margin-top: 10px;">Madde C.4</div>
           </div>
         </div>
 
@@ -897,13 +920,15 @@
               <span id="analysisCountVal">1</span>
               <span class="unit-small">adet analiz</span>
             </div>
-            <div class="result-desc" id="analysisCountDesc">Madde C.5 - Aflatoksin ve Okratoksin analizi</div>
+            <div class="result-desc" id="analysisCountDesc">Aflatoksin ve Okratoksin analizi</div>
+            <div class="regulation-ref">Madde C.5.1 - C.5.3</div>
           </div>
 
           <div class="result-card">
             <div class="result-label">Analiz Detayı</div>
             <div style="font-size: 0.95rem; font-weight: 600; color: var(--yb-blue); margin-top: 8px;" id="analysisDetailVal">-</div>
             <div class="result-desc">Her numunede yapılacak ölçümler</div>
+            <div class="regulation-ref">Madde C.5 & Ek III</div>
           </div>
         </div>
 
@@ -1156,12 +1181,6 @@
 
       document.getElementById('targetWeightVal').innerText = targetWeightKg.toLocaleString('tr-TR', { minimumFractionDigits: 1 });
       document.getElementById('samplePerPackVal').innerText = Math.round(samplePerPackGrams);
-      // openedProductVal artık editable input field, otomatik güncelleme yapma
-      const openedProductInput = document.getElementById('openedProductVal');
-      if (!openedProductInput.value) {
-        openedProductInput.value = openedProductKg.toLocaleString('tr-TR');
-      }
-      document.getElementById('openedProductDesc').innerText = `Partinin %${openedProductRatio}'lik kısmının ambalajı açılmış olur`;
       
       document.getElementById('labSplitVal').innerText = labSplitText;
 
@@ -1174,56 +1193,47 @@
 
     function visualizePalets() {
       const paletCount = parseInt(document.getElementById('paletCount').value) || 1;
-      const totalPacks = Math.ceil((parseFloat(document.getElementById('lotWeight').value) || 0) / (parseFloat(document.getElementById('packWeight').value) || 1));
+      const lotWeightKg = parseFloat(document.getElementById('lotWeight').value) || 0;
+      const packWeightKg = parseFloat(document.getElementById('packWeight').value) || 1;
+      const isVacuum = document.getElementById('pkgVacuum').checked;
+
+      const totalPacks = Math.ceil(lotWeightKg / packWeightKg);
       const packsPerPalet = Math.ceil(totalPacks / paletCount);
       const kolisPerLayer = 5; // Her katta 5 koli
 
-      // Ambalajı bozulan koli sayısı hesaplaması
-      const packWeightKg = parseFloat(document.getElementById('packWeight').value) || 1;
-      const lotWeightKg = parseFloat(document.getElementById('lotWeight').value) || 0;
-      const isVacuum = document.getElementById('pkgVacuum').checked;
+      // Otomatik hesaplama: Mevzuat kurallarından packsToOpen'ı hesapla
+      let baseIncrements = 0;
+      const lotTon = lotWeightKg / 1000;
 
-      // Manuel input override kontrolü
-      const openedProductKg = parseFloat(document.getElementById('openedProductVal').value) || 0;
-      let packsToOpen;
-
-      if (openedProductKg > 0) {
-        // Kullanıcı manuel olarak girdi
-        packsToOpen = Math.floor(openedProductKg / packWeightKg);
-        // Manuel input varsa, "Açılacak Paket Sayısı" display'ini güncelle
-        document.getElementById('packsToOpenVal').innerText = packsToOpen;
-        document.getElementById('packsToOpenDesc').innerText = 'Kullanıcı tarafından manuel olarak belirtilen ürün ağırlığından hesaplanmıştır';
+      if (lotTon <= 0.5) {
+        baseIncrements = 20;
+      } else if (lotTon <= 1.0) {
+        baseIncrements = 30;
+      } else if (lotTon <= 2.0) {
+        baseIncrements = 40;
+      } else if (lotTon <= 5.0) {
+        baseIncrements = 60;
+      } else if (lotTon <= 10.0) {
+        baseIncrements = 80;
+      } else if (lotTon < 15.0) {
+        baseIncrements = 100;
       } else {
-        // Otomatik hesaplama
-        let baseIncrements = 0;
-        const lotTon = lotWeightKg / 1000;
+        baseIncrements = 100;
+      }
 
-        if (lotTon <= 0.5) {
-          baseIncrements = 20;
-        } else if (lotTon <= 1.0) {
-          baseIncrements = 30;
-        } else if (lotTon <= 2.0) {
-          baseIncrements = 40;
-        } else if (lotTon <= 5.0) {
-          baseIncrements = 60;
-        } else if (lotTon <= 10.0) {
-          baseIncrements = 80;
-        } else if (lotTon < 15.0) {
-          baseIncrements = 100;
+      let packsToOpen = baseIncrements;
+      if (isVacuum) {
+        if (lotTon < 15.0) {
+          packsToOpen = Math.round(baseIncrements * 0.5);
         } else {
-          baseIncrements = 100;
-        }
-
-        packsToOpen = baseIncrements;
-        if (isVacuum) {
-          if (lotTon < 15.0) {
-            packsToOpen = Math.round(baseIncrements * 0.5);
-          } else {
-            packsToOpen = 50;
-          }
+          packsToOpen = 50;
         }
       }
       packsToOpen = Math.min(packsToOpen, totalPacks);
+
+      // Ambalajı açılan toplam ürün kütlesi
+      const openedProductKg = packsToOpen * packWeightKg;
+      document.getElementById('openedProductVal').innerText = openedProductKg.toLocaleString('tr-TR');
 
       // Bozulan kolilerin palet başına dağıtımı
       const defectivePerPalet = Math.floor(packsToOpen / paletCount);
@@ -1297,7 +1307,6 @@
     document.getElementById('pkgVacuum').addEventListener('change', calculate);
     document.getElementById('pkgNormal').addEventListener('change', calculate);
     document.getElementById('paletCount').addEventListener('input', calculate);
-    document.getElementById('openedProductVal').addEventListener('input', visualizePalets);
 
     // Sayfa açılışında çalıştır
     calculate();

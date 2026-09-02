@@ -886,10 +886,10 @@
           <div class="result-card alert-card">
             <div class="result-label">Ambalaj Bütünlüğü Bozulan / Açılan Ürün</div>
             <div class="result-value">
-              <input type="number" id="openedProductVal" value="0" style="width: 100%; padding: 8px; font-size: 1.5rem; font-weight: 700; color: var(--yb-blue); border: 1px solid var(--border); border-radius: 4px;">
+              <span id="openedProductVal">0</span>
               <span class="unit-small">kg</span>
             </div>
-            <div class="result-desc" id="openedProductDesc">Bozulan ambalaj ağırlığını girin</div>
+            <div class="result-desc" id="openedProductDesc">Mevzuat kurallarına göre otomatik hesaplanmış</div>
             <div class="regulation-ref">Madde C.1</div>
           </div>
         </div>
@@ -1181,12 +1181,6 @@
 
       document.getElementById('targetWeightVal').innerText = targetWeightKg.toLocaleString('tr-TR', { minimumFractionDigits: 1 });
       document.getElementById('samplePerPackVal').innerText = Math.round(samplePerPackGrams);
-      // openedProductVal artık editable input field, otomatik güncelleme yapma
-      const openedProductInput = document.getElementById('openedProductVal');
-      if (!openedProductInput.value) {
-        openedProductInput.value = openedProductKg.toLocaleString('tr-TR');
-      }
-      document.getElementById('openedProductDesc').innerText = `Partinin %${openedProductRatio}'lik kısmının ambalajı açılmış olur`;
       
       document.getElementById('labSplitVal').innerText = labSplitText;
 
@@ -1199,54 +1193,47 @@
 
     function visualizePalets() {
       const paletCount = parseInt(document.getElementById('paletCount').value) || 1;
-      const totalPacks = Math.ceil((parseFloat(document.getElementById('lotWeight').value) || 0) / (parseFloat(document.getElementById('packWeight').value) || 1));
+      const lotWeightKg = parseFloat(document.getElementById('lotWeight').value) || 0;
+      const packWeightKg = parseFloat(document.getElementById('packWeight').value) || 1;
+      const isVacuum = document.getElementById('pkgVacuum').checked;
+
+      const totalPacks = Math.ceil(lotWeightKg / packWeightKg);
       const packsPerPalet = Math.ceil(totalPacks / paletCount);
       const kolisPerLayer = 5; // Her katta 5 koli
 
-      // Ambalajı bozulan koli sayısı hesaplaması
-      const packWeightKg = parseFloat(document.getElementById('packWeight').value) || 1;
-      const openedProductKg = parseFloat(document.getElementById('openedProductVal').value) || 0;
+      // Otomatik hesaplama: Mevzuat kurallarından packsToOpen'ı hesapla
+      let baseIncrements = 0;
+      const lotTon = lotWeightKg / 1000;
 
-      // Kullanıcı "Ambalaj Bütünlüğü Bozulan / Açılan Ürün" değerini girmişse, o değerden hesapla
-      let packsToOpen;
-      if (openedProductKg > 0) {
-        packsToOpen = Math.floor(openedProductKg / packWeightKg);
-        // Manuel input varsa, "Açılacak Paket Sayısı" display'ini güncelle
-        document.getElementById('packsToOpenVal').innerText = packsToOpen;
-        document.getElementById('packsToOpenDesc').innerText = 'Kullanıcı tarafından manuel olarak belirtilen ürün ağırlığından hesaplanmıştır';
+      if (lotTon <= 0.5) {
+        baseIncrements = 20;
+      } else if (lotTon <= 1.0) {
+        baseIncrements = 30;
+      } else if (lotTon <= 2.0) {
+        baseIncrements = 40;
+      } else if (lotTon <= 5.0) {
+        baseIncrements = 60;
+      } else if (lotTon <= 10.0) {
+        baseIncrements = 80;
+      } else if (lotTon < 15.0) {
+        baseIncrements = 100;
       } else {
-        // Yoksa otomatik hesapla (mevcut logik)
-        const lotWeightKg = parseFloat(document.getElementById('lotWeight').value) || 0;
-        const isVacuum = document.getElementById('pkgVacuum').checked;
-        let baseIncrements = 0;
-        const lotTon = lotWeightKg / 1000;
-
-        if (lotTon <= 0.5) {
-          baseIncrements = 20;
-        } else if (lotTon <= 1.0) {
-          baseIncrements = 30;
-        } else if (lotTon <= 2.0) {
-          baseIncrements = 40;
-        } else if (lotTon <= 5.0) {
-          baseIncrements = 60;
-        } else if (lotTon <= 10.0) {
-          baseIncrements = 80;
-        } else if (lotTon < 15.0) {
-          baseIncrements = 100;
-        } else {
-          baseIncrements = 100;
-        }
-
-        packsToOpen = baseIncrements;
-        if (isVacuum) {
-          if (lotTon < 15.0) {
-            packsToOpen = Math.round(baseIncrements * 0.5);
-          } else {
-            packsToOpen = 50;
-          }
-        }
-        packsToOpen = Math.min(packsToOpen, totalPacks);
+        baseIncrements = 100;
       }
+
+      let packsToOpen = baseIncrements;
+      if (isVacuum) {
+        if (lotTon < 15.0) {
+          packsToOpen = Math.round(baseIncrements * 0.5);
+        } else {
+          packsToOpen = 50;
+        }
+      }
+      packsToOpen = Math.min(packsToOpen, totalPacks);
+
+      // Ambalajı açılan toplam ürün kütlesi
+      const openedProductKg = packsToOpen * packWeightKg;
+      document.getElementById('openedProductVal').innerText = openedProductKg.toLocaleString('tr-TR');
 
       // Bozulan kolilerin palet başına dağıtımı
       const defectivePerPalet = Math.floor(packsToOpen / paletCount);
@@ -1320,7 +1307,6 @@
     document.getElementById('pkgVacuum').addEventListener('change', calculate);
     document.getElementById('pkgNormal').addEventListener('change', calculate);
     document.getElementById('paletCount').addEventListener('input', calculate);
-    document.getElementById('openedProductVal').addEventListener('input', visualizePalets);
 
     // Sayfa açılışında çalıştır
     calculate();
