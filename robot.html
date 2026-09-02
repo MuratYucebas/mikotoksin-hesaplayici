@@ -856,8 +856,38 @@
 
         <!-- Palet Görselleştirmesi -->
         <div style="margin-top: 32px; padding-top: 32px; border-top: 2px solid var(--border);">
-          <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 20px; color: var(--text-main);">Palet Düzeni</h3>
-          <div id="paletVisualization"></div>
+          <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 20px; color: var(--text-main);">Palet Düzeni & Tahribat Analizi</h3>
+
+          <div style="display: grid; grid-template-columns: 1fr 320px; gap: 24px; align-items: start;">
+            <div id="paletVisualization"></div>
+
+            <!-- Tahribat Analiz Kartı -->
+            <div style="background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); border: 2px solid #FF9800; border-radius: 12px; padding: 20px; box-shadow: 0 6px 16px rgba(255, 152, 0, 0.2);">
+              <div style="font-size: 0.8rem; text-transform: uppercase; font-weight: 700; color: #E65100; letter-spacing: 0.05em; margin-bottom: 12px;">⚠️ Tahribat Analizi</div>
+
+              <div style="font-size: 2.2rem; font-weight: 900; color: #D84315; margin-bottom: 8px;">
+                <span id="damagePercentage">0</span>%
+              </div>
+
+              <div style="font-size: 0.85rem; color: #BF360C; font-weight: 600; margin-bottom: 16px; line-height: 1.5;">
+                Analiz için tahribata uğrayan ürün
+              </div>
+
+              <div style="background: white; border-radius: 8px; padding: 12px; margin-bottom: 12px;">
+                <div style="font-size: 0.7rem; color: #666; text-transform: uppercase; font-weight: 700; margin-bottom: 6px;">Açılan Toplam Ürün</div>
+                <div style="font-size: 1.3rem; font-weight: 800; color: #D84315;" id="damageTotalKg">0 kg</div>
+              </div>
+
+              <div style="background: white; border-radius: 8px; padding: 12px;">
+                <div style="font-size: 0.7rem; color: #666; text-transform: uppercase; font-weight: 700; margin-bottom: 6px;">Toplam Parti</div>
+                <div style="font-size: 1.3rem; font-weight: 800; color: #002B82;" id="damageLotKg">0 kg</div>
+              </div>
+
+              <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255, 152, 0, 0.3); font-size: 0.75rem; color: #BF360C; line-height: 1.6;">
+                <strong>Not:</strong> Mevzuat kurallarına uygun olarak belirtilen sayıda ambalaj açılmakta ve analiz için tahribata uğramaktadır.
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1037,6 +1067,12 @@
 
       document.getElementById('samplingFreqVal').innerText = `Her ${freqN}. paketten numune alınmalıdır`;
       document.getElementById('samplingFreqDesc').innerText = `Formül: ${totalPacks} toplam paket / ${packsToOpen} açılacak paket ≈ ${freqN}`;
+
+      // Tahribat Yüzdesi Hesaplaması
+      const damagePercentage = lotWeightKg > 0 ? ((openedProductKg / lotWeightKg) * 100).toFixed(1) : 0;
+      document.getElementById('damagePercentage').innerText = damagePercentage;
+      document.getElementById('damageTotalKg').innerText = openedProductKg.toLocaleString('tr-TR') + ' kg';
+      document.getElementById('damageLotKg').innerText = lotWeightKg.toLocaleString('tr-TR') + ' kg';
 
       // Palet Görselleştirmesi
       visualizePalets();
