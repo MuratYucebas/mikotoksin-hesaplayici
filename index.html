@@ -1342,45 +1342,16 @@
       const visualization = document.getElementById('paletVisualization');
       visualization.innerHTML = '';
 
-      // Toplam analiz kolileri renk sırasına göre dağıt
-      const coloredKolisPerAnalysis = [];
-      for (let a = 0; a < analysisPointCount; a++) {
-        coloredKolisPerAnalysis.push({
-          colorIndex: a,
-          koliIndices: new Set()
-        });
-      }
-
-      // Sondan başlayarak colisPerAnalysis kadar koli her analiz rengine ata
-      for (let a = 0; a < analysisPointCount; a++) {
-        for (let k = 0; k < colisPerAnalysis; k++) {
-          // Sondan başlayarak, her analiz rengine ait kolileri işaretle
-          // Örneğin: 200 açılacak koli, 2 analiz noktası
-          // Son 100 koli (koli 100-199) 1. renk
-          // Koli 0-99 2. renk
-          const globalIndex = totalPacksToOpen - 1 - (a * colisPerAnalysis + k);
-          if (globalIndex >= 0) {
-            coloredKolisPerAnalysis[a].koliIndices.add(globalIndex);
-          }
-        }
-      }
-
       // Açılan kolileri paletlere eşit dağıt
-      const coloredKolisPerPalet = Math.ceil(totalPacksToOpen / paletCount);
+      const coloredKolisPerPalet = Math.floor(totalPacksToOpen / paletCount);
       const coloredKolisRemainder = totalPacksToOpen % paletCount;
 
       for (let i = 1; i <= paletCount; i++) {
         const koliCount = i === paletCount ? (totalPacks - (i - 1) * packsPerPalet) : packsPerPalet;
         const layerCount = Math.ceil(koliCount / kolisPerLayer);
-        const paletStartIdx = (i - 1) * packsPerPalet;
 
         // Bu paletin kaç tane renkli (açılan) koli olacağı
         const coloredInThisPalet = coloredKolisPerPalet + (i <= coloredKolisRemainder ? 1 : 0);
-
-        // Bu paletin renkli kolileri: sondan başlayarak
-        // Toplam renkli koli sayısından bu palet için ayrılmış kadarını çıkar
-        const paletColoredStartIdx = totalPacksToOpen - (i * coloredKolisPerPalet + Math.min(i, coloredKolisRemainder));
-        const paletColoredEndIdx = paletColoredStartIdx + coloredInThisPalet;
 
         // Palet wrapper
         const wrapper = document.createElement('div');
@@ -1391,6 +1362,7 @@
         layersDiv.className = 'palet-layers';
 
         let coloredKoliCountInPalet = 0;
+        let colorCountByAnalysis = {};
 
         for (let layer = 0; layer < layerCount; layer++) {
           const layerDiv = document.createElement('div');
@@ -1403,19 +1375,24 @@
             const koliDiv = document.createElement('div');
             koliDiv.className = 'koli';
 
-            const globalIndex = paletStartIdx + j;
+            // Paletin en üstünden başlayarak renkli kolileri işaretle
+            // layer == 0 en üstteki katmandır (tersine oluşturulduğu için)
+            const isColored = (layer < Math.ceil(coloredInThisPalet / kolisPerLayer)) ||
+                             (layer === Math.floor(coloredInThisPalet / kolisPerLayer) &&
+                              j - startIdx < (coloredInThisPalet % kolisPerLayer === 0 ? kolisPerLayer : coloredInThisPalet % kolisPerLayer));
+
             let colorIndex = -1;
 
-            // Bu koli renkli aralığında mı kontrol et
-            if (globalIndex >= paletColoredStartIdx && globalIndex < paletColoredEndIdx) {
-              // Hangi analiz rengine ait olduğunu bul
-              for (let a = 0; a < analysisPointCount; a++) {
-                if (coloredKolisPerAnalysis[a].koliIndices.has(globalIndex)) {
-                  colorIndex = a;
-                  coloredKoliCountInPalet++;
-                  break;
-                }
+            if (isColored && analysisPointCount > 0) {
+              // Renkleri sırayla dağıt
+              const coloredIdx = coloredKoliCountInPalet % analysisPointCount;
+              colorIndex = coloredIdx;
+
+              if (!colorCountByAnalysis[colorIndex]) {
+                colorCountByAnalysis[colorIndex] = 0;
               }
+              colorCountByAnalysis[colorIndex]++;
+              coloredKoliCountInPalet++;
             }
 
             if (colorIndex >= 0) {
@@ -1424,6 +1401,7 @@
               koliDiv.style.fontWeight = 'bold';
             }
 
+            const globalIndex = (i - 1) * packsPerPalet + j;
             koliDiv.innerText = (globalIndex + 1);
             let tooltip = `Koli ${globalIndex + 1}`;
             if (colorIndex >= 0) {
@@ -1452,7 +1430,7 @@
         // Palet etiketi
         const label = document.createElement('div');
         label.className = 'palet-label';
-        label.innerText = `Palet ${i} • ${koliCount} koli${coloredKoliCountInPalet > 0 ? ` (${coloredKoliCountInPalet} renkli)` : ''}`;
+        label.innerText = `Palet ${i} • ${koliCount} koli${coloredKoliCountInPalet > 0 ? ` (${coloredKoliCountInPalet} açılacak)` : ''}`;
         wrapper.appendChild(label);
 
         visualization.appendChild(wrapper);
