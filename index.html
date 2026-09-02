@@ -1199,12 +1199,53 @@
       const packsPerPalet = Math.ceil(totalPacks / paletCount);
       const kolisPerLayer = 5; // Her katta 5 koli
 
+      // Ambalajı bozulan koli sayısı hesaplaması
+      const packWeightKg = parseFloat(document.getElementById('packWeight').value) || 1;
+      const lotWeightKg = parseFloat(document.getElementById('lotWeight').value) || 0;
+      const isVacuum = document.getElementById('pkgVacuum').checked;
+
+      let baseIncrements = 0;
+      const lotTon = lotWeightKg / 1000;
+
+      if (lotTon <= 0.5) {
+        baseIncrements = 20;
+      } else if (lotTon <= 1.0) {
+        baseIncrements = 30;
+      } else if (lotTon <= 2.0) {
+        baseIncrements = 40;
+      } else if (lotTon <= 5.0) {
+        baseIncrements = 60;
+      } else if (lotTon <= 10.0) {
+        baseIncrements = 80;
+      } else if (lotTon < 15.0) {
+        baseIncrements = 100;
+      } else {
+        baseIncrements = 100;
+      }
+
+      let packsToOpen = baseIncrements;
+      if (isVacuum) {
+        if (lotTon < 15.0) {
+          packsToOpen = Math.round(baseIncrements * 0.5);
+        } else {
+          packsToOpen = 50;
+        }
+      }
+      packsToOpen = Math.min(packsToOpen, totalPacks);
+
+      // Bozulan kolilerin palet başına dağıtımı
+      const defectivePerPalet = Math.floor(packsToOpen / paletCount);
+      const defectiveRemainder = packsToOpen % paletCount;
+
       const visualization = document.getElementById('paletVisualization');
       visualization.innerHTML = '';
 
       for (let i = 1; i <= paletCount; i++) {
         const koliCount = i === paletCount ? (totalPacks - (i - 1) * packsPerPalet) : packsPerPalet;
         const layerCount = Math.ceil(koliCount / kolisPerLayer);
+
+        // Her paletin bozulan koli sayısı
+        const defectiveInThisPalet = defectivePerPalet + (i <= defectiveRemainder ? 1 : 0);
 
         // Palet wrapper
         const wrapper = document.createElement('div');
@@ -1224,8 +1265,19 @@
           for (let j = startIdx; j < endIdx; j++) {
             const koliDiv = document.createElement('div');
             koliDiv.className = 'koli';
+
+            // Son katmandaki (en üstteki) bozulan kolileri kırmızı göster
+            // endIdx - j - 1 sıfırdan başlar, en sağdaki koli
+            // defectiveInThisPalet'ın en sağdaki kolileri işaretle
+            const isDefective = layer === layerCount - 1 && j >= (endIdx - defectiveInThisPalet);
+            if (isDefective) {
+              koliDiv.style.backgroundColor = '#d32f2f';
+              koliDiv.style.color = 'white';
+              koliDiv.style.fontWeight = 'bold';
+            }
+
             koliDiv.innerText = (j + 1);
-            koliDiv.title = `Koli ${j + 1}`;
+            koliDiv.title = `Koli ${j + 1}${isDefective ? ' (Bozulan)' : ''}`;
             layerDiv.appendChild(koliDiv);
           }
 
@@ -1242,7 +1294,7 @@
         // Palet etiketi
         const label = document.createElement('div');
         label.className = 'palet-label';
-        label.innerText = `Palet ${i} • ${koliCount} koli`;
+        label.innerText = `Palet ${i} • ${koliCount} koli${defectiveInThisPalet > 0 ? ` (${defectiveInThisPalet} bozulan)` : ''}`;
         wrapper.appendChild(label);
 
         visualization.appendChild(wrapper);
