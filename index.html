@@ -1364,27 +1364,56 @@
         let coloredKoliCountInPalet = 0;
         let colorCountByAnalysis = {};
 
-        for (let layer = 0; layer < layerCount; layer++) {
-          const layerDiv = document.createElement('div');
-          layerDiv.className = 'palet-layer';
+        // Kolileri oluştur (tüm kolileri önce bir dizide topla)
+        const allKolis = [];
 
+        for (let layer = 0; layer < layerCount; layer++) {
           const startIdx = layer * kolisPerLayer;
           const endIdx = Math.min(startIdx + kolisPerLayer, koliCount);
 
           for (let j = startIdx; j < endIdx; j++) {
+            allKolis.push({
+              layerIdx: layer,
+              posInLayer: j - startIdx,
+              globalIdx: (i - 1) * packsPerPalet + j
+            });
+          }
+        }
+
+        // En üstteki kolileri (son oluşturulanları) işaretle
+        // Katmanlar ters sırada oluşturulduğu için, son katman en üsttedir
+        const startColoringFrom = allKolis.length - coloredInThisPalet;
+
+        // Kolileri katmanlara göre grupla
+        const kolisByLayer = {};
+        for (let k = 0; k < allKolis.length; k++) {
+          const layer = allKolis[k].layerIdx;
+          if (!kolisByLayer[layer]) {
+            kolisByLayer[layer] = [];
+          }
+          kolisByLayer[layer].push({
+            idx: k,
+            pos: allKolis[k].posInLayer,
+            global: allKolis[k].globalIdx
+          });
+        }
+
+        // Katmanları ters sırada render et (aşağıdan yukarıya)
+        for (let layer = layerCount - 1; layer >= 0; layer--) {
+          const layerDiv = document.createElement('div');
+          layerDiv.className = 'palet-layer';
+
+          const kolisInLayer = kolisByLayer[layer] || [];
+
+          for (let k = 0; k < kolisInLayer.length; k++) {
+            const koli = kolisInLayer[k];
             const koliDiv = document.createElement('div');
             koliDiv.className = 'koli';
 
-            // Paletin en üstünden başlayarak renkli kolileri işaretle
-            // layer == 0 en üstteki katmandır (tersine oluşturulduğu için)
-            const isColored = (layer < Math.ceil(coloredInThisPalet / kolisPerLayer)) ||
-                             (layer === Math.floor(coloredInThisPalet / kolisPerLayer) &&
-                              j - startIdx < (coloredInThisPalet % kolisPerLayer === 0 ? kolisPerLayer : coloredInThisPalet % kolisPerLayer));
-
             let colorIndex = -1;
 
-            if (isColored && analysisPointCount > 0) {
-              // Renkleri sırayla dağıt
+            // Bu koli renkli aralığında mı kontrol et
+            if (koli.idx >= startColoringFrom && analysisPointCount > 0) {
               const coloredIdx = coloredKoliCountInPalet % analysisPointCount;
               colorIndex = coloredIdx;
 
@@ -1401,9 +1430,8 @@
               koliDiv.style.fontWeight = 'bold';
             }
 
-            const globalIndex = (i - 1) * packsPerPalet + j;
-            koliDiv.innerText = (globalIndex + 1);
-            let tooltip = `Koli ${globalIndex + 1}`;
+            koliDiv.innerText = (koli.global + 1);
+            let tooltip = `Koli ${koli.global + 1}`;
             if (colorIndex >= 0) {
               const analysisNames = [
                 'Bakanlık Analizi',
