@@ -1346,6 +1346,9 @@
       const coloredKolisPerPalet = Math.floor(totalPacksToOpen / paletCount);
       const coloredKolisRemainder = totalPacksToOpen % paletCount;
 
+      // Paletleri saklayacak dizi
+      const paletDivs = [];
+
       for (let i = 1; i <= paletCount; i++) {
         const koliCount = i === paletCount ? (totalPacks - (i - 1) * packsPerPalet) : packsPerPalet;
         const layerCount = Math.ceil(koliCount / kolisPerLayer);
@@ -1461,7 +1464,13 @@
         label.innerText = `Palet ${i} • ${koliCount} koli${coloredKoliCountInPalet > 0 ? ` (${coloredKoliCountInPalet} açılacak)` : ''}`;
         wrapper.appendChild(label);
 
-        visualization.appendChild(wrapper);
+        // Paletleri diziye ekle
+        paletDivs.push(wrapper);
+      }
+
+      // Paletleri doğru sırada ekle
+      for (let j = 0; j < paletDivs.length; j++) {
+        visualization.appendChild(paletDivs[j]);
       }
     }
 
