@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yücebaş Food - AB 2023/2782 Kuru İncir Ürünü Örnekleme Robotu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* PDF Kurumsal Renk Kodları */
+      --yb-blue: #002B82;       /* Pantone 2746 C */
+      --yb-orange: #DE7C00;     /* Pantone 138 C */
+      --yb-blue-dark: #001f5c;
+      --yb-blue-light: #f0f4fc;
+      --yb-orange-light: #fff7ed;
+      
+      --bg: #f4f6fa;
+      --card-bg: #ffffff;
+      --text-main: #17202a;
+      --text-muted: #5d6d7e;
+      --border: #d5dbdb;
+      --border-focus: #002B82;
+      --shadow-sm: 0 2px 4px rgba(0, 43, 130, 0.05);
+      --shadow-md: 0 4px 12px rgba(0, 43, 130, 0.08);
+      --shadow-lg: 0 10px 24px rgba(0, 43, 130, 0.12);
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding: 0 0 40px 0;
+      min-height: 100vh;
+    }
+
+    /* Kurumsal Header */
+    .top-navbar {
+      background: var(--yb-blue);
+      padding: 16px 24px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 32px;
+    }
+
+    .navbar-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .brand-logo-wrap {
+      display: flex;
+      align-items: center;
+    }
+
+    .brand-logo-wrap img {
+      height: 50px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .header-info-box {
+      text-align: right;
+      color: #ffffff;
+    }
+
+    .header-info-box .title-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--yb-orange);
+      background: rgba(255, 255, 255, 0.1);
+      padding: 3px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 4px;
+    }
+
+    .header-info-box h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .page-desc-card {
+      background: #ffffff;
+      border-left: 5px solid var(--yb-orange);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .page-desc-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .page-desc-card span {
+      font-weight: 700;
+      color: var(--yb-blue);
+    }
+
+    .layout-grid {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 890px) {
+      .layout-grid {
+        grid-template-columns: 1fr;
+      }
+      .header-info-box {
+        text-align: left;
+      }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--yb-blue);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 2px solid var(--yb-blue-light);
+      padding-bottom: 12px;
+    }
+
+    .card-title svg {
+      stroke: var(--yb-orange);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.825rem;
+      font-weight: 700;
+      color: var(--yb-blue);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-wrapper input {
+      width: 100%;
+      padding: 12px 42px 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-main);
+      outline: none;
+      transition: all 0.2s ease;
+      background: #fafbfc;
+    }
+
+    .input-wrapper input:focus {
+      border-color: var(--yb-blue);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(0, 43, 130, 0.12);
+    }
+
+    .input-wrapper .unit {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .radio-pill-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .radio-pill-group label {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      transition: all 0.2s;
+      user-select: none;
+      text-align: center;
+    }
+
+    .radio-pill-group input[type="radio"] {
+      display: none;
+    }
+
+    .radio-pill-group input[type="radio"]:checked + label {
+      background: var(--yb-blue-light);
+      border-color: var(--yb-blue);
+      color: var(--yb-blue);
+    }
+
+    .quick-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .tag-btn {
+      background: var(--yb-blue-light);
+      border: 1px solid #c9d8f5;
+      color: var(--yb-blue);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .tag-btn:hover {
+      background: var(--yb-blue);
+      color: #ffffff;
+    }
+
+    .status-banner {
+      background: var(--yb-blue-light);
+      border: 1px solid #cbdcf7;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .status-banner .item-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .status-banner .item-val {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--yb-blue);
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .result-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+      position: relative;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .result-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .result-card.highlight {
+      border-left: 5px solid var(--yb-orange);
+      background: linear-gradient(135deg, #ffffff 0%, var(--yb-orange-light) 100%);
+    }
+
+    .result-card.alert-card {
+      border-left: 5px solid var(--yb-blue);
+      background: linear-gradient(135deg, #ffffff 0%, var(--yb-blue-light) 100%);
+    }
+
+    .result-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .result-value {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--yb-blue);
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .result-value.accent-color {
+      color: var(--yb-orange);
+    }
+
+    .result-value .unit-small {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .result-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+      line-height: 1.4;
+      font-weight: 500;
+    }
+
+    .regulation-ref {
+      background: #f0f4fc;
+      border-left: 3px solid var(--yb-orange);
+      padding: 6px 10px;
+      margin-top: 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--yb-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    #paletVisualization {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 1200px) {
+      #paletVisualization {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 890px) {
+      #paletVisualization {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      #paletVisualization {
+        grid-template-columns: 1fr;
+      }
+    }
+
+
+    .palet-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .palet-layers {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      align-items: center;
+    }
+
+    .palet-layer {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 0;
+      padding: 4px 0;
+    }
+
+    .palet-base {
+      width: 220px;
+      height: 16px;
+      background: linear-gradient(to right, #6B4423 0%, #8B5A2B 50%, #6B4423 100%);
+      border-radius: 2px;
+      border: 2px solid #3E2723;
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2), 0 4px 8px rgba(0, 0, 0, 0.3);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0;
+    }
+
+    .palet-base::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      width: 4px;
+      height: 8px;
+      background: #5D4037;
+      border-radius: 1px;
+    }
+
+    .palet-base::after {
+      content: '';
+      position: absolute;
+      right: 8px;
+      width: 4px;
+      height: 8px;
+      background: #5D4037;
+      border-radius: 1px;
+    }
+
+    .palet-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--yb-blue);
+      text-align: center;
+      margin-top: 8px;
+      white-space: nowrap;
+      order: 3;
+    }
+
+    .koli {
+      width: 36px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--yb-orange) 0%, #CC6600 100%);
+      border: 1.5px solid #996600;
+      border-radius: 3px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #ffffff;
+      cursor: default;
+    }
+
+    .koli:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+    }
+
+    .full-width-result {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .frequency-card {
+      background: linear-gradient(135deg, var(--yb-blue) 0%, var(--yb-blue-dark) 100%);
+      color: #ffffff;
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .frequency-card .res-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--yb-orange);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .frequency-card .res-val {
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: #ffffff;
+    }
+
+    .frequency-card .res-desc {
+      font-size: 0.8rem;
+      color: #c9d8f5;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    .info-footer {
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .info-footer ul {
+      list-style-type: none;
+      display: grid;
+      gap: 6px;
+    }
+
+    .info-footer li {
+      position: relative;
+      padding-left: 18px;
+    }
+
+    .info-footer li::before {
+      content: "■";
+      position: absolute;
+      left: 6px;
+      color: var(--yb-orange);
+      font-size: 0.65rem;
+      top: 2px;
+    }
+
+
+    /* Checkbox Group Stilleri */
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px;
+      background: #fafbfc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .checkbox-item:hover {
+      background: #f0f4fc;
+      border-color: var(--yb-blue);
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      cursor: pointer;
+      accent-color: var(--yb-blue);
+    }
+
+    .checkbox-item label {
+      flex: 1;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-main);
+      margin: 0;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- Top Navigation Header with Corporate Logo -->
+  <header class="top-navbar">
+    <div class="navbar-container">
+      <div class="brand-logo-wrap">
+        <!-- Yücebaş Food Logo -->
+        <img src="./assets/logo.jpg" alt="Yücebaş Food Co. - Innovative Dried Fruits" title="Yücebaş Food Co.">
+      </div>
+
+      <div class="header-info-box">
+        <div class="title-tag">Yönetmelik (AB) 2023/2782</div>
+        <h2>Kuru İncir Ürünü Resmi Örnekleme Robotu</h2>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    
+    <div class="page-desc-card">
+      <p>Bu hesaplayıcı, AB Komisyonu <span>(AB) 2023/2782</span> sayılı Mikotoksin Numune Alma Yönetmeliği <span>Ek I Bölüm II.C</span> hükümlerine uygun olarak partiler için numune alma planı oluşturur.</p>
+    </div>
+
+    <div class="layout-grid">
+      <!-- Parametre Giriş Kartı -->
+      <div class="card">
+        <h2 class="card-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          Sevkiyat Parametreleri
+        </h2>
+
+        <div class="form-group">
+          <label for="lotWeight">Toplam Parti Büyüklüğü</label>
+          <div class="input-wrapper">
+            <input type="number" id="lotWeight" value="2000" min="1" step="any">
+            <span class="unit">kg</span>
+          </div>
+          <div class="quick-tags">
+            <button class="tag-btn" onclick="setVal('lotWeight', 1800)">1.8 t</button>
+            <button class="tag-btn" onclick="setVal('lotWeight', 4800)">4.8 t</button>
+            <button class="tag-btn" onclick="setVal('lotWeight', 7000)">7 t</button>
+            <button class="tag-btn" onclick="setVal('lotWeight', 12000)">12 t</button>
+            <button class="tag-btn" onclick="setVal('lotWeight', 20000)">20 t</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="packWeight">Birim Paket Ağırlığı</label>
+          <div class="input-wrapper">
+            <input type="number" id="packWeight" value="10" min="0.1" step="any">
+            <span class="unit">kg</span>
+          </div>
+          <div class="quick-tags">
+            <button class="tag-btn" onclick="setVal('packWeight', 5)">5 kg</button>
+            <button class="tag-btn" onclick="setVal('packWeight', 7.5)">7.5 kg</button>
+            <button class="tag-btn" onclick="setVal('packWeight', 8)">8 kg</button>
+            <button class="tag-btn" onclick="setVal('packWeight', 9)">9 kg</button>
+            <button class="tag-btn" onclick="setVal('packWeight', 10)">10 kg</button>
+            <button class="tag-btn" onclick="setVal('packWeight', 15)">15 kg</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Ambalaj Tipi</label>
+          <div class="radio-pill-group">
+            <div>
+              <input type="radio" id="pkgVacuum" name="pkgType" value="vacuum">
+              <label for="pkgVacuum">Vakumlu Ambalaj</label>
+            </div>
+            <div>
+              <input type="radio" id="pkgNormal" name="pkgType" value="normal" checked>
+              <label for="pkgNormal">Normal Ambalaj</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="paletCount">Palet Sayısı</label>
+          <div class="input-wrapper">
+            <input type="number" id="paletCount" value="10" min="1" step="1">
+            <span class="unit">adet</span>
+          </div>
+        </div>
+
+        <!-- Analiz Kontrol Noktaları - Kartın İçinde -->
+        <div style="margin-top: 32px; padding-top: 24px; border-top: 2px solid var(--border);">
+          <h3 style="font-size: 0.95rem; font-weight: 800; color: var(--yb-blue); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 11l3 3L22 4"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Analiz Kontrol Noktaları
+          </h3>
+
+          <div class="checkbox-group">
+            <div class="checkbox-item">
+              <input type="checkbox" id="analysisPoint1" checked>
+              <label for="analysisPoint1">Türkiye Cumhuriyeti il Tarım ve Orman Bakanlığı Analizi</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="analysisPoint2">
+              <label for="analysisPoint2">Müşteri Talebi ile 3. Taraf Laboratuvar Analizi</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="analysisPoint3">
+              <label for="analysisPoint3">AB Gümrük Giriş Analizi</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="analysisPoint4">
+              <label for="analysisPoint4">Müşteri Deposunda 3. Taraf Analizi</label>
+            </div>
+          </div>
+
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 12px; line-height: 1.4;">Her seçilen analiz noktası için aynı numuneler tekrar alınır ve aynı analizler yapılır. Bu, paletlerdeki açılacak koli sayısını ve renklerini çoğaltır.</p>
+        </div>
+      </div>
+
+      <!-- Sonuç ve Hesaplama Kartı -->
+      <div class="card">
+        <h2 class="card-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Mevzuat Çıktıları ve Dağılım
+        </h2>
+
+        <div class="status-banner">
+          <div>
+            <div class="item-title">Mevzuat Tonaj Kadamesi</div>
+            <div class="item-val" id="tierText">-</div>
+            <div class="regulation-ref" style="margin-top: 4px;">Tablo 2</div>
+          </div>
+          <div>
+            <div class="item-title">Partideki Toplam Paket</div>
+            <div class="item-val" id="totalPacksText">-</div>
+            <div class="regulation-ref" style="margin-top: 4px;">Madde C.2</div>
+          </div>
+          <div>
+            <div class="item-title">Alt Parti / Durum</div>
+            <div class="item-val" id="sublotsText">-</div>
+            <div class="regulation-ref" style="margin-top: 4px;">Madde C.3</div>
+          </div>
+        </div>
+
+        <div class="results-grid">
+          <!-- Açılacak Paket Sayısı -->
+          <div class="result-card highlight">
+            <div class="result-label">Açılacak Paket Sayısı</div>
+            <div class="result-value accent-color">
+              <span id="packsToOpenVal">0</span>
+              <span class="unit-small">adet paket</span>
+            </div>
+            <div class="result-desc" id="packsToOpenDesc">Artımlı numune kuralı</div>
+            <div class="regulation-ref">Tablo 2 & Madde C.7.1</div>
+          </div>
+
+          <!-- Hedef Toplam Numune Ağırlığı -->
+          <div class="result-card">
+            <div class="result-label">Hedef Agrega Numune</div>
+            <div class="result-value">
+              <span id="targetWeightVal">0</span>
+              <span class="unit-small">kg</span>
+            </div>
+            <div class="result-desc">Birleştirilecek agreganın asgari kütlesi</div>
+            <div class="regulation-ref">Tablo 2 - Kuru İncir Standardı</div>
+          </div>
+
+          <!-- Paket Başına Alınacak Miktar -->
+          <div class="result-card">
+            <div class="result-label">Paket Başı Çekilecek Numune</div>
+            <div class="result-value">
+              <span id="samplePerPackVal">0</span>
+              <span class="unit-small">g / paket</span>
+            </div>
+            <div class="result-desc">Açılan ambalajdan alınacak miktar</div>
+            <div class="regulation-ref">Madde C.2.2</div>
+          </div>
+
+          <!-- Ambalajı Açılan Ürün Miktarı -->
+          <div class="result-card alert-card">
+            <div class="result-label">Ambalaj Bütünlüğü Bozulan / Açılan Ürün</div>
+            <div class="result-value">
+              <span id="openedProductVal">0</span>
+              <span class="unit-small">kg</span>
+            </div>
+            <div class="result-desc" id="openedProductDesc">Mevzuat kurallarına göre otomatik hesaplanmış</div>
+            <div class="regulation-ref">Madde C.1</div>
+          </div>
+        </div>
+
+        <!-- Örnekleme Sıklığı (Koyu Mavi Kurumsal Kart) -->
+        <div class="frequency-card">
+          <div class="res-label">Örnekleme Sıklığı (ÖS - n) [Madde A.2]</div>
+          <div class="res-val" id="samplingFreqVal">-</div>
+          <div class="res-desc" id="samplingFreqDesc">-</div>
+          <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 0.7rem; font-weight: 600; color: var(--yb-orange); text-transform: uppercase; letter-spacing: 0.02em;">Madde A.2 - Örnekleme Şeması</div>
+        </div>
+
+        <!-- Laboratuvar Numunesi Bölünmesi -->
+        <div class="full-width-result">
+          <div>
+            <div class="result-label">Laboratuvar Numunelerine Ayrılma Şekli</div>
+            <div style="font-size: 1.05rem; font-weight: 800; color: var(--yb-blue);" id="labSplitVal">-</div>
+            <div class="result-desc">Homojenleştirilip ayrı ayrı analiz edilecek laboratuvar numuneleri</div>
+            <div class="regulation-ref" style="margin-top: 10px;">Madde C.4</div>
+          </div>
+        </div>
+
+        <!-- Laboratuvar Analiz Sayısı -->
+        <div class="results-grid" style="margin-top: 20px;">
+          <div class="result-card">
+            <div class="result-label">Gerekli Analiz Sayısı</div>
+            <div class="result-value">
+              <span id="analysisCountVal">1</span>
+              <span class="unit-small">adet analiz</span>
+            </div>
+            <div class="result-desc" id="analysisCountDesc">Aflatoksin ve Okratoksin analizi</div>
+            <div class="regulation-ref">Madde C.5.1 - C.5.3</div>
+          </div>
+
+          <div class="result-card">
+            <div class="result-label">Analiz Detayı</div>
+            <div style="font-size: 0.95rem; font-weight: 600; color: var(--yb-blue); margin-top: 8px;" id="analysisDetailVal">-</div>
+            <div class="result-desc">Her numunede yapılacak ölçümler</div>
+            <div class="regulation-ref">Madde C.5 & Ek III</div>
+          </div>
+        </div>
+
+        <div class="info-footer">
+          <ul>
+            <li><strong>Madde C.5.1:</strong> İncir ezmesinde aflatoksin ve okratoksin homojen dağılmadığı kabul edildiğinden kuru incir tablosu (Tablo 2) uygulanır.</li>
+            <li><strong>Madde C.7.1:</strong> 15 tondan küçük partilerde vakumlu ambalaj indirim oranı %50'dir; ancak 18 kg veya 24 kg gibi toplam hedef ağırlık korunmalıdır.</li>
+          </ul>
+        </div>
+
+        <!-- Palet Görselleştirmesi -->
+        <div style="margin-top: 32px; padding-top: 32px; border-top: 2px solid var(--border);">
+          <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 20px; color: var(--text-main);">Palet Düzeni</h3>
+          <div id="paletVisualization"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Sayfa açılışında hesaplamayı çalıştır
+    window.addEventListener('DOMContentLoaded', function() {
+      calculate();
+    });
+
+    // Global hesaplama değişkenleri
+    let globalCalculationState = {
+      totalPacks: 0,
+      packsToOpen: 0,
+      lotTon: 0,
+      isVacuum: false,
+      packWeightKg: 0
+    };
+
+    function setVal(id, val) {
+      document.getElementById(id).value = val;
+      calculate();
+    }
+
+    function calculate() {
+      const lotWeightKg = parseFloat(document.getElementById('lotWeight').value) || 0;
+      const packWeightKg = parseFloat(document.getElementById('packWeight').value) || 0;
+      const isVacuum = document.getElementById('pkgVacuum').checked;
+
+      if (lotWeightKg <= 0 || packWeightKg <= 0) {
+        return;
+      }
+
+      const totalPacks = Math.ceil(lotWeightKg / packWeightKg);
+      document.getElementById('totalPacksText').innerText = totalPacks.toLocaleString('tr-TR') + ' paket';
+
+      let tierName = "";
+      let sublots = "Tek Parti";
+      let baseIncrements = 0;
+      let targetWeightKg = 0;
+      let labSplitText = "";
+
+      const lotTon = lotWeightKg / 1000;
+
+      let analysisCount = 1;
+      let analysisDetail = "";
+
+      if (lotTon <= 0.1) {
+        tierName = "≤ 0,1 ton (≤ 100 kg)";
+        baseIncrements = 10;
+        targetWeightKg = 3.0;
+        labSplitText = "1 laboratuvar numunesi (3 kg - Bölünmez)";
+        analysisCount = 1;
+        analysisDetail = "Aflatoksin + Okratoksin (Tek numunede)";
+      } else if (lotTon <= 0.2) {
+        tierName = "> 0,1 – ≤ 0,2 ton";
+        baseIncrements = 15;
+        targetWeightKg = 4.5;
+        labSplitText = "1 laboratuvar numunesi (4,5 kg - Bölünmez)";
+        analysisCount = 1;
+        analysisDetail = "Aflatoksin + Okratoksin (Tek numunede)";
+      } else if (lotTon <= 0.5) {
+        tierName = "> 0,2 – ≤ 0,5 ton";
+        baseIncrements = 20;
+        targetWeightKg = 6.0;
+        labSplitText = "1 laboratuvar numunesi (6 kg - Bölünmez)";
+        analysisCount = 1;
+        analysisDetail = "Aflatoksin + Okratoksin (Tek numunede)";
+      } else if (lotTon <= 1.0) {
+        tierName = "> 0,5 – ≤ 1,0 ton";
+        baseIncrements = 30;
+        targetWeightKg = 9.0;
+        labSplitText = "1 laboratuvar numunesi (9 kg - Bölünmez)";
+        analysisCount = 1;
+        analysisDetail = "Aflatoksin + Okratoksin (Tek numunede)";
+      } else if (lotTon <= 2.0) {
+        tierName = "> 1,0 – ≤ 2,0 ton";
+        baseIncrements = 40;
+        targetWeightKg = 12.0;
+        labSplitText = "2 eşit numune (6 kg + 6 kg)";
+        analysisCount = 2;
+        analysisDetail = "Numune 1: Aflatoksin | Numune 2: Okratoksin";
+      } else if (lotTon <= 5.0) {
+        tierName = "> 2,0 – ≤ 5,0 ton";
+        baseIncrements = 60;
+        targetWeightKg = 18.0;
+        labSplitText = "2 eşit numune (9 kg + 9 kg)";
+        analysisCount = 2;
+        analysisDetail = "Numune 1: Aflatoksin | Numune 2: Okratoksin";
+      } else if (lotTon <= 10.0) {
+        tierName = "> 5,0 – ≤ 10,0 ton";
+        baseIncrements = 80;
+        targetWeightKg = 24.0;
+        labSplitText = "3 eşit numune (8 kg + 8 kg + 8 kg)";
+        analysisCount = 3;
+        analysisDetail = "Numune 1 & 2: Aflatoksin (çoğaltma) | Numune 3: Okratoksin";
+      } else if (lotTon < 15.0) {
+        tierName = "> 10,0 – < 15,0 ton";
+        baseIncrements = 100;
+        targetWeightKg = 30.0;
+        labSplitText = "3 eşit numune (10 kg + 10 kg + 10 kg)";
+        analysisCount = 3;
+        analysisDetail = "Numune 1 & 2: Aflatoksin (çoğaltma) | Numune 3: Okratoksin";
+      } else {
+        // >= 15 ton (Madde C.3)
+        const sublotCount = Math.ceil(lotTon / 25);
+        tierName = "≥ 15 ton (Büyük Parti)";
+        sublots = sublotCount + " Alt Parti (~15-30 ton)";
+        baseIncrements = 100;
+        targetWeightKg = 30.0;
+        labSplitText = "3 eşit numune (10 kg + 10 kg + 10 kg) [Alt parti başına]";
+        analysisCount = 3 * sublotCount;
+        analysisDetail = `3 analiz / alt parti × ${sublotCount} alt parti = ${analysisCount} toplam analiz`;
+      }
+
+      document.getElementById('tierText').innerText = tierName;
+      document.getElementById('sublotsText').innerText = sublots;
+
+      // Analiz Sayısı Güncellemesi
+      document.getElementById('analysisCountVal').innerText = analysisCount;
+      document.getElementById('analysisCountDesc').innerText = `Madde C.5 - Toplam ${analysisCount} adet analiz gereklidir`;
+      document.getElementById('analysisDetailVal').innerText = analysisDetail;
+
+      // Vakum indirimi hesabı (Madde C.7.1)
+      let packsToOpen = baseIncrements;
+      if (isVacuum) {
+        if (lotTon < 15.0) {
+          packsToOpen = Math.round(baseIncrements * 0.5);
+        } else {
+          packsToOpen = 50; // >= 15 ton vakumlu kuralı
+        }
+      }
+
+      // Partideki paket sayısından fazla açılamaz
+      packsToOpen = Math.min(packsToOpen, totalPacks);
+
+      // Global state güncelle
+      globalCalculationState.totalPacks = totalPacks;
+      globalCalculationState.packsToOpen = packsToOpen;
+      globalCalculationState.lotTon = lotTon;
+      globalCalculationState.isVacuum = isVacuum;
+      globalCalculationState.packWeightKg = packWeightKg;
+
+      // Paket başına çekilecek gramaj
+      let samplePerPackGrams = 0;
+      if (packsToOpen > 0) {
+        samplePerPackGrams = (targetWeightKg * 1000) / packsToOpen;
+      }
+
+      // Analiz noktaları sayısını al ve açılacak koli sayısını çoğalt
+      const analysisPointCount = getAnalysisPointCount() || 1; // En az 1 olmalı
+      const totalPacksToOpen = packsToOpen * analysisPointCount;
+
+      // Ambalajı açılan toplam ürün kütlesi
+      const openedProductKg = totalPacksToOpen * packWeightKg;
+      const openedProductRatio = ((openedProductKg / lotWeightKg) * 100).toFixed(1);
+
+      // Örnekleme Frekansı (n)
+      const freqN = Math.round(totalPacks / packsToOpen);
+
+      // UI Güncelleme
+      document.getElementById('packsToOpenVal').innerText = totalPacksToOpen.toLocaleString('tr-TR');
+      let descText = isVacuum
+        ? `Tablo 2 standardı (${baseIncrements} adet) üzerinden %50 vakum indirimi uygulandı`
+        : `Standart kurala göre açılacak paket sayısı`;
+      if (analysisPointCount > 1) {
+        descText += ` × ${analysisPointCount} analiz noktası = ${totalPacksToOpen} paket`;
+      }
+      document.getElementById('packsToOpenDesc').innerText = descText;
+
+      document.getElementById('targetWeightVal').innerText = targetWeightKg.toLocaleString('tr-TR', { minimumFractionDigits: 1 });
+      document.getElementById('samplePerPackVal').innerText = Math.round(samplePerPackGrams);
+      document.getElementById('openedProductVal').innerText = openedProductKg.toLocaleString('tr-TR');
+
+      document.getElementById('labSplitVal').innerText = labSplitText;
+
+      document.getElementById('samplingFreqVal').innerText = `Her ${freqN}. paketten numune alınmalıdır`;
+      document.getElementById('samplingFreqDesc').innerText = `Formül: ${totalPacks} toplam paket / ${packsToOpen} açılacak paket ≈ ${freqN}`;
+
+      // Palet Görselleştirmesi
+      visualizePalets();
+    }
+
+    function getAnalysisPointCount() {
+      let count = 0;
+      if (document.getElementById('analysisPoint1').checked) count++;
+      if (document.getElementById('analysisPoint2').checked) count++;
+      if (document.getElementById('analysisPoint3').checked) count++;
+      if (document.getElementById('analysisPoint4').checked) count++;
+      return count;
+    }
+
+    function visualizePalets() {
+      const paletCount = parseInt(document.getElementById('paletCount').value) || 1;
+      const kolisPerLayer = 5; // Her katta 5 koli
+
+      // Global state'ten değerleri al
+      const totalPacks = globalCalculationState.totalPacks;
+      const packWeightKg = globalCalculationState.packWeightKg;
+      const packsToOpen = globalCalculationState.packsToOpen;
+
+      const packsPerPalet = Math.ceil(totalPacks / paletCount);
+
+      // Analiz noktası sayısına göre çoğalt
+      const analysisPointCount = getAnalysisPointCount();
+      const totalPacksToOpen = packsToOpen * analysisPointCount;
+
+      // Analiz noktası renkleri
+      const analysisColors = [
+        '#d32f2f', // Kırmızı - Bakanlık
+        '#f57c00', // Turuncu - Müşteri Talep
+        '#1976d2', // Mavi - Gümrük
+        '#7b1fa2'  // Mor - Müşteri Depo
+      ];
+
+      // Her analiz noktası için kaç koli boyanacak
+      const colisPerAnalysis = packsToOpen;
+
+      // Bozulan kolilerin palet başına dağıtımı
+      const defectivePerPalet = Math.floor(totalPacksToOpen / paletCount);
+      const defectiveRemainder = totalPacksToOpen % paletCount;
+
+      const visualization = document.getElementById('paletVisualization');
+      visualization.innerHTML = '';
+
+      // Açılan kolileri paletlere eşit dağıt
+      const coloredKolisPerPalet = Math.floor(totalPacksToOpen / paletCount);
+      const coloredKolisRemainder = totalPacksToOpen % paletCount;
+
+      // Paletleri saklayacak dizi
+      const paletDivs = [];
+
+      // Koli dağıtımını eşit yap
+      const koliPerPalet = Math.floor(totalPacks / paletCount);
+      const koliRemainder = totalPacks % paletCount;
+
+      for (let i = 1; i <= paletCount; i++) {
+        // Paletleri eşit dağıt, kalan kolileri son paletlere ekle
+        const koliCount = i > (paletCount - koliRemainder) ? koliPerPalet + 1 : koliPerPalet;
+        const layerCount = Math.ceil(koliCount / kolisPerLayer);
+
+        // Bu paletin kaç tane renkli (açılan) koli olacağı - eşit dağıt
+        const coloredInThisPalet = coloredKolisPerPalet + (i > (paletCount - coloredKolisRemainder) ? 1 : 0);
+
+        // Palet wrapper
+        const wrapper = document.createElement('div');
+        wrapper.className = 'palet-wrapper';
+
+        // Katmanları oluştur (aşağıdan yukarıya)
+        const layersDiv = document.createElement('div');
+        layersDiv.className = 'palet-layers';
+
+        let coloredKoliCountInPalet = 0;
+        let colorCountByAnalysis = {};
+        let renderedKoliCountInPalet = 0;
+
+        // Kolileri oluştur (aşağıdan yukarıya, soldan sağa)
+        // Palet: katman 0 (en altta) katman layerCount-1 (en üstte)
+        // Her katman: kolisPerLayer koli (soldan sağa)
+        // İstenilen: Son coloredInThisPalet koli (en üstten başlayarak) kırmızı olmalı
+
+        // Her paletin başlangıç koli numarası
+        const paletStartKoli = (i - 1) * koliPerPalet + Math.min(i - 1, koliRemainder) + 1;
+
+        // Katmanları TERS sırada render et (katman layerCount-1 → 0)
+        // column-reverse olmadığı için normal column'da doğru sıra
+        for (let layer = layerCount - 1; layer >= 0; layer--) {
+          const layerDiv = document.createElement('div');
+          layerDiv.className = 'palet-layer';
+
+          // Bu katmandaki kolilerin başlangıç ve bitiş indeksleri
+          const layerStartIdx = layer * kolisPerLayer;
+          const layerEndIdx = Math.min((layer + 1) * kolisPerLayer, koliCount);
+
+          for (let idx = layerStartIdx; idx < layerEndIdx; idx++) {
+            const koliDiv = document.createElement('div');
+            koliDiv.className = 'koli';
+
+            let isMarked = false;
+
+            // Son coloredInThisPalet koli işaretlenmeli (en üstten başlayarak)
+            if (idx >= (koliCount - coloredInThisPalet) && analysisPointCount > 0) {
+              isMarked = true;
+              coloredKoliCountInPalet++;
+            }
+            renderedKoliCountInPalet++;
+
+            if (isMarked) {
+              // Tüm işaretli koliler kırmızı olacak
+              koliDiv.style.background = '#d32f2f'; // Kırmızı
+              koliDiv.style.color = 'white';
+              koliDiv.style.fontWeight = 'bold';
+            }
+
+            const koliNumber = paletStartKoli + idx;
+            koliDiv.innerText = koliNumber;
+            let tooltip = `Koli ${koliNumber}`;
+            if (isMarked) {
+              tooltip += ` (Açılacak)`;
+            }
+            koliDiv.title = tooltip;
+            layerDiv.appendChild(koliDiv);
+          }
+
+          layersDiv.appendChild(layerDiv);
+        }
+
+        wrapper.appendChild(layersDiv);
+
+        // Ahşap palet tabanı
+        const baseDiv = document.createElement('div');
+        baseDiv.className = 'palet-base';
+        wrapper.appendChild(baseDiv);
+
+        // Palet etiketi
+        const label = document.createElement('div');
+        label.className = 'palet-label';
+        label.innerText = `Palet ${i} • ${koliCount} koli${coloredKoliCountInPalet > 0 ? ` (${coloredKoliCountInPalet} açılacak)` : ''}`;
+        wrapper.appendChild(label);
+
+        // Paletleri diziye ekle
+        paletDivs.push(wrapper);
+      }
+
+      // Paletleri doğru sırada ekle
+      for (let j = 0; j < paletDivs.length; j++) {
+        visualization.appendChild(paletDivs[j]);
+      }
+    }
+
+    // Input dinleyicileri
+    document.getElementById('lotWeight').addEventListener('input', calculate);
+    document.getElementById('packWeight').addEventListener('input', calculate);
+    document.getElementById('pkgVacuum').addEventListener('change', calculate);
+    document.getElementById('pkgNormal').addEventListener('change', calculate);
+    document.getElementById('paletCount').addEventListener('input', calculate);
+    document.getElementById('analysisPoint1').addEventListener('change', calculate);
+    document.getElementById('analysisPoint2').addEventListener('change', calculate);
+    document.getElementById('analysisPoint3').addEventListener('change', calculate);
+    document.getElementById('analysisPoint4').addEventListener('change', calculate);
+
+    // Sayfa açılışında çalıştır
+    calculate();
+  </script>
+</body>
+</html>
