@@ -1371,9 +1371,10 @@
         }
 
         // En üstteki kolileri işaretle
-        // allKolis dizisinin başından başla (0'dan başlayan ilk koliler üstte olacak)
+        // flex-direction: column-reverse ile layers ters sırada gösterilir
+        // Bu nedenle ilk eklenen layer (6) altta, son eklenen layer (0) üstte görünür
+        // Layer 0'ın indices'leri işaretlemeliyiz (0 ile başlayan ilk N)
         const startColoringFrom = 0;
-        const endColoringAt = coloredInThisPalet;
 
         // Kolileri katmanlara göre grupla
         const kolisByLayer = {};
@@ -1403,8 +1404,8 @@
 
             let colorIndex = -1;
 
-            // Bu koli renkli aralığında mı kontrol et (0'dan başlayan ilk N koli)
-            if (koli.idx < endColoringAt && analysisPointCount > 0) {
+            // Bu koli renkli aralığında mı kontrol et (başından başlayan N koli)
+            if (koli.idx < coloredInThisPalet && analysisPointCount > 0) {
               const coloredIdx = coloredKoliCountInPalet % analysisPointCount;
               colorIndex = coloredIdx;
 
