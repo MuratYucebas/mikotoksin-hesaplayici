@@ -762,6 +762,24 @@
           </div>
         </div>
 
+        <!-- Laboratuvar Analiz Sayısı -->
+        <div class="results-grid" style="margin-top: 20px;">
+          <div class="result-card">
+            <div class="result-label">Gerekli Analiz Sayısı</div>
+            <div class="result-value">
+              <span id="analysisCountVal">1</span>
+              <span class="unit-small">adet analiz</span>
+            </div>
+            <div class="result-desc" id="analysisCountDesc">Madde C.5 - Aflatoksin ve Okratoksin analizi</div>
+          </div>
+
+          <div class="result-card">
+            <div class="result-label">Analiz Detayı</div>
+            <div style="font-size: 0.95rem; font-weight: 600; color: var(--yb-blue); margin-top: 8px;" id="analysisDetailVal">-</div>
+            <div class="result-desc">Her numunede yapılacak ölçümler</div>
+          </div>
+        </div>
+
         <div class="info-footer">
           <ul>
             <li><strong>Madde C.5.1:</strong> İncir ezmesinde aflatoksin ve okratoksin homojen dağılmadığı kabul edildiğinden kuru incir tablosu (Tablo 2) uygulanır.</li>
@@ -892,46 +910,65 @@
 
       const lotTon = lotWeightKg / 1000;
 
+      let analysisCount = 1;
+      let analysisDetail = "";
+
       if (lotTon <= 0.1) {
         tierName = "≤ 0,1 ton (≤ 100 kg)";
         baseIncrements = 10;
         targetWeightKg = 3.0;
         labSplitText = "1 laboratuvar numunesi (3 kg - Bölünmez)";
+        analysisCount = 1;
+        analysisDetail = "Aflatoksin + Okratoksin (Tek numunede)";
       } else if (lotTon <= 0.2) {
         tierName = "> 0,1 – ≤ 0,2 ton";
         baseIncrements = 15;
         targetWeightKg = 4.5;
         labSplitText = "1 laboratuvar numunesi (4,5 kg - Bölünmez)";
+        analysisCount = 1;
+        analysisDetail = "Aflatoksin + Okratoksin (Tek numunede)";
       } else if (lotTon <= 0.5) {
         tierName = "> 0,2 – ≤ 0,5 ton";
         baseIncrements = 20;
         targetWeightKg = 6.0;
         labSplitText = "1 laboratuvar numunesi (6 kg - Bölünmez)";
+        analysisCount = 1;
+        analysisDetail = "Aflatoksin + Okratoksin (Tek numunede)";
       } else if (lotTon <= 1.0) {
         tierName = "> 0,5 – ≤ 1,0 ton";
         baseIncrements = 30;
         targetWeightKg = 9.0;
         labSplitText = "1 laboratuvar numunesi (9 kg - Bölünmez)";
+        analysisCount = 1;
+        analysisDetail = "Aflatoksin + Okratoksin (Tek numunede)";
       } else if (lotTon <= 2.0) {
         tierName = "> 1,0 – ≤ 2,0 ton";
         baseIncrements = 40;
         targetWeightKg = 12.0;
         labSplitText = "2 eşit numune (6 kg + 6 kg)";
+        analysisCount = 2;
+        analysisDetail = "Numune 1: Aflatoksin | Numune 2: Okratoksin";
       } else if (lotTon <= 5.0) {
         tierName = "> 2,0 – ≤ 5,0 ton";
         baseIncrements = 60;
         targetWeightKg = 18.0;
         labSplitText = "2 eşit numune (9 kg + 9 kg)";
+        analysisCount = 2;
+        analysisDetail = "Numune 1: Aflatoksin | Numune 2: Okratoksin";
       } else if (lotTon <= 10.0) {
         tierName = "> 5,0 – ≤ 10,0 ton";
         baseIncrements = 80;
         targetWeightKg = 24.0;
         labSplitText = "3 eşit numune (8 kg + 8 kg + 8 kg)";
+        analysisCount = 3;
+        analysisDetail = "Numune 1 & 2: Aflatoksin (çoğaltma) | Numune 3: Okratoksin";
       } else if (lotTon < 15.0) {
         tierName = "> 10,0 – < 15,0 ton";
         baseIncrements = 100;
         targetWeightKg = 30.0;
         labSplitText = "3 eşit numune (10 kg + 10 kg + 10 kg)";
+        analysisCount = 3;
+        analysisDetail = "Numune 1 & 2: Aflatoksin (çoğaltma) | Numune 3: Okratoksin";
       } else {
         // >= 15 ton (Madde C.3)
         const sublotCount = Math.ceil(lotTon / 25);
@@ -940,10 +977,17 @@
         baseIncrements = 100;
         targetWeightKg = 30.0;
         labSplitText = "3 eşit numune (10 kg + 10 kg + 10 kg) [Alt parti başına]";
+        analysisCount = 3 * sublotCount;
+        analysisDetail = `3 analiz / alt parti × ${sublotCount} alt parti = ${analysisCount} toplam analiz`;
       }
 
       document.getElementById('tierText').innerText = tierName;
       document.getElementById('sublotsText').innerText = sublots;
+
+      // Analiz Sayısı Güncellemesi
+      document.getElementById('analysisCountVal').innerText = analysisCount;
+      document.getElementById('analysisCountDesc').innerText = `Madde C.5 - Toplam ${analysisCount} adet analiz gereklidir`;
+      document.getElementById('analysisDetailVal').innerText = analysisDetail;
 
       // Vakum indirimi hesabı (Madde C.7.1)
       let packsToOpen = baseIncrements;
