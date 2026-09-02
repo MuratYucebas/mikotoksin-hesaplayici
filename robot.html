@@ -1245,11 +1245,12 @@
     }
 
     // Sayfaya girildiğinde modal göster
-    window.addEventListener('load', function() {
-      setTimeout(function() {
-        openEmailModal();
-      }, 2000);
-    });
+    setTimeout(function() {
+      const modal = document.getElementById('emailModal');
+      if (modal) {
+        modal.style.display = 'flex';
+      }
+    }, 1500);
 
     // Modal dışına tıklandığında kapat
     document.addEventListener('click', function(event) {
